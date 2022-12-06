@@ -1,0 +1,49 @@
+/*  CSS Document  */
+
+@import url('https://fonts.googleapis.com/css?family=Warnes|Abel');
+
+html {
+	background-color: #000;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-size: 1em;
+	font-family: 'Abel', sans-serif;
+}
+
+main {
+	margin: 50px 50px;
+	padding: 20px 45px;
+	text-align: center;
+	color: rgba(255, 255, 255, .65);
+	border: 2px solid white;
+	border-radius: 34px;
+}
+
+p {
+	margin: 0 0 1em 0;
+	font-size: 1.2em;
+	line-height: 1.1em;
+}
+
+h2 {
+	font-size: 2em;
+	margin: 0;
+}
+
+h1 {
+	font-family: 'Warnes', cursive;
+	font-weight: normal;
+	font-size: 4em;
+	line-height: 1.2em;
+	margin: 0 0 15px 0;
+	color: rgba(255, 255, 255, 1);
+}
+.neonText {
+	text-shadow: -2px -2px 10px #fff, 2px 2px 10px #fff, 2px 2px 20px gold, 2px 2px 40px gold, 2px 2px 60px gold, 2px 2px 80px gold, 2px 2px 100px gold;
+}
+.neonBox {
+	box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 20px gold, inset 0 0 5px gold, 0 0 20px 2px gold, inset 0 0 20px 2px gold;
+}
