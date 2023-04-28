@@ -1,1 +1,1 @@
-# A static website where you can explore and keyboard parts.
+# A static website where you can explore keyboard parts.
