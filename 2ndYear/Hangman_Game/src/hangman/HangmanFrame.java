@@ -4,9 +4,9 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-public class HangmanFrame {
+public class HangmanFrame extends JFrame {
 
-	private JFrame frame;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Launch the application.
@@ -16,7 +16,7 @@ public class HangmanFrame {
 			public void run() {
 				try {
 					HangmanFrame window = new HangmanFrame();
-					window.frame.setVisible(true);
+					window.setVisible(true);
 				}
 				catch (Exception e) {
 					e.printStackTrace();
@@ -29,16 +29,9 @@ public class HangmanFrame {
 	 * Create the application.
 	 */
 	public HangmanFrame() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 900, 600);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 }
