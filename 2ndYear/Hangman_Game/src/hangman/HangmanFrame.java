@@ -3,6 +3,16 @@ package hangman;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JTextPane;
+import java.awt.BorderLayout;
+import javax.swing.JFormattedTextField;
+import java.awt.Color;
+import javax.swing.JEditorPane;
+import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
+import javax.swing.JPasswordField;
+import javax.swing.JLabel;
+import java.awt.Font;
 
 public class HangmanFrame extends JFrame {
 
@@ -32,6 +42,6 @@ public class HangmanFrame extends JFrame {
 		setBounds(100, 100, 900, 600);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setLayout(null);
 	}
-
 }
