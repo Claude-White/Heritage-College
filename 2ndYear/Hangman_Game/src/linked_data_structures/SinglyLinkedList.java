@@ -140,7 +140,7 @@ public class SinglyLinkedList<E>
    * @param target the element to locate
    * @return the node containing the target element, null if the target was not in the list
    */
-  private SLNode<E> find(E target)
+  public SLNode<E> find(E target) // changed from private to public
   {
     SLNode<E> cursor = head.getSuccessor();
 

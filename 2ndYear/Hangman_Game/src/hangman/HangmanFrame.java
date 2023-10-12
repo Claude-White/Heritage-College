@@ -18,6 +18,7 @@ public class HangmanFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
+
 	/**
 	 * Launch the application.
 	 */
@@ -39,6 +40,7 @@ public class HangmanFrame extends JFrame {
 	 * Create the application.
 	 */
 	public HangmanFrame() {
+		setTitle("Hangman");
 		setBounds(100, 100, 900, 600);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
