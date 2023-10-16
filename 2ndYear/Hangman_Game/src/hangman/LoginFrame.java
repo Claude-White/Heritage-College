@@ -9,28 +9,12 @@ import javax.swing.JButton;
 import javax.swing.SpringLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JComboBox;
 
 public class LoginFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField fldUsername;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginFrame frame = new LoginFrame();
-					frame.setVisible(true);
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -49,6 +33,7 @@ public class LoginFrame extends JFrame {
 		springLayout.putConstraint(SpringLayout.SOUTH, btnExit, 60, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, btnExit, -10, SpringLayout.EAST, getContentPane());
 		getContentPane().add(btnExit);
+		btnExit.addActionListener(e -> btnExit());
 		
 		JButton btnScoreboard = new JButton("Scoreboard");
 		springLayout.putConstraint(SpringLayout.NORTH, btnScoreboard, 10, SpringLayout.NORTH, getContentPane());
@@ -62,17 +47,54 @@ public class LoginFrame extends JFrame {
 		springLayout.putConstraint(SpringLayout.SOUTH, btnStart, -10, SpringLayout.SOUTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, btnStart, -375, SpringLayout.EAST, getContentPane());
 		getContentPane().add(btnStart);
+		btnStart.addActionListener(e -> btnStart());
 		
 		fldUsername = new JTextField();
-		springLayout.putConstraint(SpringLayout.WEST, fldUsername, 188, SpringLayout.WEST, getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, fldUsername, -227, SpringLayout.SOUTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.NORTH, fldUsername, 319, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, fldUsername, -516, SpringLayout.EAST, getContentPane());
 		getContentPane().add(fldUsername);
 		fldUsername.setColumns(10);
 		
 		JLabel lblUsername = new JLabel("Username:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblUsername, 5, SpringLayout.NORTH, fldUsername);
-		springLayout.putConstraint(SpringLayout.SOUTH, lblUsername, -5, SpringLayout.SOUTH, fldUsername);
-		springLayout.putConstraint(SpringLayout.EAST, lblUsername, -6, SpringLayout.WEST, fldUsername);
+		springLayout.putConstraint(SpringLayout.WEST, fldUsername, 6, SpringLayout.EAST, lblUsername);
+		springLayout.putConstraint(SpringLayout.EAST, lblUsername, -680, SpringLayout.EAST, getContentPane());
+		springLayout.putConstraint(SpringLayout.NORTH, lblUsername, 324, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, lblUsername, -232, SpringLayout.SOUTH, getContentPane());
 		getContentPane().add(lblUsername);
+		
+		JComboBox cmbxSavedPlayers = new JComboBox();
+		springLayout.putConstraint(SpringLayout.NORTH, cmbxSavedPlayers, 319, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, cmbxSavedPlayers, 588, SpringLayout.WEST, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, cmbxSavedPlayers, 28, SpringLayout.NORTH, fldUsername);
+		springLayout.putConstraint(SpringLayout.EAST, cmbxSavedPlayers, -154, SpringLayout.EAST, getContentPane());
+		getContentPane().add(cmbxSavedPlayers);
 	}
+	
+	private void btnExit() {
+		System.exit(0);
+	} // end btnExit
+
+	private void btnScoreboard() {
+		// display scoreboard
+	} // btnScoreboard()
+
+	private void btnStart() {
+		createPlayer();
+		HangmanFrame gameFrame = new HangmanFrame();
+		gameFrame.setVisible(true);
+		gameFrame.setTitle("Hangman");
+		gameFrame.setBounds(100, 100, 900, 600);
+		gameFrame.setResizable(false);
+		gameFrame.setLocationRelativeTo(null);
+		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(false);
+		this.dispose();
+	} // btnStart()
+
+	private void createPlayer() {
+		Scoreboard scoreboard = new Scoreboard();
+		scoreboard.addPlayer(fldUsername.getText().trim());
+		scoreboard.sortScoreboard();
+	}	// createPlayer()
+	
 }

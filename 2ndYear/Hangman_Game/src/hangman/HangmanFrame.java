@@ -26,7 +26,7 @@ public class HangmanFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					HangmanFrame window = new HangmanFrame();
+					LoginFrame window = new LoginFrame();
 					window.setVisible(true);
 				}
 				catch (Exception e) {
