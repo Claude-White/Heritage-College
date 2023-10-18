@@ -194,10 +194,4 @@ public class DoublyLinkedList<E>
 		}
 		return cursor;
 	} // find()
-
-	public void replace(int p, E e) {
-		DLNode<E> node = find(p);
-		node.setElement(e);
-	} // replace(int, E)
-
 } // DoublyLinkedList class

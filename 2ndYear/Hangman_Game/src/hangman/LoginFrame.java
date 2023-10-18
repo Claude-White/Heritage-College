@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.SpringLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 
 public class LoginFrame extends JFrame {
@@ -40,6 +41,7 @@ public class LoginFrame extends JFrame {
 		springLayout.putConstraint(SpringLayout.SOUTH, btnScoreboard, 60, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, btnScoreboard, -10, SpringLayout.WEST, btnExit);
 		getContentPane().add(btnScoreboard);
+		btnScoreboard.addActionListener(e -> new ScoreboardFrame());
 		
 		JButton btnStart = new JButton("Start");
 		springLayout.putConstraint(SpringLayout.NORTH, btnStart, -60, SpringLayout.SOUTH, getContentPane());
@@ -74,27 +76,17 @@ public class LoginFrame extends JFrame {
 		System.exit(0);
 	} // end btnExit
 
-	private void btnScoreboard() {
-		// display scoreboard
-	} // btnScoreboard()
-
 	private void btnStart() {
-		createPlayer();
-		HangmanFrame gameFrame = new HangmanFrame();
-		gameFrame.setVisible(true);
-		gameFrame.setTitle("Hangman");
-		gameFrame.setBounds(100, 100, 900, 600);
-		gameFrame.setResizable(false);
-		gameFrame.setLocationRelativeTo(null);
-		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(false);
-		this.dispose();
-	} // btnStart()
-
-	private void createPlayer() {
 		Scoreboard scoreboard = new Scoreboard();
-		scoreboard.addPlayer(fldUsername.getText().trim());
-		scoreboard.sortScoreboard();
-	}	// createPlayer()
+		String username = fldUsername.getText().trim();
+		if (scoreboard.addPlayer(username)) {
+			HangmanFrame gameFrame = new HangmanFrame(username);
+			this.setVisible(false);
+			this.dispose();
+		}
+		else {
+			JOptionPane.showMessageDialog(new JPanel(), "Please enter a username.");
+		}
+	} // btnStart()
 	
 }
