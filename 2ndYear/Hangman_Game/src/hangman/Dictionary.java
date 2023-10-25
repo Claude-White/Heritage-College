@@ -49,7 +49,7 @@ public class Dictionary {
              }
            }
            if (numUniqueChars >= MIN_GUESSABLE_CHARS) {
-             words.add(word);
+             words.add(word.toUpperCase().trim());
              numWords++;
            }
          }

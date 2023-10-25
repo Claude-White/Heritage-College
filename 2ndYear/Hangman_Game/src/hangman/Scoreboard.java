@@ -4,16 +4,15 @@ import java.io.Serializable;
 import linked_data_structures.*;
 
 public class Scoreboard implements Serializable {
-  private static DoublyLinkedList<Player> players;
+  private static DoublyLinkedList<Player> players = new DoublyLinkedList<>();
   private static int numPlayers;
 
   public Scoreboard() {
-    players = new DoublyLinkedList<>();
     numPlayers = players.getLength();
   } // Scoreboard()
 
   public boolean addPlayer(String username) {
-  	if (username.length() < 1) {
+  	if (username.isEmpty()) {
   		return false;
   	}
     players.add(new Player(username));

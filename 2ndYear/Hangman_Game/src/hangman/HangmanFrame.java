@@ -1,34 +1,20 @@
 package hangman;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JTextPane;
-import java.awt.BorderLayout;
-import javax.swing.JFormattedTextField;
-import java.awt.Color;
-import java.awt.Dimension;
-
-import javax.swing.JEditorPane;
-import javax.swing.JProgressBar;
-import javax.swing.SwingConstants;
-import javax.swing.JPasswordField;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SpringLayout;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import java.awt.GridLayout;
+import java.awt.*;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class HangmanFrame extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	private String tempWord;
+
 	private JButton[] btnLetters = new JButton[26];
+	private JLabel lblWordToGuess;
+	private JLabel lblWrongGuessesList;
+
+	private HangmanGame game;
 
 	/**
 	 * Launch the application.
@@ -51,9 +37,6 @@ public class HangmanFrame extends JFrame implements ActionListener {
 	 * Create the application.
 	 */
 	public HangmanFrame(String username) {
-		setupGame(username);
-		
-		
 		setTitle("Hangman");
 		setBounds(100, 100, 900, 600);
 		setResizable(false);
@@ -71,7 +54,7 @@ public class HangmanFrame extends JFrame implements ActionListener {
 		getContentPane().add(letterPanel);
 		letterPanel.setLayout(new GridLayout(2, 13, 0, 0));
 		
-		JLabel lblWordToGuess = new JLabel("");
+		lblWordToGuess = new JLabel("");
 		springLayout.putConstraint(SpringLayout.SOUTH, lblWordToGuess, -154, SpringLayout.NORTH, letterPanel);
 		springLayout.putConstraint(SpringLayout.EAST, lblWordToGuess, -274, SpringLayout.EAST, getContentPane());
 		getContentPane().add(lblWordToGuess);
@@ -81,7 +64,7 @@ public class HangmanFrame extends JFrame implements ActionListener {
 		springLayout.putConstraint(SpringLayout.EAST, lblWrongGuesses, -241, SpringLayout.EAST, getContentPane());
 		getContentPane().add(lblWrongGuesses);
 		
-		JLabel lblWrongGuessesList = new JLabel("");
+		lblWrongGuessesList = new JLabel("");
 		springLayout.putConstraint(SpringLayout.NORTH, lblWrongGuessesList, 6, SpringLayout.SOUTH, lblWrongGuesses);
 		springLayout.putConstraint(SpringLayout.WEST, lblWrongGuessesList, 0, SpringLayout.WEST, lblWrongGuesses);
 		getContentPane().add(lblWrongGuessesList);
@@ -116,19 +99,77 @@ public class HangmanFrame extends JFrame implements ActionListener {
 		JMenuItem mntmRules = new JMenuItem("Rules");
 		mnHelp.add(mntmRules);
 		mntmRules.addActionListener(e -> new RulesFrame());
+
+		setupGame(username);
 	}
 	
 	private void setupGame(String username) {
 		Scoreboard scoreboard = new Scoreboard();
-		HangmanGame game = new HangmanGame(scoreboard.getPlayer(username));
+		game = new HangmanGame(scoreboard.getPlayer(username));
+		// Not sure if belongs in front end or back end
+		tempWord = game.getWordToGuess();
+		for (int i = 0; i < tempWord.length(); i++) {
+			if (Character.isLetter(tempWord.charAt(i))) {
+				lblWordToGuess.setText(lblWordToGuess.getText() + "_");
+			} else if (!Character.isLetter(tempWord.charAt(i))&& !Character.isWhitespace(tempWord.charAt(i))) {
+				lblWordToGuess.setText(lblWordToGuess.getText() + tempWord.charAt(i));
+
+			} else {
+				lblWordToGuess.setText(lblWordToGuess.getText() + " ");
+			}
+			lblWordToGuess.setText(lblWordToGuess.getText() + " ");
+		}
+
+		System.out.println(scoreboard.getPlayer(username).getUsername());
+		System.out.println(game.getWordToGuess());
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		for (int i = 0; i < btnLetters.length; i++) {
-			if (e.getSource() == btnLetters[i]) {
-				//btnLetters[i].getText()
-			}
-		}
+    for (JButton btnLetter : btnLetters) {
+      if (e.getSource() == btnLetter) {
+				char letter = btnLetter.getText().charAt(0);
+        if (game.checkInput(letter)) {
+          System.out.println("Correct");
+					btnLetter.setUI(new javax.swing.plaf.basic.BasicButtonUI() {
+						@Override
+						public void paint(Graphics g, JComponent c) {
+							g.setColor(Color.GREEN);
+							g.fillRect(0, 0, c.getWidth(), c.getHeight());
+							super.paint(g, c);
+						}
+					});
+					btnLetter.setEnabled(false);
+					StringBuilder tempLblWordToGuess;
+					for (int i = 0; i < tempWord.length(); i++) {
+						tempLblWordToGuess = new StringBuilder(lblWordToGuess.getText());
+						if (tempWord.charAt(i) == letter) {
+							tempLblWordToGuess.setCharAt(i * 2, letter);
+							lblWordToGuess.setText(tempLblWordToGuess.toString());
+						}
+					}
+        } else {
+          System.out.println("Incorrect");
+					lblWrongGuessesList.setText(lblWrongGuessesList.getText() + letter + " ");
+					btnLetter.setUI(new javax.swing.plaf.basic.BasicButtonUI() {
+						@Override
+						public void paint(Graphics g, JComponent c) {
+							g.setColor(Color.RED);
+							g.fillRect(0, 0, c.getWidth(), c.getHeight());
+							super.paint(g, c);
+						}
+					});
+					btnLetter.setEnabled(false);
+        }
+				if(game.hasLost()) {
+					System.out.println("You lose");
+					JOptionPane.showMessageDialog(new JPanel(), "You lose");
+				}
+				if(game.hasWon()) {
+					System.out.println("You win");
+					JOptionPane.showMessageDialog(new JPanel(), "You win");
+				}
+      }
+    }
 	}
 }
