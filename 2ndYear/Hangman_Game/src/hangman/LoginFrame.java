@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
+import java.awt.Font;
 
 public class LoginFrame extends JFrame {
 
@@ -30,6 +31,7 @@ public class LoginFrame extends JFrame {
 		getContentPane().setLayout(springLayout);
 		
 		JButton btnExit = new JButton("Exit");
+		btnExit.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		springLayout.putConstraint(SpringLayout.NORTH, btnExit, 10, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, btnExit, 60, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, btnExit, -10, SpringLayout.EAST, getContentPane());
@@ -37,6 +39,7 @@ public class LoginFrame extends JFrame {
 		btnExit.addActionListener(e -> btnExit());
 		
 		JButton btnScoreboard = new JButton("Scoreboard");
+		btnScoreboard.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		springLayout.putConstraint(SpringLayout.NORTH, btnScoreboard, 10, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, btnScoreboard, 60, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, btnScoreboard, -10, SpringLayout.WEST, btnExit);
@@ -44,6 +47,7 @@ public class LoginFrame extends JFrame {
 		btnScoreboard.addActionListener(e -> new ScoreboardFrame());
 		
 		JButton btnStart = new JButton("Start");
+		btnStart.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		springLayout.putConstraint(SpringLayout.NORTH, btnStart, -60, SpringLayout.SOUTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, btnStart, 375, SpringLayout.WEST, getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, btnStart, -10, SpringLayout.SOUTH, getContentPane());
@@ -52,12 +56,14 @@ public class LoginFrame extends JFrame {
 		btnStart.addActionListener(e -> btnStart());
 		
 		fldUsername = new JTextField();
+		fldUsername.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		springLayout.putConstraint(SpringLayout.NORTH, fldUsername, 319, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, fldUsername, -516, SpringLayout.EAST, getContentPane());
 		getContentPane().add(fldUsername);
 		fldUsername.setColumns(10);
 		
 		JLabel lblUsername = new JLabel("Username:");
+		lblUsername.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		springLayout.putConstraint(SpringLayout.WEST, fldUsername, 6, SpringLayout.EAST, lblUsername);
 		springLayout.putConstraint(SpringLayout.EAST, lblUsername, -680, SpringLayout.EAST, getContentPane());
 		springLayout.putConstraint(SpringLayout.NORTH, lblUsername, 324, SpringLayout.NORTH, getContentPane());
@@ -65,6 +71,7 @@ public class LoginFrame extends JFrame {
 		getContentPane().add(lblUsername);
 		
 		JComboBox cmbxSavedPlayers = new JComboBox();
+		cmbxSavedPlayers.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		springLayout.putConstraint(SpringLayout.NORTH, cmbxSavedPlayers, 319, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, cmbxSavedPlayers, 588, SpringLayout.WEST, getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, cmbxSavedPlayers, 28, SpringLayout.NORTH, fldUsername);

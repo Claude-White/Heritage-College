@@ -33,6 +33,7 @@ public class ScoreboardFrame extends JFrame {
 		contentPane.setLayout(sl_contentPane);
 		
 		JButton btnExit = new JButton("Exit");
+		btnExit.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnExit, 10, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnExit, -10, SpringLayout.EAST, contentPane);
 		contentPane.add(btnExit);

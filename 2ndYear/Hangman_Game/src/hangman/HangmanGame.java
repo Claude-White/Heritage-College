@@ -32,9 +32,43 @@ public class HangmanGame {
     return player;
   } // getPlayer()
 
-  public int getWordLength() {
-    return wordLength;
+  public int getNumErrors() {
+    return numErrors;
+  } // getNumErrors()
+
+  public boolean canGetHint() {
+    return numErrors < 5;
+  } // canGetHint()
+
+  public char getHint() {
+    int rand = (int) (Math.random() * wordToGuess.getLength());
+    if(Character.isLetter(wordToGuess.getElementAt(rand))) {
+      for (int i = 0; i < guessedLetters.getLength(); i++) {
+        if (guessedLetters.getElementAt(i) == wordToGuess.getElementAt(rand)) {
+          return getHint();
+        }
+      }
+      numErrors++;
+      return wordToGuess.getElementAt(rand);
+    }
+    else {
+      return getHint();
+    }
+  } // getHint()
+
+  public int getNumberOfLetters() {
+    int numLetters = wordLength;
+    for (int i = 0; i < wordToGuess.getLength(); i++) {
+      if (!Character.isLetter(wordToGuess.getElementAt(i))) {
+        numLetters--;
+      }
+    }
+    return numLetters;
   } // getWordToGuess()
+
+  public int getNumberOfGuessedLetters() {
+    return guessedLetters.getLength();
+  } // getNumberOfGuessedLetters()
 
   public String getWordToGuess() {
     StringBuilder tempWord = new StringBuilder();
