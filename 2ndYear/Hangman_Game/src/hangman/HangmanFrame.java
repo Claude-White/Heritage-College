@@ -13,8 +13,10 @@ public class HangmanFrame extends JFrame implements ActionListener {
 	private JButton[] btnLetters = new JButton[26];
 	private JLabel lblWordToGuess;
 	private JLabel lblWrongGuessesList;
+	private JLabel lblUsername;
 
 	private HangmanGame game;
+	private Scoreboard scoreboard;
 
 	/**
 	 * Launch the application.
@@ -69,6 +71,11 @@ public class HangmanFrame extends JFrame implements ActionListener {
 		springLayout.putConstraint(SpringLayout.WEST, lblWrongGuessesList, 0, SpringLayout.WEST, lblWrongGuesses);
 		getContentPane().add(lblWrongGuessesList);
 		
+		lblUsername = new JLabel("");
+		springLayout.putConstraint(SpringLayout.NORTH, lblUsername, 10, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, lblUsername, 0, SpringLayout.WEST, letterPanel);
+		getContentPane().add(lblUsername);
+		
 		char letter = 'A';
 		for (int i = 0; i < btnLetters.length; i++) {
 			btnLetters[i] = new JButton(Character.toString(letter + i));
@@ -84,6 +91,7 @@ public class HangmanFrame extends JFrame implements ActionListener {
 		
 		JMenuItem mntmNewGame = new JMenuItem("New Game");
 		mnFile.add(mntmNewGame);
+		mntmNewGame.addActionListener(e -> setupNewGame(username));
 		
 		JMenuItem mntmScoreboard = new JMenuItem("Scoreboard");
 		mnFile.add(mntmScoreboard);
@@ -100,13 +108,14 @@ public class HangmanFrame extends JFrame implements ActionListener {
 		mnHelp.add(mntmRules);
 		mntmRules.addActionListener(e -> new RulesFrame());
 
-		setupGame(username);
+		setupNewGame(username);
 	}
 	
-	private void setupGame(String username) {
-		Scoreboard scoreboard = new Scoreboard();
+	private void setupNewGame(String username) {
+		clearAll();
+		scoreboard = new Scoreboard();
 		game = new HangmanGame(scoreboard.getPlayer(username));
-		// Not sure if belongs in front end or back end
+		lblUsername.setText("Username: " + username);
 		tempWord = game.getWordToGuess();
 		for (int i = 0; i < tempWord.length(); i++) {
 			if (Character.isLetter(tempWord.charAt(i))) {
@@ -119,10 +128,25 @@ public class HangmanFrame extends JFrame implements ActionListener {
 			}
 			lblWordToGuess.setText(lblWordToGuess.getText() + " ");
 		}
-
-		System.out.println(scoreboard.getPlayer(username).getUsername());
-		System.out.println(game.getWordToGuess());
 	}
+
+	private void clearAll() {
+		lblWrongGuessesList.setText("");
+		lblWordToGuess.setText("");
+    for (JButton btnLetter : btnLetters) {
+      btnLetter.setUI(new javax.swing.plaf.basic.BasicButtonUI() {
+        @Override
+        public void paint(Graphics g, JComponent c) {
+          g.setColor(Color.WHITE);
+          g.fillRect(0, 0, c.getWidth(), c.getHeight());
+          g.setColor(Color.BLACK);
+          g.drawRect(0, 0, c.getWidth() - 1, c.getHeight() - 1);
+          super.paint(g, c);
+        }
+      });
+      btnLetter.setEnabled(true);
+    }
+	} // clearAll()
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -130,7 +154,6 @@ public class HangmanFrame extends JFrame implements ActionListener {
       if (e.getSource() == btnLetter) {
 				char letter = btnLetter.getText().charAt(0);
         if (game.checkInput(letter)) {
-          System.out.println("Correct");
 					btnLetter.setUI(new javax.swing.plaf.basic.BasicButtonUI() {
 						@Override
 						public void paint(Graphics g, JComponent c) {
@@ -149,7 +172,6 @@ public class HangmanFrame extends JFrame implements ActionListener {
 						}
 					}
         } else {
-          System.out.println("Incorrect");
 					lblWrongGuessesList.setText(lblWrongGuessesList.getText() + letter + " ");
 					btnLetter.setUI(new javax.swing.plaf.basic.BasicButtonUI() {
 						@Override
@@ -162,12 +184,14 @@ public class HangmanFrame extends JFrame implements ActionListener {
 					btnLetter.setEnabled(false);
         }
 				if(game.hasLost()) {
-					System.out.println("You lose");
-					JOptionPane.showMessageDialog(new JPanel(), "You lose");
+					JOptionPane.showMessageDialog(new JPanel(), "You lose. Word was: " + tempWord);
+					scoreboard.gamePlayed(game.getPlayer().getUsername(), false);
+					setupNewGame(game.getPlayer().getUsername());
 				}
 				if(game.hasWon()) {
-					System.out.println("You win");
 					JOptionPane.showMessageDialog(new JPanel(), "You win");
+					scoreboard.gamePlayed(game.getPlayer().getUsername(), true);
+					setupNewGame(game.getPlayer().getUsername());
 				}
       }
     }

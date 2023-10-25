@@ -28,6 +28,10 @@ public class HangmanGame {
     System.out.println();
   } // HangmanGame(Player)
 
+  public Player getPlayer() {
+    return player;
+  } // getPlayer()
+
   public int getWordLength() {
     return wordLength;
   } // getWordToGuess()
@@ -46,7 +50,6 @@ public class HangmanGame {
 
   public boolean checkInput(char input) {
     boolean flag = false;
-    System.out.println("User input: " + input);
     for (int i = 0; i < wordToGuess.getLength(); i++) {
       if(wordToGuess.getElementAt(i) == input) {
         guessedLetters.add(input);

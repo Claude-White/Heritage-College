@@ -1,5 +1,7 @@
 package hangman;
 
+import linked_data_structures.DoublyLinkedList;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -8,10 +10,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.SpringLayout;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
+import java.awt.Font;
 
 public class ScoreboardFrame extends JFrame {
 
 	private JPanel contentPane;
+	private JTextArea areaDisplay;
 
 	/**
 	 * Create the frame.
@@ -33,7 +37,8 @@ public class ScoreboardFrame extends JFrame {
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnExit, -10, SpringLayout.EAST, contentPane);
 		contentPane.add(btnExit);
 		
-		JTextArea areaDisplay = new JTextArea();
+		areaDisplay = new JTextArea();
+		areaDisplay.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		areaDisplay.setEditable(false);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, areaDisplay, 10, SpringLayout.SOUTH, btnExit);
 		sl_contentPane.putConstraint(SpringLayout.WEST, areaDisplay, 10, SpringLayout.WEST, contentPane);
@@ -49,6 +54,13 @@ public class ScoreboardFrame extends JFrame {
 	}
 	
 	private void displayScoreboard() {
-		
+		areaDisplay.setText(String.format("%-23s%10s%20s\n", "Username", "Wins", "Games Played"));
+		areaDisplay.append(String.format("%-23s%10s%20s\n", "------------", "--------", "----------------"));
+		Scoreboard scoreboard = new Scoreboard();
+		DoublyLinkedList<Player> players = scoreboard.getPlayers();
+		for (int i = 0; i < players.getLength(); i++) {
+			areaDisplay.append(String.format("%-23s%10s%20s\n", players.getElementAt(i).getUsername(), players.getElementAt(i).getNumGamesWon(), players.getElementAt(i).getNumGamesPlayed()));
+		}
+
 	}
 }

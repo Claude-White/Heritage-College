@@ -36,6 +36,7 @@ public class Dictionary {
   } // getAllWords()
 
   private void readFile() {
+    boolean flag = true;
     File wordFile = new File("word_db.txt");
     try {
       Scanner wordScanner = new Scanner(wordFile);
@@ -49,8 +50,16 @@ public class Dictionary {
              }
            }
            if (numUniqueChars >= MIN_GUESSABLE_CHARS) {
-             words.add(word.toUpperCase().trim());
-             numWords++;
+             char[] tempWord = word.toUpperCase().trim().toCharArray();
+             for (char c: tempWord) {
+                if (Character.isDigit(c)) {
+                  flag = false;
+                }
+             }
+             if (flag) {
+                words.add(word.toUpperCase().trim());
+                numWords++;
+             }
            }
          }
       }
