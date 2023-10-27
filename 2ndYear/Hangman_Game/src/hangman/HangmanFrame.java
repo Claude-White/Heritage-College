@@ -1,9 +1,14 @@
 package hangman;
 
 import java.awt.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class HangmanFrame extends JFrame implements ActionListener {
 
@@ -41,9 +46,10 @@ public class HangmanFrame extends JFrame implements ActionListener {
 	 * Create the application.
 	 */
 	public HangmanFrame(String username) {
+		getContentPane().setBackground(Color.WHITE);
 		getContentPane().setFont(new Font("Monospaced", Font.PLAIN, 13));
 		setTitle("Hangman");
-		setBounds(100, 100, 900, 600);
+		setBounds(100, 100, 899, 600);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -52,6 +58,7 @@ public class HangmanFrame extends JFrame implements ActionListener {
 		getContentPane().setLayout(springLayout);
 		
 		JPanel letterPanel = new JPanel();
+		letterPanel.setBackground(Color.WHITE);
 		springLayout.putConstraint(SpringLayout.NORTH, letterPanel, -90, SpringLayout.SOUTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, letterPanel, 10, SpringLayout.WEST, getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, letterPanel, -10, SpringLayout.SOUTH, getContentPane());
@@ -101,7 +108,6 @@ public class HangmanFrame extends JFrame implements ActionListener {
 			char hint = game.getHint();
 			for (JButton btnLetter : btnLetters) {
 				if (btnLetter.getText().charAt(0) == hint) {
-					//lblLives.setText("Lives: " + (6 - game.getNumErrors()));
 					btnLetter.doClick();
 				}
 			}
@@ -113,12 +119,38 @@ public class HangmanFrame extends JFrame implements ActionListener {
 		getContentPane().add(btnHint);
 
 		lblLives = new JLabel("Lives: ");
-		springLayout.putConstraint(SpringLayout.NORTH, lblLives, 10, SpringLayout.NORTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, lblLives, -200, SpringLayout.EAST, getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, lblLives, 60, SpringLayout.NORTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, lblLives, -10, SpringLayout.EAST, getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, lblLives, 90, SpringLayout.WEST, getContentPane());
+		lblLives.setHorizontalAlignment(SwingConstants.CENTER);
+		springLayout.putConstraint(SpringLayout.NORTH, lblLives, 80, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, lblLives, 100, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, lblLives, -600, SpringLayout.EAST, getContentPane());
 		lblLives.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		getContentPane().add(lblLives);
+		
+		JLabel lblHangmanImg = new JLabel();
+		lblHangmanImg.setSize(250, 400);
+		springLayout.putConstraint(SpringLayout.NORTH, lblHangmanImg, 100, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, lblHangmanImg, 50, SpringLayout.WEST, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, lblHangmanImg, -100, SpringLayout.SOUTH, letterPanel);
+		springLayout.putConstraint(SpringLayout.EAST, lblHangmanImg, -600, SpringLayout.EAST, getContentPane());
+		
+		BufferedImage originalImage;
+		try {
+			originalImage = ImageIO.read(new File("./Images/6Lives.png"));
+			int labelWidth = lblHangmanImg.getWidth();
+	    int labelHeight = lblHangmanImg.getHeight();
+	    double scaleFactor = Math.min((double) labelWidth / originalImage.getWidth(), (double) labelHeight / originalImage.getHeight());
+	    int scaledWidth = (int) (originalImage.getWidth() * scaleFactor);
+	    int scaledHeight = (int) (originalImage.getHeight() * scaleFactor);
+	    Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+	    ImageIcon hangmanImg = new ImageIcon(scaledImage);
+			lblHangmanImg.setIcon(hangmanImg);
+		}
+		catch (IOException e1) {
+			JOptionPane.showMessageDialog(new JPanel(), "Hangman image could not be found.");
+			lblHangmanImg.setIcon(null);
+		}
+		getContentPane().add(lblHangmanImg);
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setFont(new Font("Monospaced", Font.PLAIN, 14));
@@ -131,7 +163,7 @@ public class HangmanFrame extends JFrame implements ActionListener {
 		JMenuItem mntmNewGame = new JMenuItem("New Game");
 		mntmNewGame.setFont(new Font("Monospaced", Font.PLAIN, 14));
 		mnFile.add(mntmNewGame);
-		mntmNewGame.addActionListener(e -> setupNewGame(username));
+		mntmNewGame.addActionListener(e -> setupNewGame());
 		
 		JMenuItem mntmScoreboard = new JMenuItem("Scoreboard");
 		mntmScoreboard.setFont(new Font("Monospaced", Font.PLAIN, 14));
@@ -159,7 +191,27 @@ public class HangmanFrame extends JFrame implements ActionListener {
 		clearAll();
 		scoreboard = new Scoreboard();
 		game = new HangmanGame(scoreboard.getPlayer(username));
+		this.setTitle("Hangman - Game " + (game.getTotalWords() - game.getNumWords()) + "/" + game.getTotalWords());
 		lblUsername.setText("Username: " + username);
+		lblLives.setText("Lives: " + (6 - game.getNumErrors()));
+		tempWord = game.getWordToGuess();
+		for (int i = 0; i < tempWord.length(); i++) {
+			if (Character.isLetter(tempWord.charAt(i))) {
+				lblWordToGuess.setText(lblWordToGuess.getText() + "_");
+			} else if (!Character.isLetter(tempWord.charAt(i))&& !Character.isWhitespace(tempWord.charAt(i))) {
+				lblWordToGuess.setText(lblWordToGuess.getText() + tempWord.charAt(i));
+			} else {
+				lblWordToGuess.setText(lblWordToGuess.getText() + " ");
+			}
+			lblWordToGuess.setText(lblWordToGuess.getText() + " ");
+		}
+	}
+
+	private void setupNewGame() {
+		clearAll();
+		scoreboard = new Scoreboard();
+		game = new HangmanGame();
+		this.setTitle("Hangman - Game " + (game.getTotalWords() - game.getNumWords()) + "/" + game.getTotalWords());
 		lblLives.setText("Lives: " + (6 - game.getNumErrors()));
 		tempWord = game.getWordToGuess();
 		for (int i = 0; i < tempWord.length(); i++) {
@@ -233,12 +285,20 @@ public class HangmanFrame extends JFrame implements ActionListener {
 				if(game.hasLost()) {
 					JOptionPane.showMessageDialog(new JPanel(), "You lose. Word was: " + tempWord);
 					scoreboard.gamePlayed(game.getPlayer().getUsername(), false);
-					setupNewGame(game.getPlayer().getUsername());
+					if (game.hasMoreWords()) {
+						JOptionPane.showMessageDialog(new JPanel(), "There are no words left.");
+						System.exit(0);
+					}
+					setupNewGame();
 				}
 				if(game.hasWon()) {
 					JOptionPane.showMessageDialog(new JPanel(), "You win");
 					scoreboard.gamePlayed(game.getPlayer().getUsername(), true);
-					setupNewGame(game.getPlayer().getUsername());
+					if (game.hasMoreWords()) {
+						JOptionPane.showMessageDialog(new JPanel(), "There are no words left.");
+						System.exit(0);
+					}
+					setupNewGame();
 				}
 				if (!game.canGetHint() || game.getNumberOfLetters() - 1 == game.getNumberOfGuessedLetters()) {
 					btnHint.setEnabled(false);

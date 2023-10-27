@@ -13,6 +13,7 @@ public class Dictionary {
   private static final int MIN_GUESSABLE_CHARS = 4;
   private SinglyLinkedList<String> words;
   private int numWords;
+  private int totalWords;
 
   public Dictionary() {
     words = new SinglyLinkedList<>();
@@ -24,16 +25,9 @@ public class Dictionary {
     int randomWordNum = (int) (Math.random() * numWords);
     String randomWord = words.getElementAt(randomWordNum);
     words.remove(randomWordNum);
+    numWords--;
     return randomWord;
   } // getWord()
-
-  public String getAllWords() {
-    StringBuilder allWords = new StringBuilder();
-    for (int i = 0; i < numWords; i++) {
-      allWords.append(words.getElementAt(i)).append("\n");
-    }
-    return allWords.toString();
-  } // getAllWords()
 
   private void readFile() {
     boolean flag = true;
@@ -63,6 +57,7 @@ public class Dictionary {
            }
          }
       }
+      totalWords = numWords;
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
@@ -71,5 +66,9 @@ public class Dictionary {
   public int getNumWords() {
     return numWords;
   } // getNumWords()
+
+  public int getTotalWords() {
+    return totalWords;
+  } // getTotalWords()
 
 }

@@ -8,8 +8,8 @@ public class HangmanGame {
   private SinglyLinkedList<Character> guessedLetters;
   private int wordLength;
   private int numErrors;
-  private Dictionary dictionary;
-  private Player player;
+  private static Dictionary dictionary;
+  private static Player player;
 
   public HangmanGame(Player user) {
     dictionary = new Dictionary();
@@ -28,9 +28,36 @@ public class HangmanGame {
     System.out.println();
   } // HangmanGame(Player)
 
+  public HangmanGame() {
+    numErrors = 0;
+    wordToGuess = new SinglyLinkedList<>();
+    guessedLetters = new SinglyLinkedList<>();
+    String tempWord = dictionary.getRandomWord();
+    for (int i = tempWord.length() - 1; i >= 0; i--) {
+      wordToGuess.add(tempWord.charAt(i));
+    }
+    wordLength = wordToGuess.getLength();
+    for (int i = 0; i < wordLength; i++) {
+      System.out.print(wordToGuess.getElementAt(i));
+    }
+    System.out.println();
+  } // HangmanGame(Player)
+
   public Player getPlayer() {
     return player;
   } // getPlayer()
+
+  public boolean hasMoreWords() {
+    return dictionary.getNumWords() < 1;
+  } // hasMoreWords()
+
+  public int getNumWords() {
+    return dictionary.getNumWords();
+  } // hasMoreWords()
+
+  public int getTotalWords() {
+    return dictionary.getTotalWords();
+  } // hasMoreWords()
 
   public int getNumErrors() {
     return numErrors;
