@@ -22,7 +22,7 @@ public class RulesFrame extends JFrame {
 	 */
 	public RulesFrame() {
 		setTitle("Rules");
-		setBounds(100, 100, 650, 660);
+		setBounds(100, 100, 600, 400);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -38,7 +38,7 @@ public class RulesFrame extends JFrame {
 		areaDisplay.setFont(new Font("Monospaced", Font.PLAIN, 16));
 		areaDisplay.setWrapStyleWord(true);
 		areaDisplay.setText(
-				"Object: One player thinks of a word and the other tries to guess it by\nguessing letters. Each incorrect guess brings you closer to being \"hanged.\"\nThis game helps to sharpen children’s spelling and word-decoding skills.\n\nDirections: Decide who is going first. Start the game by having this person\nchoose a word or phrase in their mind. (Choose a word from the book just\nread, and for quick reference to the word, use a bookmark to keep track of\nthe page it is located on.)\n\nPlace one dash on the bottom of the game board for each letter of the word\nor words chosen. Leave a space between words.\n\nIf the word is dog, draw three spaces, like this: __ __ __.\n\nHave the other player guess one letter at a time - or he or she can use a\nturn to guess the entire word or words.\n\nFill in the letter everywhere it appears on the appropriate dash (or dashes)\neach time the person guesses correctly. Circle the letter on the alphabet if\nis guessed correctly. Add one body part to the drawing each time the letter\nchosen is not in the word. Begin by drawing a head attached to the short\nvertical line (the \"noose\"). Add eyes, ears, nose, hair, body, legs, and arms.\nPut an X through the letter that was guessed and not correct. You may also\nwish to make your drawings very elaborate - one ear at a time, a neck, and\na belly button - so that children will have a lot of guesses before losing.\nIf the drawing of the person is completed before the word or words are\nguessed, the guessing player loses. If the player figures out the word or\nwords first, he or she wins.");
+				"The game randomly selects a word and the\nplayer tries to guess it by guessing letters. Each\nincorrect guess brings you closer to being \"hanged\".\n\nIf the word is dog, the spaces are drawn\nlike this: _ _ _.\n\nThe player has to guess one letter at a time. The letter\nis filled in everywhere it appears on the appropriate\ndash (or dashes) each time the person guesses\ncorrectly. One body part is added to the drawing each\ntime the letter chosen is not in the word. If the\ndrawing of the person is completed before the word\nis guessed, the player loses. If the player figures out\nthe word first, they win.");
 		areaDisplay.setEditable(false);
 		sl_contentPane.putConstraint(SpringLayout.WEST, areaDisplay, 10,
 				SpringLayout.WEST, contentPane);

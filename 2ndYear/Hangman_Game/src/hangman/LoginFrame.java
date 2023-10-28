@@ -1,27 +1,30 @@
 package hangman;
 
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import javax.swing.SpringLayout;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JComboBox;
+import javax.swing.*;
+import javax.imageio.ImageIO;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.awt.Color;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 
 public class LoginFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField fldUsername;
+	private BufferedImage originalImage;
+	private JLabel lblHangmanImg;
+	private JLabel lblTitle;
 
 	/**
 	 * Create the frame.
 	 */
 	public LoginFrame() {
+		getContentPane().setBackground(Color.WHITE);
 		setTitle("Login");
 		setBounds(100, 100, 900, 600);
 		setResizable(false);
@@ -29,6 +32,21 @@ public class LoginFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		SpringLayout springLayout = new SpringLayout();
 		getContentPane().setLayout(springLayout);
+		this.addKeyListener(new KeyListener() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int keyCode = e.getKeyCode();
+				if (KeyEvent.getKeyText(keyCode).equalsIgnoreCase("i")) {
+					updateTitle("Full");
+				}
+			}
+			@Override
+			public void keyTyped(KeyEvent e) {}
+			@Override
+			public void keyReleased(KeyEvent e) {}
+		});
+		setFocusable(true);
+    requestFocusInWindow();
 		
 		JButton btnExit = new JButton("Exit");
 		btnExit.setFont(new Font("Monospaced", Font.PLAIN, 13));
@@ -55,28 +73,111 @@ public class LoginFrame extends JFrame {
 		getContentPane().add(btnStart);
 		btnStart.addActionListener(e -> btnStart());
 		
-		fldUsername = new JTextField();
-		fldUsername.setFont(new Font("Monospaced", Font.PLAIN, 13));
-		springLayout.putConstraint(SpringLayout.NORTH, fldUsername, 319, SpringLayout.NORTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, fldUsername, -516, SpringLayout.EAST, getContentPane());
-		getContentPane().add(fldUsername);
-		fldUsername.setColumns(10);
+		JComboBox cmbxSavedPlayers = new JComboBox();
+		springLayout.putConstraint(SpringLayout.EAST, cmbxSavedPlayers, -109, SpringLayout.EAST, getContentPane());
+		cmbxSavedPlayers.setModel(new DefaultComboBoxModel(new String[] {"Players"}));
+		cmbxSavedPlayers.setForeground(new Color(238, 238, 238));
+		cmbxSavedPlayers.setFont(new Font("Monospaced", Font.PLAIN, 13));
+		getContentPane().add(cmbxSavedPlayers);
+		
+		lblHangmanImg = new JLabel("");
+		lblHangmanImg.setSize(200, 200);
+		springLayout.putConstraint(SpringLayout.NORTH, lblHangmanImg, 50, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, lblHangmanImg, 50, SpringLayout.WEST, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, lblHangmanImg, 250, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, lblHangmanImg, -650, SpringLayout.EAST, getContentPane());
+		lblHangmanImg.setHorizontalAlignment(SwingConstants.CENTER);
+		updateHangman();
+		getContentPane().add(lblHangmanImg);
+		
+		JLabel lblNewPlayer = new JLabel("New Player");
+		springLayout.putConstraint(SpringLayout.WEST, lblNewPlayer, 100, SpringLayout.WEST, getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, lblNewPlayer, -536, SpringLayout.EAST, getContentPane());
+		lblNewPlayer.setHorizontalAlignment(SwingConstants.CENTER);
+		getContentPane().add(lblNewPlayer);
+		
+		JPanel newPlayerPanel = new JPanel();
+		springLayout.putConstraint(SpringLayout.NORTH, cmbxSavedPlayers, 0, SpringLayout.NORTH, newPlayerPanel);
+		springLayout.putConstraint(SpringLayout.WEST, cmbxSavedPlayers, 180, SpringLayout.EAST, newPlayerPanel);
+		springLayout.putConstraint(SpringLayout.SOUTH, cmbxSavedPlayers, 0, SpringLayout.SOUTH, newPlayerPanel);
+		springLayout.putConstraint(SpringLayout.NORTH, newPlayerPanel, 319, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, lblNewPlayer, -6, SpringLayout.NORTH, newPlayerPanel);
+		springLayout.putConstraint(SpringLayout.WEST, newPlayerPanel, 0, SpringLayout.WEST, lblNewPlayer);
+		springLayout.putConstraint(SpringLayout.EAST, newPlayerPanel, 0, SpringLayout.EAST, lblNewPlayer);
+		newPlayerPanel.setBorder(null);
+		newPlayerPanel.setBackground(Color.WHITE);
+		getContentPane().add(newPlayerPanel);
 		
 		JLabel lblUsername = new JLabel("Username:");
+		newPlayerPanel.add(lblUsername);
 		lblUsername.setFont(new Font("Monospaced", Font.PLAIN, 13));
-		springLayout.putConstraint(SpringLayout.WEST, fldUsername, 6, SpringLayout.EAST, lblUsername);
 		springLayout.putConstraint(SpringLayout.EAST, lblUsername, -680, SpringLayout.EAST, getContentPane());
 		springLayout.putConstraint(SpringLayout.NORTH, lblUsername, 324, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, lblUsername, -232, SpringLayout.SOUTH, getContentPane());
-		getContentPane().add(lblUsername);
+		springLayout.putConstraint(SpringLayout.WEST, lblUsername, 6, SpringLayout.EAST, getContentPane());
 		
-		JComboBox cmbxSavedPlayers = new JComboBox();
-		cmbxSavedPlayers.setFont(new Font("Monospaced", Font.PLAIN, 13));
-		springLayout.putConstraint(SpringLayout.NORTH, cmbxSavedPlayers, 319, SpringLayout.NORTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, cmbxSavedPlayers, 588, SpringLayout.WEST, getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, cmbxSavedPlayers, 28, SpringLayout.NORTH, fldUsername);
-		springLayout.putConstraint(SpringLayout.EAST, cmbxSavedPlayers, -154, SpringLayout.EAST, getContentPane());
-		getContentPane().add(cmbxSavedPlayers);
+		fldUsername = new JTextField();
+		newPlayerPanel.add(fldUsername);
+		fldUsername.setBackground(new Color(238, 238, 238));
+		fldUsername.setFont(new Font("Monospaced", Font.PLAIN, 13));
+		springLayout.putConstraint(SpringLayout.NORTH, fldUsername, 319, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, fldUsername, -516, SpringLayout.EAST, getContentPane());
+		fldUsername.setColumns(20);
+		
+		JLabel lblSavedPlayers = new JLabel("Saved Players");
+		springLayout.putConstraint(SpringLayout.WEST, lblSavedPlayers, 0, SpringLayout.WEST, cmbxSavedPlayers);
+		springLayout.putConstraint(SpringLayout.SOUTH, lblSavedPlayers, -6, SpringLayout.NORTH, cmbxSavedPlayers);
+		springLayout.putConstraint(SpringLayout.EAST, lblSavedPlayers, 0, SpringLayout.EAST, cmbxSavedPlayers);
+		lblSavedPlayers.setHorizontalAlignment(SwingConstants.CENTER);
+		getContentPane().add(lblSavedPlayers);
+		
+		lblTitle = new JLabel("");
+		lblTitle.setSize(300, 60);
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		springLayout.putConstraint(SpringLayout.NORTH, lblTitle, 60, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, lblTitle, 300, SpringLayout.WEST, getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, lblTitle, 120, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, lblTitle, -300, SpringLayout.EAST, getContentPane());
+		updateTitle("");
+		getContentPane().add(lblTitle);
+	}
+	
+	private void updateTitle(String title) {
+		BufferedImage originalImage;
+		try {
+			originalImage = ImageIO.read(new File("./Images/" + title + "Title.png"));
+			int labelWidth = lblTitle.getWidth();
+	    int labelHeight = lblTitle.getHeight();
+	    double scaleFactor = Math.min((double) labelWidth / originalImage.getWidth(), (double) labelHeight / originalImage.getHeight());
+	    int scaledWidth = (int) (originalImage.getWidth() * scaleFactor);
+	    int scaledHeight = (int) (originalImage.getHeight() * scaleFactor);
+	    Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+	    ImageIcon hangmanImg = new ImageIcon(scaledImage);
+	    lblTitle.setIcon(hangmanImg);
+		}
+		catch (IOException e1) {
+			JOptionPane.showMessageDialog(new JPanel(), "Hangman image could not be found.");
+			lblTitle.setIcon(null);
+		}
+	}
+	
+	private void updateHangman() {
+		BufferedImage originalImage;
+		try {
+			originalImage = ImageIO.read(new File("./Images/1Lives.png"));
+			int labelWidth = lblHangmanImg.getWidth();
+	    int labelHeight = lblHangmanImg.getHeight();
+	    double scaleFactor = Math.min((double) labelWidth / originalImage.getWidth(), (double) labelHeight / originalImage.getHeight());
+	    int scaledWidth = (int) (originalImage.getWidth() * scaleFactor);
+	    int scaledHeight = (int) (originalImage.getHeight() * scaleFactor);
+	    Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+	    ImageIcon hangmanImg = new ImageIcon(scaledImage);
+			lblHangmanImg.setIcon(hangmanImg);
+		}
+		catch (IOException e1) {
+			JOptionPane.showMessageDialog(new JPanel(), "Hangman image could not be found.");
+			lblHangmanImg.setIcon(null);
+		}
 	}
 	
 	private void btnExit() {
@@ -95,5 +196,4 @@ public class LoginFrame extends JFrame {
 			JOptionPane.showMessageDialog(new JPanel(), "Please enter a username.");
 		}
 	} // btnStart()
-	
 }

@@ -21,6 +21,8 @@ public class HangmanFrame extends JFrame implements ActionListener {
 	private JLabel lblUsername;
 	private JButton btnHint;
 	private JLabel lblLives;
+	private JLabel lblHangmanImg;
+	private JLabel lblArrowImg;
 
 	private HangmanGame game;
 	private Scoreboard scoreboard;
@@ -72,16 +74,15 @@ public class HangmanFrame extends JFrame implements ActionListener {
 		springLayout.putConstraint(SpringLayout.EAST, lblWordToGuess, -274, SpringLayout.EAST, getContentPane());
 		getContentPane().add(lblWordToGuess);
 		
-		JLabel lblWrongGuesses = new JLabel("Wrong Guesses:");
+		JLabel lblWrongGuesses = new JLabel("Wrong Guesses");
 		lblWrongGuesses.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		springLayout.putConstraint(SpringLayout.NORTH, lblWrongGuesses, 84, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, lblWrongGuesses, -241, SpringLayout.EAST, getContentPane());
 		getContentPane().add(lblWrongGuesses);
 		
 		lblWrongGuessesList = new JLabel("");
+		springLayout.putConstraint(SpringLayout.NORTH, lblWrongGuessesList, 25, SpringLayout.SOUTH, lblWrongGuesses);
 		lblWrongGuessesList.setFont(new Font("Monospaced", Font.PLAIN, 13));
-		springLayout.putConstraint(SpringLayout.NORTH, lblWrongGuessesList, 6, SpringLayout.SOUTH, lblWrongGuesses);
-		springLayout.putConstraint(SpringLayout.WEST, lblWrongGuessesList, 0, SpringLayout.WEST, lblWrongGuesses);
 		getContentPane().add(lblWrongGuessesList);
 		
 		lblUsername = new JLabel("");
@@ -108,6 +109,7 @@ public class HangmanFrame extends JFrame implements ActionListener {
 			char hint = game.getHint();
 			for (JButton btnLetter : btnLetters) {
 				if (btnLetter.getText().charAt(0) == hint) {
+					updateHangman();
 					btnLetter.doClick();
 				}
 			}
@@ -127,30 +129,24 @@ public class HangmanFrame extends JFrame implements ActionListener {
 		lblLives.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		getContentPane().add(lblLives);
 		
-		JLabel lblHangmanImg = new JLabel();
+		lblHangmanImg = new JLabel();
 		lblHangmanImg.setSize(250, 400);
 		springLayout.putConstraint(SpringLayout.NORTH, lblHangmanImg, 100, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, lblHangmanImg, 50, SpringLayout.WEST, getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, lblHangmanImg, -100, SpringLayout.SOUTH, letterPanel);
 		springLayout.putConstraint(SpringLayout.EAST, lblHangmanImg, -600, SpringLayout.EAST, getContentPane());
-		
-		BufferedImage originalImage;
-		try {
-			originalImage = ImageIO.read(new File("./Images/6Lives.png"));
-			int labelWidth = lblHangmanImg.getWidth();
-	    int labelHeight = lblHangmanImg.getHeight();
-	    double scaleFactor = Math.min((double) labelWidth / originalImage.getWidth(), (double) labelHeight / originalImage.getHeight());
-	    int scaledWidth = (int) (originalImage.getWidth() * scaleFactor);
-	    int scaledHeight = (int) (originalImage.getHeight() * scaleFactor);
-	    Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
-	    ImageIcon hangmanImg = new ImageIcon(scaledImage);
-			lblHangmanImg.setIcon(hangmanImg);
-		}
-		catch (IOException e1) {
-			JOptionPane.showMessageDialog(new JPanel(), "Hangman image could not be found.");
-			lblHangmanImg.setIcon(null);
-		}
 		getContentPane().add(lblHangmanImg);
+		
+		lblArrowImg = new JLabel("");
+		springLayout.putConstraint(SpringLayout.WEST, lblWrongGuessesList, 5, SpringLayout.EAST, lblArrowImg);
+		springLayout.putConstraint(SpringLayout.SOUTH, lblWrongGuessesList, -4, SpringLayout.SOUTH, lblArrowImg);
+		springLayout.putConstraint(SpringLayout.WEST, lblArrowImg, 255, SpringLayout.EAST, lblHangmanImg);
+		springLayout.putConstraint(SpringLayout.EAST, lblArrowImg, -64, SpringLayout.EAST, lblWrongGuesses);
+		springLayout.putConstraint(SpringLayout.NORTH, lblArrowImg, 6, SpringLayout.SOUTH, lblWrongGuesses);
+		springLayout.putConstraint(SpringLayout.SOUTH, lblArrowImg, 46, SpringLayout.SOUTH, lblWrongGuesses);
+		lblArrowImg.setSize(40, 40);
+		setArrow();
+		getContentPane().add(lblArrowImg);
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setFont(new Font("Monospaced", Font.PLAIN, 14));
@@ -163,7 +159,7 @@ public class HangmanFrame extends JFrame implements ActionListener {
 		JMenuItem mntmNewGame = new JMenuItem("New Game");
 		mntmNewGame.setFont(new Font("Monospaced", Font.PLAIN, 14));
 		mnFile.add(mntmNewGame);
-		mntmNewGame.addActionListener(e -> setupNewGame());
+		mntmNewGame.addActionListener(e -> setupNewGame(false));
 		
 		JMenuItem mntmScoreboard = new JMenuItem("Scoreboard");
 		mntmScoreboard.setFont(new Font("Monospaced", Font.PLAIN, 14));
@@ -187,11 +183,50 @@ public class HangmanFrame extends JFrame implements ActionListener {
 		setupNewGame(username);
 	}
 	
+	private void updateHangman() {
+		BufferedImage originalImage;
+		try {
+			originalImage = ImageIO.read(new File("./Images/" + (6 - game.getNumErrors()) + "Lives.png"));
+			int labelWidth = lblHangmanImg.getWidth();
+	    int labelHeight = lblHangmanImg.getHeight();
+	    double scaleFactor = Math.min((double) labelWidth / originalImage.getWidth(), (double) labelHeight / originalImage.getHeight());
+	    int scaledWidth = (int) (originalImage.getWidth() * scaleFactor);
+	    int scaledHeight = (int) (originalImage.getHeight() * scaleFactor);
+	    Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+	    ImageIcon hangmanImg = new ImageIcon(scaledImage);
+			lblHangmanImg.setIcon(hangmanImg);
+		}
+		catch (IOException e1) {
+			JOptionPane.showMessageDialog(new JPanel(), "Hangman image could not be found.");
+			lblHangmanImg.setIcon(null);
+		}
+	}
+	
+	private void setArrow() {
+		BufferedImage originalImage;
+		try {
+			originalImage = ImageIO.read(new File("./Images/Arrow.png"));
+			int labelWidth = lblArrowImg.getWidth();
+	    int labelHeight = lblArrowImg.getHeight();
+	    double scaleFactor = Math.min((double) labelWidth / originalImage.getWidth(), (double) labelHeight / originalImage.getHeight());
+	    int scaledWidth = (int) (originalImage.getWidth() * scaleFactor);
+	    int scaledHeight = (int) (originalImage.getHeight() * scaleFactor);
+	    Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+	    ImageIcon hangmanImg = new ImageIcon(scaledImage);
+	    lblArrowImg.setIcon(hangmanImg);
+		}
+		catch (IOException e1) {
+			JOptionPane.showMessageDialog(new JPanel(), "Hangman image could not be found.");
+			lblArrowImg.setIcon(null);
+		}
+	}
+	
 	private void setupNewGame(String username) {
 		clearAll();
 		scoreboard = new Scoreboard();
 		game = new HangmanGame(scoreboard.getPlayer(username));
 		this.setTitle("Hangman - Game " + (game.getTotalWords() - game.getNumWords()) + "/" + game.getTotalWords());
+		updateHangman();
 		lblUsername.setText("Username: " + username);
 		lblLives.setText("Lives: " + (6 - game.getNumErrors()));
 		tempWord = game.getWordToGuess();
@@ -207,11 +242,13 @@ public class HangmanFrame extends JFrame implements ActionListener {
 		}
 	}
 
-	private void setupNewGame() {
+	private void setupNewGame(boolean hasWon) {
+		scoreboard.gamePlayed(game.getPlayer().getUsername(), hasWon);
 		clearAll();
 		scoreboard = new Scoreboard();
 		game = new HangmanGame();
 		this.setTitle("Hangman - Game " + (game.getTotalWords() - game.getNumWords()) + "/" + game.getTotalWords());
+		updateHangman();
 		lblLives.setText("Lives: " + (6 - game.getNumErrors()));
 		tempWord = game.getWordToGuess();
 		for (int i = 0; i < tempWord.length(); i++) {
@@ -227,8 +264,8 @@ public class HangmanFrame extends JFrame implements ActionListener {
 	}
 
 	private void clearAll() {
-		lblWrongGuessesList.setText("");
 		lblWordToGuess.setText("");
+		lblWrongGuessesList.setText("");
     for (JButton btnLetter : btnLetters) {
       btnLetter.setUI(new javax.swing.plaf.basic.BasicButtonUI() {
         @Override
@@ -270,6 +307,7 @@ public class HangmanFrame extends JFrame implements ActionListener {
 						}
 					}
         } else {
+        	updateHangman();
 					lblWrongGuessesList.setText(lblWrongGuessesList.getText() + letter + " ");
 					btnLetter.setUI(new javax.swing.plaf.basic.BasicButtonUI() {
 						@Override
@@ -284,21 +322,19 @@ public class HangmanFrame extends JFrame implements ActionListener {
         }
 				if(game.hasLost()) {
 					JOptionPane.showMessageDialog(new JPanel(), "You lose. Word was: " + tempWord);
-					scoreboard.gamePlayed(game.getPlayer().getUsername(), false);
 					if (game.hasMoreWords()) {
 						JOptionPane.showMessageDialog(new JPanel(), "There are no words left.");
 						System.exit(0);
 					}
-					setupNewGame();
+					setupNewGame(false);
 				}
 				if(game.hasWon()) {
 					JOptionPane.showMessageDialog(new JPanel(), "You win");
-					scoreboard.gamePlayed(game.getPlayer().getUsername(), true);
 					if (game.hasMoreWords()) {
 						JOptionPane.showMessageDialog(new JPanel(), "There are no words left.");
 						System.exit(0);
 					}
-					setupNewGame();
+					setupNewGame(false);
 				}
 				if (!game.canGetHint() || game.getNumberOfLetters() - 1 == game.getNumberOfGuessedLetters()) {
 					btnHint.setEnabled(false);
