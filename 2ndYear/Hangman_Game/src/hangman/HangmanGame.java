@@ -2,141 +2,167 @@ package hangman;
 
 import linked_data_structures.*;
 
-public class HangmanGame {
+import java.io.*;
 
-  private static SinglyLinkedList<Character> wordToGuess;
-  private SinglyLinkedList<Character> guessedLetters;
-  private int wordLength;
-  private int numErrors;
-  private static Dictionary dictionary;
-  private static Player player;
+public class HangmanGame implements Serializable {
 
-  public HangmanGame(Player user) {
-    dictionary = new Dictionary();
-    numErrors = 0;
-    player = user;
-    wordToGuess = new SinglyLinkedList<>();
-    guessedLetters = new SinglyLinkedList<>();
-    String tempWord = dictionary.getRandomWord();
-    for (int i = tempWord.length() - 1; i >= 0; i--) {
-      wordToGuess.add(tempWord.charAt(i));
-    }
-    wordLength = wordToGuess.getLength();
-    for (int i = 0; i < wordLength; i++) {
-      System.out.print(wordToGuess.getElementAt(i));
-    }
-    System.out.println();
-  } // HangmanGame(Player)
+	private SinglyLinkedList<Character> wordToGuess;
+	private SinglyLinkedList<Character> correctlyGuessedLetters;
+	private SinglyLinkedList<Character> wronglyGuessedLetters;
+	private int wordLength;
+	private int numErrors;
+	private Dictionary dictionary;
+	private Player player;
 
-  public HangmanGame() {
-    numErrors = 0;
-    wordToGuess = new SinglyLinkedList<>();
-    guessedLetters = new SinglyLinkedList<>();
-    String tempWord = dictionary.getRandomWord();
-    for (int i = tempWord.length() - 1; i >= 0; i--) {
-      wordToGuess.add(tempWord.charAt(i));
-    }
-    wordLength = wordToGuess.getLength();
-    for (int i = 0; i < wordLength; i++) {
-      System.out.print(wordToGuess.getElementAt(i));
-    }
-    System.out.println();
-  } // HangmanGame(Player)
+	public HangmanGame(Player user) {
+		dictionary = new Dictionary();
+		numErrors = 0;
+		player = user;
+		wordToGuess = new SinglyLinkedList<>();
+		correctlyGuessedLetters = new SinglyLinkedList<>();
+		wronglyGuessedLetters = new SinglyLinkedList<>();
+		String tempWord = dictionary.getRandomWord();
+		for (int i = tempWord.length() - 1; i >= 0; i--) {
+			wordToGuess.add(tempWord.charAt(i));
+		}
+		wordLength = wordToGuess.getLength();
+		player.setGame(this);
+		for (int i = 0; i < wordLength; i++) {
+			System.out.print(wordToGuess.getElementAt(i));
+		}
+		System.out.println();
+	} // HangmanGame(Player)
 
-  public Player getPlayer() {
-    return player;
-  } // getPlayer()
+	public HangmanGame(Player gamePlayer, Dictionary dict) {
+		dictionary = dict;
+		numErrors = 0;
+		player = gamePlayer;
+		wordToGuess = new SinglyLinkedList<>();
+		correctlyGuessedLetters = new SinglyLinkedList<>();
+		wronglyGuessedLetters = new SinglyLinkedList<>();
+		String tempWord = dictionary.getRandomWord();
+		for (int i = tempWord.length() - 1; i >= 0; i--) {
+			wordToGuess.add(tempWord.charAt(i));
+		}
+		wordLength = wordToGuess.getLength();
+		player.setGame(this);
+		for (int i = 0; i < wordLength; i++) {
+			System.out.print(wordToGuess.getElementAt(i));
+		}
+		System.out.println();
+	} // HangmanGame(Player)
 
-  public boolean hasMoreWords() {
-    return dictionary.getNumWords() < 1;
-  } // hasMoreWords()
+	public Dictionary getDictionary() {
+		return dictionary;
+	} // getDictionary()
 
-  public int getNumWords() {
-    return dictionary.getNumWords();
-  } // hasMoreWords()
+	public Player getPlayer() {
+		return player;
+	} // getPlayer()
 
-  public int getTotalWords() {
-    return dictionary.getTotalWords();
-  } // hasMoreWords()
+	public boolean hasMoreWords() {
+		return dictionary.getNumWords() < 1;
+	} // hasMoreWords()
 
-  public int getNumErrors() {
-    return numErrors;
-  } // getNumErrors()
+	public int getNumWords() {
+		return dictionary.getNumWords();
+	} // hasMoreWords()
 
-  public boolean canGetHint() {
-    return numErrors < 5;
-  } // canGetHint()
+	public int getTotalWords() {
+		return dictionary.getTotalWords();
+	} // hasMoreWords()
 
-  public char getHint() {
-    int rand = (int) (Math.random() * wordToGuess.getLength());
-    if(Character.isLetter(wordToGuess.getElementAt(rand))) {
-      for (int i = 0; i < guessedLetters.getLength(); i++) {
-        if (guessedLetters.getElementAt(i) == wordToGuess.getElementAt(rand)) {
-          return getHint();
-        }
-      }
-      numErrors++;
-      return wordToGuess.getElementAt(rand);
-    }
-    else {
-      return getHint();
-    }
-  } // getHint()
+	public int getNumErrors() {
+		return numErrors;
+	} // getNumErrors()
 
-  public int getNumberOfLetters() {
-    int numLetters = wordLength;
-    for (int i = 0; i < wordToGuess.getLength(); i++) {
-      if (!Character.isLetter(wordToGuess.getElementAt(i))) {
-        numLetters--;
-      }
-    }
-    return numLetters;
-  } // getWordToGuess()
+	public boolean canGetHint() {
+		return numErrors < 5;
+	} // canGetHint()
 
-  public int getNumberOfGuessedLetters() {
-    return guessedLetters.getLength();
-  } // getNumberOfGuessedLetters()
+	public char getHint() {
+		int rand = (int) (Math.random() * wordToGuess.getLength());
+		if (Character.isLetter(wordToGuess.getElementAt(rand))) {
+			for (int i = 0; i < correctlyGuessedLetters.getLength(); i++) {
+				if (correctlyGuessedLetters.getElementAt(i) == wordToGuess.getElementAt(rand)) {
+					return getHint();
+				}
+			}
+			numErrors++;
+			return wordToGuess.getElementAt(rand);
+		}
+		else {
+			return getHint();
+		}
+	} // getHint()
 
-  public String getWordToGuess() {
-    StringBuilder tempWord = new StringBuilder();
-    for (int i = 0; i < wordLength; i++) {
-      tempWord.append(wordToGuess.getElementAt(i));
-    }
-    return tempWord.toString();
-  } // getWordToGuess()
+	public int getNumberOfLetters() {
+		int numLetters = wordLength;
+		for (int i = 0; i < wordToGuess.getLength(); i++) {
+			if (!Character.isLetter(wordToGuess.getElementAt(i))) {
+				numLetters--;
+			}
+		}
+		return numLetters;
+	} // getNumberOfLetters()
 
-  public void saveGame() {
-    // save game to file by serializing this object with the player object
-  } // saveGame()
+	public SinglyLinkedList<Character> getCorrectlyGuessedLettersList() {
+		return correctlyGuessedLetters;
+	} // getGuessedLetters()
 
-  public boolean checkInput(char input) {
-    boolean flag = false;
-    for (int i = 0; i < wordToGuess.getLength(); i++) {
-      if(wordToGuess.getElementAt(i) == input) {
-        guessedLetters.add(input);
-        flag = true;
-      }
-    }
-    if (!flag) {
-      numErrors++;
-      return false;
-    }
-    return true;
-  } // checkInput(char)
+	public void resetCorrectlyGuessedLetters() {
+		correctlyGuessedLetters = new SinglyLinkedList<>();
+	} // setCorrectlyGuessedLetters()
 
-  public boolean hasLost() {
-    return numErrors >= 6;
-  } // checkLoss()
+	public SinglyLinkedList<Character> getWronglyGuessedLettersList() {
+		return wronglyGuessedLetters;
+	} // getGuessedLetters()
 
-  public boolean hasWon() {
-    String tempWord = getWordToGuess();
-    int tempLength = 0;
-    for (int i = 0; i < wordLength; i++) {
-      if(Character.isLetter(tempWord.charAt(i))) {
-        tempLength++;
-      }
-    }
-    return guessedLetters.getLength() == tempLength;
-  } // checkWin()
+	public int getNumberOfGuessedLetters() {
+		return correctlyGuessedLetters.getLength();
+	} // getNumberOfGuessedLetters()
+
+	public String getWordToGuess() {
+		StringBuilder tempWord = new StringBuilder();
+		for (int i = 0; i < wordLength; i++) {
+			tempWord.append(wordToGuess.getElementAt(i));
+		}
+		return tempWord.toString();
+	} // getWordToGuess()
+
+	public SinglyLinkedList<Character> getWordToGuessList() {
+		return wordToGuess;
+	} // getWordToGuessList()
+
+	public boolean checkInput(char input) {
+		boolean flag = false;
+		for (int i = 0; i < wordToGuess.getLength(); i++) {
+			if (wordToGuess.getElementAt(i) == input) {
+				correctlyGuessedLetters.add(input);
+				flag = true;
+			}
+		}
+		if (!flag) {
+			wronglyGuessedLetters.add(input);
+			numErrors++;
+			return false;
+		}
+		return true;
+	} // checkInput(char)
+
+	public boolean hasLost() {
+		return numErrors >= 6;
+	} // checkLoss()
+
+	public boolean hasWon() {
+		String tempWord = getWordToGuess();
+		int tempLength = 0;
+		for (int i = 0; i < wordLength; i++) {
+			if (Character.isLetter(tempWord.charAt(i))) {
+				tempLength++;
+			}
+		}
+		return correctlyGuessedLetters.getLength() == tempLength;
+	} // checkWin()
 
 } // class HangmanGame

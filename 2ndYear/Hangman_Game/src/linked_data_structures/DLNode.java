@@ -1,9 +1,12 @@
 package linked_data_structures;
+
+import java.io.Serializable;
+
 /**
  *   The structure of a node in the simple doubly linked
  *   list introduced in the chapter on Fundamental Data Structures.
  */
-public class DLNode<E> extends SLNode<E> {
+public class DLNode<E> extends SLNode<E> implements Serializable {
   private DLNode<E> predecessor; // link to the predecessor
 
   /**

@@ -62,6 +62,5 @@ public class ScoreboardFrame extends JFrame {
 		for (int i = 0; i < players.getLength(); i++) {
 			areaDisplay.append(String.format("%-23s%10s%20s\n", players.getElementAt(i).getUsername(), players.getElementAt(i).getNumGamesWon(), players.getElementAt(i).getNumGamesPlayed()));
 		}
-
 	}
 }

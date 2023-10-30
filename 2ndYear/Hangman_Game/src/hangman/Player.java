@@ -1,53 +1,67 @@
 package hangman;
 
-public class Player {
+import java.io.Serializable;
 
-  private String username;
-  private int numGamesPlayed;
-  private int numGamesWon;
+public class Player implements Serializable {
 
-  public Player() {
-    username = "Unknown";
-    numGamesPlayed = 0;
-    numGamesWon = 0;
-  }
+	private String username;
+	private int numGamesPlayed;
+	private int numGamesWon;
 
-  public Player(String name) {
-    username = name;
-    numGamesPlayed = 0;
-    numGamesWon = 0;
-  }
+	HangmanGame playerGame;
 
-  public String getUsername() {
-    return username;
-  } // getUsername()
+	public Player() {
+		username = "Unknown";
+		numGamesPlayed = 0;
+		numGamesWon = 0;
+		playerGame = new HangmanGame(this);
+	}
 
-  public void setUsername(String name) {
-    username = name;
-  } // setUsername(String)
+	public Player(String name) {
+		username = name;
+		numGamesPlayed = 0;
+		numGamesWon = 0;
+		playerGame = new HangmanGame(this);
+	}
 
-  public int getNumGamesPlayed() {
-    return numGamesPlayed;
-  } // getNumGamesPlayed()
+	public String getUsername() {
+		return username;
+	} // getUsername()
 
-  public void setNumGamesPlayed(int num) {
-    numGamesPlayed = num;
-  } // setNumGamesPlayed(int)
+	public void setUsername(String name) {
+		username = name;
+	} // setUsername(String)
 
-  public int getNumGamesWon() {
-    return numGamesWon;
-  } // getNumGamesWon()
+	public int getNumGamesPlayed() {
+		return numGamesPlayed;
+	} // getNumGamesPlayed()
 
-  public void setNumGamesWon(int num) {
-    numGamesWon = num;
-  } // setNumGamesWon(int)
+	public void setNumGamesPlayed(int num) {
+		numGamesPlayed = num;
+	} // setNumGamesPlayed(int)
 
-  public void incrementGamesPlayed() {
-    numGamesPlayed++;
-  } // incrementGamesPlayed()
+	public int getNumGamesWon() {
+		return numGamesWon;
+	} // getNumGamesWon()
 
-  public void incrementGamesWon() {
-    numGamesWon++;
-  } // incrementGamesWon()
+	public void setNumGamesWon(int num) {
+		numGamesWon = num;
+	} // setNumGamesWon(int)
 
+	public void incrementGamesPlayed() {
+		numGamesPlayed++;
+	} // incrementGamesPlayed()
+
+	public void incrementGamesWon() {
+		numGamesWon++;
+	} // incrementGamesWon()
+
+	public HangmanGame setGame(HangmanGame game) {
+		playerGame = game;
+		return playerGame;
+	} // setGame(HangmanGame)
+
+	public HangmanGame getGame() {
+		return playerGame;
+	} // getGame()
 }

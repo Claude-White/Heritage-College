@@ -1,10 +1,12 @@
 package linked_data_structures;
 
+import java.io.Serializable;
+
 /**
  * Description: A simple singly-linked list introduced in the chapter on
  * Fundamental Data Structures.
  */
-public class DoublyLinkedList<E>
+public class DoublyLinkedList<E> implements Serializable
 {
 	private int length; // the number of elements in the linked list
 	protected DLNode<E> head; // access point to the linked list

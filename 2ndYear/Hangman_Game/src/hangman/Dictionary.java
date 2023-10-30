@@ -3,10 +3,11 @@ package hangman;
 import linked_data_structures.*;
 
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.Scanner;
 import java.io.File;
 
-public class Dictionary {
+public class Dictionary implements Serializable {
 
   private static final int MIN_WORD_LENGTH = 5;
   private static final int MAX_WORD_LENGTH = 16;

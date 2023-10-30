@@ -1,9 +1,12 @@
 package linked_data_structures;
+
+import java.io.Serializable;
+
 /**
  *   The structure of a node in the simple singly-linked list
  *   introduced in the chapter on Fundamental Data Structures.
  */
-public class SLNode<E>
+public class SLNode<E> implements Serializable
 {
   private E element; // the data field
   private SLNode<E> successor; // the link to this node's successor

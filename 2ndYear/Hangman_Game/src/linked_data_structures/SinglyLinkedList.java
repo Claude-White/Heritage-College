@@ -1,9 +1,12 @@
 package linked_data_structures;
+
+import java.io.Serializable;
+
 /**
  * A simple singly-linked list introduced in the chapter
  * on Fundamental Data Structures.
  */
-public class SinglyLinkedList<E>
+public class SinglyLinkedList<E> implements Serializable
 {
   /** the number of elements in the list
    */
