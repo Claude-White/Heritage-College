@@ -6,12 +6,11 @@ import linked_data_structures.*;
 
 public class Scoreboard implements Serializable {
 	private static DoublyLinkedList<Player> players = new DoublyLinkedList<>();
-	private static int numPlayers;
 	private String filename = "save_game.ser";
-
-	public Scoreboard() {
-		numPlayers = players.getLength();
-	} // Scoreboard()
+	
+	public int getNumPlayers() {
+		return players.getLength();
+	} // numPlayers()
 
 	public boolean addPlayer(String username) {
 		if (username.isEmpty()) {
@@ -48,7 +47,7 @@ public class Scoreboard implements Serializable {
 
 	public Player getPlayer(String username) {
 		for (int i = 0; i < players.getLength(); i++) {
-			if (players.getElementAt(i).getUsername().equals(username)) {
+			if (players.getElementAt(i).getUsername().equalsIgnoreCase(username)) {
 				return players.getElementAt(i);
 			}
 		}
@@ -73,4 +72,8 @@ public class Scoreboard implements Serializable {
 		System.out.println("Game loaded successfully.");
 		return players;
 	} // loadGames()
+	
+	public void resetPlayerList() {
+		players = new DoublyLinkedList<>();
+	} // resetPlayerList();
 } // Scoreboard class

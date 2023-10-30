@@ -27,10 +27,6 @@ public class HangmanGame implements Serializable {
 		}
 		wordLength = wordToGuess.getLength();
 		player.setGame(this);
-		for (int i = 0; i < wordLength; i++) {
-			System.out.print(wordToGuess.getElementAt(i));
-		}
-		System.out.println();
 	} // HangmanGame(Player)
 
 	public HangmanGame(Player gamePlayer, Dictionary dict) {
@@ -46,10 +42,6 @@ public class HangmanGame implements Serializable {
 		}
 		wordLength = wordToGuess.getLength();
 		player.setGame(this);
-		for (int i = 0; i < wordLength; i++) {
-			System.out.print(wordToGuess.getElementAt(i));
-		}
-		System.out.println();
 	} // HangmanGame(Player)
 
 	public Dictionary getDictionary() {
@@ -75,6 +67,10 @@ public class HangmanGame implements Serializable {
 	public int getNumErrors() {
 		return numErrors;
 	} // getNumErrors()
+	
+	public void setNumErrors(int num) {
+		numErrors = num;
+	}
 
 	public boolean canGetHint() {
 		return numErrors < 5;

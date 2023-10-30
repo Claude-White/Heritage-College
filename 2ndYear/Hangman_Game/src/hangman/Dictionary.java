@@ -29,6 +29,10 @@ public class Dictionary implements Serializable {
     numWords--;
     return randomWord;
   } // getWord()
+  
+  public SinglyLinkedList<String> getWords() {
+  	return words;
+  }
 
   private void readFile() {
     boolean flag = true;
