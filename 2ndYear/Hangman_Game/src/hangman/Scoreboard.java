@@ -17,7 +17,21 @@ public class Scoreboard implements Serializable {
 		if (username.isEmpty()) {
 			return false;
 		}
-		players.add(new Player(username));
+		else {
+			if (players.getLength() == 0) {
+				players.add(new Player(username));
+				return true;
+			}
+
+			int tempPos = 0;
+			while (tempPos < players.getLength()) {
+				if (players.getElementAt(tempPos).getUsername().compareTo(username) > 0) {
+					break;
+				}
+				tempPos++;
+			}
+			players.add(new Player(username), tempPos);
+		}
 		return true;
 	} // addPlayer(Player)
 
@@ -50,8 +64,7 @@ public class Scoreboard implements Serializable {
 		System.out.println("Game saved successfully.");
 	} // saveGame()
 
-	public DoublyLinkedList<Player> loadGames()
-			throws IOException, ClassNotFoundException {
+	public DoublyLinkedList<Player> loadGames() throws IOException, ClassNotFoundException {
 		FileInputStream file = new FileInputStream(filename);
 		ObjectInputStream in = new ObjectInputStream(file);
 		players = (DoublyLinkedList<Player>) in.readObject();
