@@ -28,6 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -71,11 +72,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/hangmanImg"
             android:layout_width="192dp"
             android:layout_height="291dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="40dp"
             app:layout_constraintEnd_toStartOf="@+id/btnHint"
+            app:layout_constraintHorizontal_bias="0.454"
             app:layout_constraintStart_toEndOf="@+id/btnBack"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:srcCompat="@drawable/lives6" />
@@ -89,15 +91,34 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/hangmanImg" />
 
         <TextView
             android:id="@+id/lblWrongGuessesList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@+id/lblWrongGuesses"
             app:layout_constraintTop_toBottomOf="@+id/lblWrongGuesses" />
+
+        <TextView
+            android:id="@+id/lblUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/hangmanImg"
+            app:layout_constraintEnd_toStartOf="@+id/btnHint"
+            app:layout_constraintStart_toEndOf="@+id/btnBack"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+        <TextView
+            android:id="@+id/lblLives"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hangmanImg" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
