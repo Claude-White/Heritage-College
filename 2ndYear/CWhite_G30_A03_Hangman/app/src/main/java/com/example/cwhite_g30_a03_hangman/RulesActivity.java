@@ -28,11 +28,11 @@ public class RulesActivity extends AppCompatActivity {
         TextView txtRules = findViewById(R.id.areaDisplayRules);
         String rules;
         try {
-            File rulesFile = new File(getFilesDir(), "rules.txt");
+            InputStream rulesFile = getAssets().open("rules.txt");
             Scanner readRules = new Scanner(rulesFile);
             while (readRules.hasNextLine()) {
                 rules = readRules.nextLine();
-                txtRules.append(rules);
+                txtRules.append(rules + "\n");
             }
         }
         catch (IOException e) {

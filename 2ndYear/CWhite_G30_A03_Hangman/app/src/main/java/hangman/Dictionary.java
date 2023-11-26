@@ -18,7 +18,7 @@ public class Dictionary implements Serializable {
   private Context context;
 
   private static final int MIN_WORD_LENGTH = 4;
-  private static final int MAX_WORD_LENGTH = 20;
+  private static final int MAX_WORD_LENGTH = 26;
   private static final int MIN_GUESSABLE_CHARS = 3;
   private SinglyLinkedList<String> words;
   private int numWords;

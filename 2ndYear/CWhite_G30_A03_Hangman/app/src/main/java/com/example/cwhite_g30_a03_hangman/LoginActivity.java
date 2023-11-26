@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -48,6 +49,7 @@ public class LoginActivity extends AppCompatActivity implements Serializable {
         ScrollView playersScroll = findViewById(R.id.playersScroll);
         LinearLayout playersGroup = findViewById(R.id.playersGroup);
         EditText fldNewPlayer = findViewById(R.id.fldNewPlayer);
+        addSavedPlayers(playersGroup);
         findViewById(R.id.btnNewPlayer).setOnClickListener(v -> {
             fldNewPlayer.setVisibility(EditText.VISIBLE);
             btnStart.setVisibility(Button.VISIBLE);
@@ -55,7 +57,6 @@ public class LoginActivity extends AppCompatActivity implements Serializable {
             playersScroll.setVisibility(ScrollView.GONE);
         });
         findViewById(R.id.btnSavedPlayers).setOnClickListener(v -> {
-            addSavedPlayers(playersGroup);
             fldNewPlayer.setVisibility(EditText.GONE);
             btnStart.setVisibility(Button.GONE);
             playersGroup.setVisibility(LinearLayout.VISIBLE);
@@ -68,6 +69,7 @@ public class LoginActivity extends AppCompatActivity implements Serializable {
                 if (scoreboard.addPlayer(username, this)) {
                     Intent gameIntent = new Intent(this, HangmanGameActivity.class);
                     gameIntent.putExtra("player", scoreboard.getPlayer(username));
+                    System.out.println("New Player: " + scoreboard.getPlayer(username).getUsername());
                     gameIntent.putExtra("samePlayer", false);
                     startActivity(gameIntent);
                 }
@@ -95,32 +97,45 @@ public class LoginActivity extends AppCompatActivity implements Serializable {
         if (!file.exists() || file.length() == 0) {
             TextView noPlayers = new TextView(this);
             noPlayers.setText("No saved players");
+            noPlayers.setGravity(Gravity.CENTER);
             playersGroup.addView(noPlayers);
+            Log.i("loadedPlayers", "no one");
             return;
         }
         else {
             Scoreboard sc = new Scoreboard();
             try {
                 players = sc.loadGames(this);
-                Log.i("loadedPlayers", players.toString());
-                ArrayList<TextView> savedPlayers = new ArrayList<>();
+                ArrayList<View> savedPlayers = new ArrayList<>();
                 TextView playersList = new TextView(this);
                 playersList.setText("Saved Players");
+                playersList.setGravity(Gravity.CENTER);
                 savedPlayers.add(playersList);
-                for (int i = 1; i < players.getLength() + 1; i++) {
-                    TextView btnPlayer = new TextView(this);
+                for (int i = 0; i < players.getLength(); i++) {
+                    Button btnPlayer = new Button(this);
                     btnPlayer.setText(players.getElementAt(i).getUsername());
                     savedPlayers.add(btnPlayer);
                 }
-                for (TextView btnPlayer : savedPlayers) {
-                    playersGroup.addView(btnPlayer);
-                    btnPlayer.setOnClickListener(v -> {
-                        Intent gameIntent = new Intent(this, HangmanGameActivity.class);
-                        gameIntent.putExtra("player", players.getElementAt(savedPlayers.indexOf(btnPlayer) + 1));
-                        gameIntent.putExtra("samePlayer", true);
-                        startActivity(gameIntent);
-                    });
+                for (int i = 0; i < savedPlayers.size(); i++) {
+                    if (savedPlayers.get(i) instanceof Button) {
+                        Button btnTemp = (Button) savedPlayers.get(i);
+                        btnTemp.setId(i);
+                        btnTemp.setOnClickListener(v -> {
+                            Log.i("listener", "works");
+                            Intent gameIntent = new Intent(this, HangmanGameActivity.class);
+                            gameIntent.putExtra("player", players.getElementAt(savedPlayers.indexOf(btnTemp) - 1));
+                            gameIntent.putExtra("samePlayer", false);
+                            startActivity(gameIntent);
+                        });
+                        playersGroup.addView(btnTemp);
+                    }
+                    else {
+                        TextView txtTemp = (TextView) savedPlayers.get(i);
+                        playersGroup.addView(txtTemp);
+                    }
+
                 }
+
             }
             catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();

@@ -54,8 +54,12 @@ public class Scoreboard implements Serializable {
 				return players.getElementAt(i);
 			}
 		}
-		return players.getElementAt(0);
+		return null; // players.getElementAt(0)
 	} // getPlayer(String)
+
+	public Player getPlayer(int index) {
+		return players.getElementAt(index);
+	} // getPlayer(int)
 
 	public void saveGame(Context context) throws IOException {
 		File output = new File(context.getFilesDir(), filename);
@@ -64,6 +68,7 @@ public class Scoreboard implements Serializable {
 		}
 		FileOutputStream fileOut = new FileOutputStream(output);
 		ObjectOutputStream out = new ObjectOutputStream(fileOut);
+		System.out.println("Num Errors Before Save: " + players.getElementAt(0).getGame().getNumErrors());
 		out.writeObject(players);
 		out.close();
 		fileOut.close();
@@ -75,12 +80,12 @@ public class Scoreboard implements Serializable {
 		if (!input.exists()) {
 			input.createNewFile();
 		}
-		FileInputStream fileIn = new FileInputStream(filename);
+		FileInputStream fileIn = new FileInputStream(input);
 		ObjectInputStream in = new ObjectInputStream(fileIn);
 		players = (DoublyLinkedList<Player>) in.readObject();
+		System.out.println("Num Errors After Save: " + players.getElementAt(0).getGame().getNumErrors());
 		in.close();
 		fileIn.close();
-		Log.i("Players", players.toString());
 		Log.i("Loaded", "Game loaded successfully.");
 		return players;
 	} // loadGames()

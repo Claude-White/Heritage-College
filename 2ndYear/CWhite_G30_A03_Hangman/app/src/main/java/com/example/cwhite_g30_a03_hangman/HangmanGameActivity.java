@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
 import hangman.*;
 import linked_data_structures.*;
 
-public class HangmanGameActivity extends AppCompatActivity implements View.OnClickListener {
+public class HangmanGameActivity extends AppCompatActivity implements View.OnClickListener, Serializable {
 
     private Button btnHint;
     private TextView lblWordToGuess;
@@ -46,20 +46,27 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
     private TextView lblLives;
     private ImageView hangmanImg;
     private String tempWord;
-    private HangmanGame game;
-    private Scoreboard scoreboard;
     private Button[] btnLetters = new Button[26];
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private Handler handler = new Handler(Looper.getMainLooper());
+
+    private Player player;
+    private Scoreboard scoreboard;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hangman_game);
+        int textColor = ContextCompat.getColor(this, R.color.textColor);
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Hangman");
+        toolbar.setTitleTextColor(textColor);
         setSupportActionBar(toolbar);
+
+        player = getIntent().getSerializableExtra("player", Player.class);
+        boolean samePlayer = getIntent().getBooleanExtra("samePlayer", false);
 
         lblWordToGuess = findViewById(R.id.lblWordToGuess);
         lblWrongGuessesList = findViewById(R.id.lblWrongGuessesList);
@@ -76,7 +83,7 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 if (id == R.id.newGameNavMenu) {
-                    System.out.println("New Game");
+                    setupNewGame(player, true);
                 } else if (id == R.id.rulesNavMenu) {
                     Intent rulesIntent = new Intent(HangmanGameActivity.this, RulesActivity.class);
                     startActivity(rulesIntent);
@@ -85,6 +92,7 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
                     startActivity(scoreboardIntent);
                 } else if (id == R.id.quitNavMenu) {
                     finishAffinity();
+                    System.exit(0);
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
@@ -113,7 +121,7 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
 
         btnHint = findViewById(R.id.btnHint);
         btnHint.setOnClickListener(v -> {
-            char hint = game.getHint();
+            char hint = player.getGame().getHint();
             for (Button btnLetter : btnLetters) {
                 if (Character.toUpperCase(btnLetter.getText().charAt(0)) == Character.toUpperCase(hint)) {
                     updateHangman();
@@ -121,41 +129,29 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
                     break;
                 }
             }
-            if (!game.canGetHint()) {
+            if (!player.getGame().canGetHint()) {
                 btnHint.setEnabled(false);
             }
         });
-        Player player = getIntent().getSerializableExtra("player", Player.class);
-        boolean samePlayer = getIntent().getBooleanExtra("samePlayer", false);
-        Log.i("samePlayer", samePlayer + "");
         setupNewGame(player, samePlayer);
     }
 
         private void updateHangman() {
-//            InputStream originalImage;
-//            Bitmap originalBitmap;
-//            try {
-//                originalImage = getAssets().open((6 - game.getNumErrors()) + "Lives.png");
-//                originalBitmap = BitmapFactory.decodeStream(originalImage);
-//                int labelWidth = hangmanImg.getWidth();
-//                int labelHeight = hangmanImg.getHeight();
-//                double scaleFactor = Math.min((double) labelWidth / originalBitmap.getWidth(), (double) labelHeight / originalBitmap.getHeight());
-//                int scaledWidth = (int) (originalBitmap.getWidth() * scaleFactor);
-//                int scaledHeight = (int) (originalBitmap.getHeight() * scaleFactor);
-//                Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, scaledWidth, scaledHeight, false);
-//                hangmanImg.setImageBitmap(scaledBitmap);
-//            }
-//            catch (IOException e1) {
-//                AlertDialog.Builder alertLoss = new AlertDialog.Builder(this);
-//                alertLoss.setTitle("Image not found")
-//                    .setMessage("Hangman image could not be found.")
-//                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            // Handle positive button click
-//                        }
-//                    })
-//                    .show();
-//            }
+            try {
+                InputStream originalImage = getAssets().open((6 - player.getGame().getNumErrors()) + "Lives.png");
+                hangmanImg.setImageBitmap(BitmapFactory.decodeStream(originalImage));
+            }
+            catch (IOException e1) {
+                AlertDialog.Builder alertLoss = new AlertDialog.Builder(this);
+                alertLoss.setTitle("Image not found")
+                    .setMessage("Hangman image could not be found.")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Handle positive button click
+                        }
+                    })
+                    .show();
+            }
         }
 
     @SuppressLint("SetTextI18n")
@@ -163,13 +159,12 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
         clearAll();
         scoreboard = new Scoreboard();
         if (samePlayer) {
-            player.setGame(new HangmanGame(player, player.getGame().getDictionary())); // removes a word
-            game = player.getGame();
-            this.setTitle("Hangman - Game " + (game.getTotalWords() - game.getNumWords()) + "/" + game.getTotalWords());
+            player.setGame(new HangmanGame(player, player.getGame().getDictionary()));
+            this.setTitle("Hangman - Game " + (player.getGame().getTotalWords() - player.getGame().getNumWords()) + "/" + player.getGame().getTotalWords());
             updateHangman();
             lblUsername.setText("Username: " + player.getUsername());
-            lblLives.setText("Lives: " + (6 - game.getNumErrors()));
-            tempWord = game.getWordToGuess();
+            lblLives.setText("Lives: " + (6 - player.getGame().getNumErrors()));
+            tempWord = player.getGame().getWordToGuess();
             for (int i = 0; i < tempWord.length(); i++) {
                 if (Pattern.matches("[a-zA-Z]", tempWord.charAt(i) + "")) {
                     lblWordToGuess.append("_");
@@ -181,18 +176,18 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
             }
         }
         else {
-            game = player.getGame();
-            if (!game.canGetHint()) {
+            if (!player.getGame().canGetHint()) {
                 btnHint.setEnabled(false);
             }
-            for (int i = 0; i < game.getWronglyGuessedLettersList().getLength(); i++) {
-                incorrectGuess(btnLetters[game.getWronglyGuessedLettersList().getElementAt(i) - 65]); // Because of ascii codes for uppercase letters
+            // call incorrectGuess() for each incorrect guess, maybe .getNumErrors()
+            for (int i = 0; i < player.getGame().getWronglyGuessedLettersList().getLength(); i++) {
+                incorrectGuess(btnLetters[player.getGame().getWronglyGuessedLettersList().getElementAt(i) - 'A']);
             }
-            this.setTitle("Hangman - Game " + (game.getTotalWords() - game.getNumWords()) + "/" + game.getTotalWords());
+            setTitle("Hangman - Game " + (player.getGame().getTotalWords() - player.getGame().getNumWords()) + "/" + player.getGame().getTotalWords());
             updateHangman();
-            lblUsername.setText("Username: " + player.getUsername());
-            lblLives.setText("Lives: " + (6 - game.getNumErrors()));
-            tempWord = game.getWordToGuess();
+            lblUsername.setText(player.getUsername());
+            lblLives.setText("Lives: " + (6 - player.getGame().getNumErrors()));
+            tempWord = player.getGame().getWordToGuess();
 
             for (int i = 0; i < tempWord.length(); i++) {
                 if (Pattern.matches("[a-zA-Z]", tempWord.charAt(i) + "")) {
@@ -203,15 +198,32 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
                 }
                 lblWordToGuess.append(" "); // made changes might be wrong
             }
-            SinglyLinkedList<Character> tempLetters = game.getCorrectlyGuessedLettersList();
-            game.resetCorrectlyGuessedLetters();
+            SinglyLinkedList<Character> tempLetters = player.getGame().getCorrectlyGuessedLettersList();
+            player.getGame().resetCorrectlyGuessedLetters();
             for (Button btnLetter : btnLetters) {
                 for (int i = 0; i < tempLetters.getLength(); i++) {
-                    if (btnLetter.getText().charAt(0) == tempLetters.getElementAt(i)) {
+                    if (Character.toUpperCase(btnLetter.getText().charAt(0)) == Character.toUpperCase(tempLetters.getElementAt(i))) {
                         btnLetter.performClick();
                     }
                 }
             }
+        }
+        try {
+            System.out.println("Players Game Errors: " + player.getGame().getNumErrors());
+            System.out.println("Players GetPlayer, GetGame Errors: " + scoreboard.getPlayer(0).getGame().getNumErrors());
+            scoreboard.saveGame(this);
+        } catch (IOException e) {
+            AlertDialog.Builder alertGameNotSaved = new AlertDialog.Builder(this);
+            alertGameNotSaved.setTitle("Fail to Save")
+                .setMessage("Failed to save game.")
+                .show();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            }, 3000);
+            e.printStackTrace();
         }
     }
 
@@ -235,7 +247,7 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
             tempLblWordToGuess = new StringBuilder(lblWordToGuess.getText());
             Log.i("tempWord", tempLblWordToGuess.toString());
             if (Character.toUpperCase(tempWord.charAt(i)) == Character.toUpperCase(btnLetter.getText().charAt(0))) {
-                tempLblWordToGuess.setCharAt(i * 2, game.getLetterAt(i));
+                tempLblWordToGuess.setCharAt(i * 2, player.getGame().getLetterAt(i));
                 lblWordToGuess.setText(tempLblWordToGuess.toString());
                 Log.i("tempWord", tempLblWordToGuess.toString());
             }
@@ -253,79 +265,21 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
     @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View view) {
-        Handler handler = new Handler(Looper.getMainLooper());
         Button btn = (Button) view;
         for (Button btnLetter : btnLetters) {
             if (btn == btnLetter) {
                 char letter = btnLetter.getText().charAt(0);
-                if (game.checkInput(letter)) {
+                if (player.getGame().checkInput(letter)) {
                     correctGuess(btnLetter);
-                    Log.i("letterCorrect", "Yes");
                 }
                 else {
                     incorrectGuess(btnLetter);
-                    Log.i("letterCorrect", "No");
                 }
-                lblLives.setText("Lives: " + (6 - game.getNumErrors()));
-                if (game.hasLost()) {
-                    AlertDialog.Builder alertLoss = new AlertDialog.Builder(this);
-                    alertLoss.setTitle("Loss")
-                        .setMessage("You lose. Word was: " + tempWord)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Handle positive button click
-                            }
-                        })
-                        .show();
-                    //JOptionPane.showMessageDialog(new JPanel(), "You lose. Word was: " + tempWord);
-                    if (game.noMoreWords()) {
-                        AlertDialog.Builder alertOutOfWords = new AlertDialog.Builder(this);
-                        alertOutOfWords.setTitle("Out of Words")
-                            .setMessage("There are no words left.")
-                            .show();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                finish();
-                            }
-                        }, 3000);
-                    }
-                    else {
-                        scoreboard.gamePlayed(game.getPlayer().getUsername(), false);
-                        setupNewGame(game.getPlayer(), true);
-                    }
-                }
-                if (game.hasWon()) {
-                    AlertDialog.Builder alertWin = new AlertDialog.Builder(this);
-                    alertWin.setTitle("Win")
-                        .setMessage("You win")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Handle positive button click
-                            }
-                        })
-                        .show();
-                    //JOptionPane.showMessageDialog(new JPanel(), "You win");
-                    if (game.noMoreWords()) {
-                        AlertDialog.Builder alertOutOfWords = new AlertDialog.Builder(this);
-                        alertOutOfWords.setTitle("Out of Words")
-                            .setMessage("There are no words left.")
-                            .show();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                finish();
-                            }
-                        }, 3000);
-                    } else {
-                        scoreboard.gamePlayed(game.getPlayer().getUsername(), true);
-                        setupNewGame(game.getPlayer(), true);
-                    }
-                }
-                if (!game.canGetHint() || game.getNumberOfLetters() - 1 == game.getNumberOfGuessedLetters()) {
-                    btnHint.setEnabled(false);
-                }
+
+
                 try {
+                    System.out.println("Players Game Errors: " + player.getGame().getNumErrors());
+                    System.out.println("Players GetPlayer, GetGame Errors: " + scoreboard.getPlayer(0).getGame().getNumErrors());
                     scoreboard.saveGame(this);
                 } catch (IOException e) {
                     AlertDialog.Builder alertGameNotSaved = new AlertDialog.Builder(this);
@@ -339,6 +293,62 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
                         }
                     }, 3000);
                     e.printStackTrace();
+                }
+
+                lblLives.setText("Lives: " + (6 - player.getGame().getNumErrors()));
+                if (player.getGame().hasLost()) {
+                    AlertDialog.Builder alertLoss = new AlertDialog.Builder(this);
+                    alertLoss.setTitle("Loss")
+                        .setMessage("You lose. Word was: " + tempWord)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Handle positive button click
+                            }
+                        })
+                        .show();
+                    if (player.getGame().noMoreWords()) {
+                        AlertDialog.Builder alertOutOfWords = new AlertDialog.Builder(this);
+                        alertOutOfWords.setTitle("Out of Words")
+                            .setMessage("There are no words left.")
+                            .show();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                finish();
+                            }
+                        }, 3000);
+                    }
+                    scoreboard.gamePlayed(player.getGame().getPlayer().getUsername(), false);
+                    setupNewGame(player.getGame().getPlayer(), true);
+                }
+                if (player.getGame().hasWon()) {
+                    AlertDialog.Builder alertWin = new AlertDialog.Builder(this);
+                    alertWin.setTitle("Win")
+                        .setMessage("You win")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Handle positive button click
+                            }
+                        })
+                        .show();
+                    //JOptionPane.showMessageDialog(new JPanel(), "You win");
+                    if (player.getGame().noMoreWords()) {
+                        AlertDialog.Builder alertOutOfWords = new AlertDialog.Builder(this);
+                        alertOutOfWords.setTitle("Out of Words")
+                            .setMessage("There are no words left.")
+                            .show();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                finish();
+                            }
+                        }, 3000);
+                    }
+                    scoreboard.gamePlayed(player.getGame().getPlayer().getUsername(), true);
+                    setupNewGame(player.getGame().getPlayer(), true);
+                }
+                if (!player.getGame().canGetHint() || player.getGame().getNumberOfLetters() - 1 == player.getGame().getNumberOfGuessedLetters()) {
+                    btnHint.setEnabled(false);
                 }
             } // if (btn == btnLetter)
         }
