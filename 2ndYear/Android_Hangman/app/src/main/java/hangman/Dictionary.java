@@ -47,8 +47,6 @@ public class Dictionary implements Serializable {
        processWord(word);
     }
     totalWords = numWords;
-    Log.i("words", words.getLength() + "");
-    Log.i("words", numWords + "");
   } // readFile()
 
   private void processWord(String word) {

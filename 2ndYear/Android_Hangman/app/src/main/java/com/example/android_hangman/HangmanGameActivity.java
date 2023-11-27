@@ -50,6 +50,7 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
 
   private Player player;
   private Scoreboard scoreboard;
+  private int indexOfPlayer;
 
   @SuppressLint("SetTextI18n")
   @Override
@@ -61,8 +62,9 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
     toolbar.setTitle("Hangman");
     toolbar.setTitleTextColor(textColor);
     setSupportActionBar(toolbar);
-
-    player = getIntent().getSerializableExtra("player", Player.class);
+    Scoreboard sc = new Scoreboard();
+    indexOfPlayer = getIntent().getIntExtra("indexOfPlayer", 0);
+    player = sc.getPlayer(indexOfPlayer);
     boolean samePlayer = getIntent().getBooleanExtra("samePlayer", false);
 
     lblWordToGuess = findViewById(R.id.lblWordToGuess);
@@ -155,6 +157,19 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
   private void setupNewGame(Player player, boolean samePlayer) {
     clearAll();
     scoreboard = new Scoreboard();
+    if (scoreboard.getPlayer(indexOfPlayer).getGame().getNumWords() == 0) {
+      AlertDialog.Builder alertNoMoreWords = new AlertDialog.Builder(this);
+      alertNoMoreWords.setTitle("No more words")
+          .setMessage("No more words for this player.")
+          .show();
+      handler.postDelayed(new Runnable() {
+        @Override
+        public void run() {
+          finish();
+        }
+      }, 2000);
+    }
+    else {
     if (samePlayer) {
       player.setGame(new HangmanGame(player, player.getGame().getDictionary()));
       this.setTitle("Hangman - Game " + (player.getGame().getTotalWords() - player.getGame().getNumWords()) + "/" + player.getGame().getTotalWords());
@@ -165,14 +180,12 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
       for (int i = 0; i < tempWord.length(); i++) {
         if (Pattern.matches("[a-zA-Z]", tempWord.charAt(i) + "")) {
           lblWordToGuess.append("_");
-        }
-        else {
+        } else {
           lblWordToGuess.append(tempWord.charAt(i) + "");
         }
         lblWordToGuess.append(" "); // made changes might be wrong
       }
-    }
-    else {
+    } else {
       if (!player.getGame().canGetHint()) {
         btnHint.setEnabled(false);
       }
@@ -189,8 +202,7 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
       for (int i = 0; i < tempWord.length(); i++) {
         if (Pattern.matches("[a-zA-Z]", tempWord.charAt(i) + "")) {
           lblWordToGuess.append("_");
-        }
-        else {
+        } else {
           lblWordToGuess.append(tempWord.charAt(i) + "");
         }
         lblWordToGuess.append(" "); // made changes might be wrong
@@ -206,8 +218,6 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
       }
     }
     try {
-      System.out.println("Players Game Errors: " + player.getGame().getNumErrors());
-      System.out.println("Players GetPlayer, GetGame Errors: " + scoreboard.getPlayer(0).getGame().getNumErrors());
       scoreboard.saveGame(this);
     } catch (IOException e) {
       AlertDialog.Builder alertGameNotSaved = new AlertDialog.Builder(this);
@@ -222,6 +232,7 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
       }, 3000);
       e.printStackTrace();
     }
+  }
   }
 
   private void clearAll() {
@@ -242,11 +253,9 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
     StringBuilder tempLblWordToGuess;
     for (int i = 0; i < tempWord.length(); i++) {
       tempLblWordToGuess = new StringBuilder(lblWordToGuess.getText());
-      Log.i("tempWord", tempLblWordToGuess.toString());
       if (Character.toUpperCase(tempWord.charAt(i)) == Character.toUpperCase(btnLetter.getText().charAt(0))) {
         tempLblWordToGuess.setCharAt(i * 2, player.getGame().getLetterAt(i));
         lblWordToGuess.setText(tempLblWordToGuess.toString());
-        Log.i("tempWord", tempLblWordToGuess.toString());
       }
     }
   } // correctGuess()
@@ -275,8 +284,6 @@ public class HangmanGameActivity extends AppCompatActivity implements View.OnCli
 
 
         try {
-          System.out.println("Players Game Errors: " + player.getGame().getNumErrors());
-          System.out.println("Players GetPlayer, GetGame Errors: " + scoreboard.getPlayer(0).getGame().getNumErrors());
           scoreboard.saveGame(this);
         } catch (IOException e) {
           AlertDialog.Builder alertGameNotSaved = new AlertDialog.Builder(this);

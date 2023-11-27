@@ -58,7 +58,6 @@ public class HangmanGame implements Serializable {
 	} // getPlayer()
 
 	public boolean noMoreWords() {
-		Log.i("numWords", dictionary.getNumWords() + "");
 		return dictionary.getNumWords() < 1;
 	} // hasMoreWords()
 

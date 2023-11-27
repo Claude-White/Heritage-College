@@ -1,9 +1,11 @@
 package com.example.android_hangman;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -58,8 +60,7 @@ public class LoginActivity extends AppCompatActivity implements Serializable {
       try {
         if (scoreboard.addPlayer(username, this)) {
           Intent gameIntent = new Intent(this, HangmanGameActivity.class);
-          gameIntent.putExtra("player", scoreboard.getPlayer(username));
-          System.out.println("New Player: " + scoreboard.getPlayer(username).getUsername());
+          gameIntent.putExtra("indexOfPlayer", scoreboard.getPostion());
           gameIntent.putExtra("samePlayer", false);
           startActivity(gameIntent);
         }
@@ -89,7 +90,6 @@ public class LoginActivity extends AppCompatActivity implements Serializable {
       noPlayers.setText("No saved players");
       noPlayers.setGravity(Gravity.CENTER);
       playersGroup.addView(noPlayers);
-      Log.i("loadedPlayers", "no one");
       return;
     }
     else {
@@ -111,9 +111,8 @@ public class LoginActivity extends AppCompatActivity implements Serializable {
             Button btnTemp = (Button) savedPlayers.get(i);
             btnTemp.setId(i);
             btnTemp.setOnClickListener(v -> {
-              Log.i("listener", "works");
               Intent gameIntent = new Intent(this, HangmanGameActivity.class);
-              gameIntent.putExtra("player", players.getElementAt(savedPlayers.indexOf(btnTemp) - 1));
+              gameIntent.putExtra("indexOfPlayer", savedPlayers.indexOf(btnTemp) - 1);
               gameIntent.putExtra("samePlayer", false);
               startActivity(gameIntent);
             });

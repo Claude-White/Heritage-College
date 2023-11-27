@@ -16,6 +16,7 @@ import linked_data_structures.DoublyLinkedList;
 public class Scoreboard implements Serializable {
 	private static DoublyLinkedList<Player> players = new DoublyLinkedList<>();
 	private String filename = "save_game.ser";
+	private int postion = 0;
 	
 	public int getNumPlayers() {
 		return players.getLength();
@@ -39,9 +40,14 @@ public class Scoreboard implements Serializable {
 				tempPos++;
 			}
 			players.add(new Player(username, context), tempPos);
+			postion = tempPos;
 		}
 		return true;
 	} // addPlayer(Player)
+
+	public int getPostion() {
+		return postion;
+	} // getPostion()
 
 	public void gamePlayed(String username, boolean hasWon) {
 		if (hasWon) {
@@ -74,7 +80,6 @@ public class Scoreboard implements Serializable {
 		}
 		FileOutputStream fileOut = new FileOutputStream(output);
 		ObjectOutputStream out = new ObjectOutputStream(fileOut);
-		System.out.println("Num Errors Before Save: " + players.getElementAt(0).getGame().getNumErrors());
 		out.writeObject(players);
 		out.close();
 		fileOut.close();
@@ -89,7 +94,6 @@ public class Scoreboard implements Serializable {
 		FileInputStream fileIn = new FileInputStream(input);
 		ObjectInputStream in = new ObjectInputStream(fileIn);
 		players = (DoublyLinkedList<Player>) in.readObject();
-		System.out.println("Num Errors After Save: " + players.getElementAt(0).getGame().getNumErrors());
 		in.close();
 		fileIn.close();
 		Log.i("Loaded", "Game loaded successfully.");
