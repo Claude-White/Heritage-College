@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="LoginLayout" type="id" />
+    <item name="btnScoreboard" type="id" />
+    <item name="btnNewPlayer" type="id" />
+    <item name="btnSavedPlayers" type="id" />
+    <item name="imageView" type="id" />
+    <item name="btnStart" type="id" />
+    <item name="fldNewPlayer" type="id" />
+    <item name="btnRules" type="id" />
+    <item name="playersScroll" type="id" />
+    <item name="playersGroup" type="id" />
+</resources>
