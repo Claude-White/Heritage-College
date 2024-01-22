@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number'] {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield !important;
+  }
+}
+
+@layer components {
+  .inputMovie {
+    @apply px-2 py-2 rounded-lg h-max ring-1 ring-gray-300;
+  }
+  .inputMovieLong {
+    @apply w-full col-span-1 px-2 py-2 rounded-lg sm:col-span-2 h-max ring-1 ring-gray-300;
+  }
+}
