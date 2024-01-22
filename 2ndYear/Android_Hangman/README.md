@@ -1,7 +1,12 @@
 # An Android implementation of a Hangman game
+**This is a program where you play hangman on mobile.**
 
-Previously written in java with JFrames, now ported to Android
+Made with LinkedLists and Android Studio
+Language: Java
+Course: Programming III at Heritage College
 
-Android studio to develop this application
-
-Used local storage to keep saves of game progression
+Learning Outcomes:
+- Use and implements LinkedList
+- Learn how to develop apps with Android Studio
+- Use Serialization and Deserialization on mobile
+- Use the device's local storage to save game progression
