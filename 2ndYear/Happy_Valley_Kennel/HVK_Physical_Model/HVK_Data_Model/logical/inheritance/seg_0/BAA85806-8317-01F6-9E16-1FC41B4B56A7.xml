@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.InheritanceRelation" name="Hierarchy_9" directorySegmentName="seg_0" id="BAA85806-8317-01F6-9E16-1FC41B4B56A7">
+<createdBy>barb</createdBy>
+<createdTime>2023-09-20 18:06:56 UTC</createdTime>
+<ownerDesignName>HVK_Data_Model</ownerDesignName>
+<engineerTo>
+<item key="DD0BB5E4-0490-421C-169D-9BBAF6D4B4F5" value="true"/>
+</engineerTo>
+<identifying>false</identifying>
+<nameOnSource>Super Type</nameOnSource>
+<nameOnTarget>Sub Type</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>true</optionalTarget>
+<sourceEntity>6D41005E-D460-36D4-A45D-6AACA38D25E3</sourceEntity>
+<targetEntity>98A23FA4-1B4E-1977-C03F-8B06210BDA3D</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

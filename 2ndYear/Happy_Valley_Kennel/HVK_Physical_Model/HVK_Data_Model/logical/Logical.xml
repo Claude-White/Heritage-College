@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<LogicalDesign class="oracle.dbtools.crest.model.design.logical.LogicalDesign" name="Logical" id="0D39326C-C6A6-D719-09F8-B16062680279" mainViewID="2A0D586F-C778-7DEC-F97E-F48B5C267AE0">
+<createdBy>barb</createdBy>
+<createdTime>2023-09-20 17:41:13 UTC</createdTime>
+<ownerDesignName>HVK_Data_Model</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</LogicalDesign>

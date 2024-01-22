@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Relation_29" directorySegmentName="seg_0" id="98E45A83-C1AE-D054-4F37-33A52344A4FB">
+<createdBy>barb</createdBy>
+<createdTime>2023-09-22 19:18:22 UTC</createdTime>
+<ownerDesignName>HVK_Data_Model</ownerDesignName>
+<engineerTo>
+<item key="DD0BB5E4-0490-421C-169D-9BBAF6D4B4F5" value="true"/>
+</engineerTo>
+<identifying>false</identifying>
+<nameOnSource>be related to</nameOnSource>
+<nameOnTarget>contain</nameOnTarget>
+<optionalSource>false</optionalSource>
+<optionalTarget>true</optionalTarget>
+<sourceCardinality>*</sourceCardinality>
+<sourceEntity>0781A38C-11F3-D5E8-59DB-F7F01848B93C</sourceEntity>
+<targetCardinalityString>1</targetCardinalityString>
+<targetEntity>45CF116E-C35E-7673-D097-8765E2ACD4F1</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>
