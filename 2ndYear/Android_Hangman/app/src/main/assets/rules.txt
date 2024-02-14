@@ -1,0 +1,15 @@
+The game randomly selects a word and the
+player tries to guess it by guessing letters. Each
+incorrect guess brings you closer to being "hanged".
+
+If the word is dog, the spaces are drawn
+like this: _ _ _.
+
+The player has to guess one letter at a time. The letter
+is filled in everywhere it appears on the appropriate
+dash (or dashes) each time the person guesses
+correctly. One body part is added to the drawing each
+time the letter chosen is not in the word. If the
+drawing of the person is completed before the word
+is guessed, the player loses. If the player figures out
+the word first, they win.

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles/styles.css">
+  <script src="js/game.js" defer></script>
+  <!-- <script defer src="js/gametest.js"></script> -->
+  <title>Hazard</title>
+</head>
+
+<body id="gameBody">
+  <header class="grid">
+    <div id="bank">
+      <img id="vault" src="images/Vault.svg" alt="Balance Logo">
+      <p id="balance"></p>
+    </div>
+    <h1 id="introH1">Hazard</h1>
+    <div id="profile">
+      <p id="fName"></p>
+      <p id="lName"></p>
+      <img id="logo" src="images/Logos/logo0.png" alt="Profile Logo">
+    </div>
+  </header>
+  <main>
+    <form class="grid" method="get" id="gameForm" name="gameForm">
+      <div class="inputs">
+        <input type="text" name="bet" id="bet" placeholder="Amount">
+        <label for="bet">Bet</label>
+      </div>
+      <div class="inputs">
+        <input type="text" name="main" id="main" placeholder="5 - 9">
+        <label for="main">Main</label>
+      </div>
+      <div id="chance"></div>
+      <button type="button" class="button" id="roll">Roll</button>
+      <div id="dice">
+        <img id="diceLeft" src="images/Dice/Dice1.png" alt="Dice">
+        <img id="diceRight" src="images/Dice/Dice2.png" alt="Dice">
+      </div>
+      <div id="status"></div>
+    </form>
+  </main>
+  <footer>
+    <div class="footInfo" id="username"></div>
+    <div class="footInfo" id="phoneNum"></div>
+    <div class="footInfo" id="city"></div>
+    <div class="footInfo" id="emailAddress"></div>
+  </footer>
+</body>
+
+
+</html>

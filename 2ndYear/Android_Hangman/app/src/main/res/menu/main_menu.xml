@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/closeNavMenu"
+        android:title="Close" />
+    <item
+        android:id="@+id/newGameNavMenu"
+        android:title="New Game" />
+    <item
+        android:id="@+id/rulesNavMenu"
+        android:title="Rules" />
+    <item
+        android:id="@+id/scoreboardNavMenu"
+        android:title="Scoreboard" />
+    <item
+        android:id="@+id/quitNavMenu"
+        android:title="Quit" />
+</menu>

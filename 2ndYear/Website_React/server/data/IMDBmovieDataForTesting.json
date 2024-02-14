@@ -1,0 +1,127 @@
+[
+  {
+    "Key": 1,
+    "Title": "Guardians of the Galaxy",
+    "Genre": ["Action", "Adventure", "Sci-Fi"],
+    "Actors": ["Chris Pratt", "Vin Diesel", "Bradley Cooper", "Zoe Saldana"],
+    "Year": 2014,
+    "Runtime": 121,
+    "Revenue": 333.13
+  },
+  {
+    "Key": 2,
+    "Title": "Prometheus",
+    "Genre": ["Adventure", "Mystery", "Sci-Fi"],
+    "Actors": [
+      "Noomi Rapace",
+      "Logan Marshall-Green",
+      "Michael Fassbender",
+      "Charlize Theron"
+    ],
+    "Year": 2012,
+    "Runtime": 124,
+    "Revenue": 126.46
+  },
+  {
+    "Key": 3,
+    "Title": "Split",
+    "Genre": ["Horror", "Thriller"],
+    "Actors": [
+      "James McAvoy",
+      "Anya Taylor-Joy",
+      "Haley Lu Richardson",
+      "Jessica Sula"
+    ],
+    "Year": 2016,
+    "Runtime": 117,
+    "Revenue": 138.12
+  },
+  {
+    "Key": 4,
+    "Title": "Sing",
+    "Genre": ["Animation", "Comedy", "Family"],
+    "Actors": [
+      "Matthew McConaughey",
+      "Reese Witherspoon",
+      "Seth MacFarlane",
+      "Scarlett Johansson"
+    ],
+    "Year": 2016,
+    "Runtime": 108,
+    "Revenue": 270.32
+  },
+  {
+    "Key": 5,
+    "Title": "Suicide Squad",
+    "Genre": ["Action", "Adventure", "Fantasy"],
+    "Actors": ["Will Smith", "Jared Leto", "Margot Robbie", "Viola Davis"],
+    "Year": 2016,
+    "Runtime": 123,
+    "Revenue": 325.02
+  },
+  {
+    "Key": 6,
+    "Title": "The Great Wall",
+    "Genre": ["Action", "Adventure", "Fantasy"],
+    "Actors": ["Matt Damon", "Tian Jing", "Willem Dafoe", "Andy Lau"],
+    "Year": 2016,
+    "Runtime": 103,
+    "Revenue": 45.13
+  },
+  {
+    "Key": 7,
+    "Title": "La La Land",
+    "Genre": ["Comedy", "Drama", "Music"],
+    "Actors": [
+      "Ryan Gosling",
+      "Emma Stone",
+      "Rosemarie DeWitt",
+      "J.K. Simmons"
+    ],
+    "Year": 2016,
+    "Runtime": 128,
+    "Revenue": 151.06
+  },
+  {
+    "Key": 8,
+    "Title": "Mindhorn",
+    "Genre": ["Comedy"],
+    "Actors": [
+      "Essie Davis",
+      "Andrea Riseborough",
+      "Julian Barratt",
+      "Kenneth Branagh"
+    ],
+    "Year": 2016,
+    "Runtime": 89,
+    "Revenue": 0
+  },
+  {
+    "Key": 9,
+    "Title": "The Lost City of Z",
+    "Genre": ["Action", "Adventure", "Biography"],
+    "Actors": [
+      "Charlie Hunnam",
+      "Robert Pattinson",
+      "Sienna Miller",
+      "Tom Holland"
+    ],
+    "Year": 2016,
+    "Runtime": 141,
+    "Revenue": 8.01
+  },
+  {
+    "Key": 10,
+    "Title": "Passengers",
+    "Genre": ["Adventure", "Drama", "Romance"],
+    "Actors": [
+      "Jennifer Lawrence",
+      "Chris Pratt",
+      "Michael Sheen",
+      "Laurence Fishburne"
+    ],
+    "Year": 2016,
+    "Runtime": 116,
+    "Revenue": 100.01
+  }
+]

@@ -1,0 +1,3 @@
+# Changes made in Android version
+- Can now handle accented characters
+- No longer forces everthing letter to be uppercase
