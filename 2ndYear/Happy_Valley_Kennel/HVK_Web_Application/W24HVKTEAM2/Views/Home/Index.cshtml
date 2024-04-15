@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = null;
+}
+@model W24HVKTEAM2.Models.Hvkuser;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/W24HVKTEAM2.styles.css" asp-append-version="true" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="d-flex login-main-container">
+        <div class="login-hero">
+            <h1>Welcome To Happy Valley Kennel</h1>
+        </div>
+
+
+        <div class="login-form">
+            <form asp-action="Index" asp-controller="Home" method="post">
+                <div asp-validation-summary="ModelOnly" class="validation-summary alert alert-danger"></div>
+
+                <h5 class="login-form-title">LOGIN</h5>
+                <div>
+                    <label asp-for="Email" class="login-form-label"><i class='bx bx-user'></i></label>
+                    <input asp-for="Email" class="login-form-input text-black" type="text" placeholder="Email">
+                </div>
+
+
+                <a class="login-form-link forgot-password" href="">Forgot Password?</a>
+
+
+                <div>
+                    <label asp-for="Password" class="login-form-label"><i class='bx bx-lock-alt'></i></label>
+                    <input asp-for="Password" class="login-form-input text-black" type="password" placeholder="Password">
+                </div>
+
+                <input class="login-form-submit-button" type="submit" value="Login">
+
+                <div>
+                    <p class="create-account-message">Don't have an account? <a class="login-form-link" href="">Register</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

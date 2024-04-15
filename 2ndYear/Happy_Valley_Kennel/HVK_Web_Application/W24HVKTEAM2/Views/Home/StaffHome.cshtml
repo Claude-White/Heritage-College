@@ -1,0 +1,141 @@
+﻿@model IEnumerable<W24HVKTEAM2.Models.Reservation>
+
+@{
+    Layout = "~/Views/Shared/_StaffLayout.cshtml";
+
+}
+<div class="triple-table-style">
+  
+
+    <div>
+        <h2>Upcoming Reservations</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Starts On</th>
+                    <th># Pets</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{var count1 = 0;}
+                @foreach (var reservation in Model)
+                {
+                    if (reservation.StartDate > DateTime.Now)
+                    {
+                        ++count1;
+                        <tr>
+                            <td>@reservation.PetReservations.Select(pr => pr.Pet).Select(p => p.Hvkuser).Select(u => u.FirstName).First() @reservation.PetReservations.Select(pr => pr.Pet).Select(p => p.Hvkuser).Select(u => u.LastName).First()</td>
+                            <td>@reservation.StartDate.ToString("yyyy/MM/dd")</td>
+                            <td>@reservation.PetReservations.Select(pr => pr.Pet).Count()</td>
+                            <td><button class="btn-edit"><i class='bx bxs-edit'></i></button></td>
+                            <td><button class="btn btn-primary">Start</button></td>
+                        </tr>
+                    }
+                }
+
+                @if (count1 < 1)
+                {
+                    <tr>
+                        <td>No Reservations</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <h2>Active Reservations</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Ends On</th>
+                    <th># Pets</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var count2 = 0;
+                }
+
+                @foreach (var reservation in Model)
+                {
+                    if (reservation.StartDate <= DateTime.Now && reservation.EndDate >= DateTime.Now)
+                    {
+                        ++count2;
+                        <tr>
+                            <td>@reservation.PetReservations.Select(pr => pr.Pet).Select(p => p.Hvkuser).Select(u => u.FirstName).First() @reservation.PetReservations.Select(pr => pr.Pet).Select(p => p.Hvkuser).Select(u => u.LastName).First()</td>
+                            <td>@reservation.EndDate.ToString("yyyy/MM/dd")</td>
+                            <td>@reservation.PetReservations.Select(pr => pr.Pet).Count()</td>
+                            <td><button class="btn-edit"><i class='bx bxs-edit'></i></button></td>
+                            <td><button class="btn btn-primary">End</button></td>
+                        </tr>
+                    }
+                }
+
+                @if (count2 < 1)
+                {
+                    <tr>
+                        <td>No Reservations</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <h2>Ending Reservations</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Ends On</th>
+                    <th># Pets</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{var count3 = 0;}
+                @foreach (var reservation in Model)
+                {
+                    if (reservation.EndDate <= DateTime.Now)
+                    {
+                        ++count3;
+                        <tr>
+                            <td>@reservation.PetReservations.Select(pr => pr.Pet).Select(p => p.Hvkuser).Select(u => u.FirstName).First() @reservation.PetReservations.Select(pr => pr.Pet).Select(p => p.Hvkuser).Select(u => u.LastName).First()</td>
+                            <td>@reservation.EndDate.ToString("yyyy/MM/dd")</td>
+                            <td>@reservation.PetReservations.Select(pr => pr.Pet).Count()</td>
+                            <td><button class="btn-edit"><i class='bx bxs-edit'></i></button></td>
+                            <td><button class="btn btn-primary">End</button></td>
+                        </tr>
+                    }
+                }
+
+                @if (count3 < 1)
+                {
+                    <tr>
+                        <td>No Reservations</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

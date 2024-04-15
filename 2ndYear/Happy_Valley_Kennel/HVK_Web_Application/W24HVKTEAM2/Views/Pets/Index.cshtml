@@ -1,0 +1,89 @@
+﻿@model IEnumerable<W24HVKTEAM2.Models.Pet>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Breed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Birthyear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DogSize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Climber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Barker)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpecialNotes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sterilized)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hvkuser)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Breed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Birthyear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DogSize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Climber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Barker)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpecialNotes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sterilized)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hvkuser.FirstName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PetId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PetId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PetId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

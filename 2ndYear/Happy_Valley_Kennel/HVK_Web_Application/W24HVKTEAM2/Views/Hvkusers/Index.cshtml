@@ -1,0 +1,71 @@
+﻿@model IEnumerable<W24HVKTEAM2.Models.Hvkuser>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_StaffLayout.cshtml";
+}
+
+<div class="index-head">
+    <h1>All Customers</h1>
+    <form asp-action="Index" asp-controller="Hvkusers" method="post">
+        <input class="fld-text input-40" type="text" name="query" placeholder="Search" />
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+</div>
+
+<div class="table-style">
+    <table class="table overflow-scroll">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Phone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CellPhone)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CellPhone)
+                    </td>
+                    <td>
+                        <a asp-action="StaffEdit" asp-route-id="@item.HvkuserId"><i class='bx bxs-edit'></i></a>
+                        <!--a asp-action="Details" asp-route-id="@item.HvkuserId">Details</a-->
+                        <!--a asp-action="Delete" asp-route-id="@item.HvkuserId">Delete</a-->
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="mt-4"></div>
+<a asp-controller="Home" asp-action="StaffHome">
+    <input type="button" value="Back" class="btn btn-secondary btn-outline-secondary text-black" />
+</a>

@@ -1,0 +1,76 @@
+﻿@model W24HVKTEAM2.Models.Pet
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Pet</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PetId" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label>
+                <input asp-for="Gender" class="form-control" />
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Breed" class="control-label"></label>
+                <input asp-for="Breed" class="form-control" />
+                <span asp-validation-for="Breed" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Birthyear" class="control-label"></label>
+                <input asp-for="Birthyear" class="form-control" />
+                <span asp-validation-for="Birthyear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HvkuserId" class="control-label"></label>
+                <select asp-for="HvkuserId" class="form-control" asp-items="ViewBag.HvkuserId"></select>
+                <span asp-validation-for="HvkuserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DogSize" class="control-label"></label>
+                <input asp-for="DogSize" class="form-control" />
+                <span asp-validation-for="DogSize" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Climber" /> @Html.DisplayNameFor(model => model.Climber)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Barker" /> @Html.DisplayNameFor(model => model.Barker)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="SpecialNotes" class="control-label"></label>
+                <input asp-for="SpecialNotes" class="form-control" />
+                <span asp-validation-for="SpecialNotes" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Sterilized" /> @Html.DisplayNameFor(model => model.Sterilized)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

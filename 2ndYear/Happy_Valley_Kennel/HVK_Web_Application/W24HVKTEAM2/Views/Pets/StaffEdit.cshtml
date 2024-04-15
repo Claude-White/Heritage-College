@@ -1,0 +1,109 @@
+﻿@model W24HVKTEAM2.Models.Pet
+
+@{
+    Layout = "_StaffLayout";
+}
+
+<div class="manage-pet-head">
+    <h2>Manage @Model.Name's Information</h2>
+    <button type="submit" class="btn btn-delete"><i class='bx bx-trash'></i>Remove</button>
+</div>
+<div>
+    <form asp-action="StaffEdit">
+        <div class="pet-vacc-info-container">
+            <div class="pet-info-style">
+                <h4>Information</h4>
+                <div class="gray-pet-info-background">
+                    <input type="hidden" asp-for="PetId" />
+                    <input type="hidden" asp-for="Hvkuser" />
+                    <input type="hidden" asp-for="HvkuserId" />
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <br />
+                        <input class="fld-text pet-info-fld" type="text" asp-for="Name" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Breed"></label>
+                        <br />
+                        <input class="fld-text pet-info-fld breed-input" type="text" asp-for="Breed" />
+                    </div>
+                    <div class="radio-checkbox-pet-info-group">
+                        <label asp-for="Gender"></label>
+                        @foreach (var gender in Enum.GetValues(typeof(Pet.DogGender))) {
+                            <div>
+                                <input type="radio" asp-for="Gender" value="@gender" id="@gender" checked="@(((gender.ToString().Substring(0,1)) == Model.Gender) ? "checked" : null)" />
+                                <label for="@gender">@gender</label>
+                            </div>
+                        }
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Birthyear"></label>
+                        <br />
+                        <input class="fld-text pet-info-fld year-input" type="number" asp-for="Birthyear" />
+                    </div>
+                    <div class="radio-checkbox-pet-info-group">
+                        <label asp-for="DogSize"></label>
+                        @foreach (var dogSize in Enum.GetValues(typeof(Pet.DogSizeList))) {
+                            <div>
+                                <input type="radio" asp-for="DogSize" value="@dogSize" id="@dogSize" checked="@(((dogSize.ToString().Substring(0,1)) == Model.DogSize) ? "checked" : null)" />
+                                <label for="@dogSize">@dogSize</label>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="checkbox-pet-group">
+                        <div>
+                            <label asp-for="Barker"></label>
+                            <input type="checkbox" asp-for="Barker" />
+                        </div>
+                        <div>
+                            <label asp-for="Climber"></label>
+                            <input type="checkbox" name="climber" asp-for="Climber" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Sterilized"></label>
+                        <input type="checkbox" name="sterilized" asp-for="Sterilized" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="SpecialNotes"></label>
+                        <br />
+                        <textarea class="textarea-style pet-info-fld" asp-for="SpecialNotes">@Model.SpecialNotes</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="table-style-pet-vaccinations">
+                <h4>Vaccination</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Checked</th>
+                            <th>Name</th>
+                            <th>Expiry Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var vaccination in Model.PetVaccinations) {
+                            <tr>
+                                <td><input type="checkbox" @((vaccination.VaccinationChecked) ? "checked" : "") /></td>
+                                <td>@vaccination.Vaccination.Name</td>
+                                <td><input type="date" class="vaccination-expiry-dates" value="@vaccination.ExpiryDate.ToString("yyyy-MM-dd")" /></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="pet-info-action-buttons">
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+            <div class="form-group">
+                <a asp-controller="Hvkusers" asp-action="StaffEdit" asp-route-id="@Model.HvkuserId">
+                    <input type="button" value="Cancel" class="btn btn-secondary btn-outline-secondary" />
+                </a>
+            </div>
+        </div>
+    </form>
+</div>

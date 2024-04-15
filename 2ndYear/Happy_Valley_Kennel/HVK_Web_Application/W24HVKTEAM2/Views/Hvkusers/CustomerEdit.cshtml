@@ -1,0 +1,118 @@
+﻿@model W24HVKTEAM2.Models.Hvkuser
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<h1>@(Model.FirstName)'s Information</h1>
+<hr />
+<form class="form-edit-cust" asp-action="CustomerEdit">
+    <div>
+        <h5>Personal Information</h5>
+        <input type="hidden" asp-for="HvkuserId" />
+        <input type="hidden" asp-for="UserType" class="form-control" />
+        <div class="edit-table-style">
+            <div class="flex-row-cust">
+                <div class="form-group-flex">
+                    <label asp-for="FirstName" class="control-label">First Name <div class="mandatory">*</div></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group-flex">
+                    <label asp-for="LastName" class="control-label">Last Name <div class="mandatory">*</div></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="info-required">
+                    <p class="less-pad">At Least One is required:</p>
+                    <ul>
+                        <li>Email</li>
+                        <li>Phone Number</li>
+                        <li>Cell Number</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex-row-cust">
+                <div class="form-group-flex">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group-flex">
+                    <label asp-for="Phone" class="control-label"></label>
+                    <input asp-for="Phone" class="form-control" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+                <div class="form-group-flex">
+                    <label asp-for="CellPhone" class="control-label"></label>
+                    <input asp-for="CellPhone" class="form-control" />
+                    <span asp-validation-for="CellPhone" class="text-danger"></span>
+                </div>
+                @Html.HiddenFor(model => model.Password)
+            </div>
+        </div>
+    </div>
+    <div>
+        <h5>Home Address</h5>
+        <div class="edit-table-style">
+            <div class="flex-row-cust">
+                <div class="form-group-flex">
+                    <label asp-for="Street" class="control-label"></label>
+                    <input asp-for="Street" class="form-control" />
+                    <span asp-validation-for="Street" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="flex-row-cust">
+                <div class="form-group-flex">
+                    <label asp-for="City" class="control-label"></label>
+                    <input asp-for="City" class="form-control" />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Province" class="control-label"></label>
+                    <select asp-for="Province" class="form-control" asp-items="new SelectList(Enum.GetValues(typeof(Hvkuser.Provinces)))">
+                        <option value="none">Select Province</option>
+                    </select>
+                </div>
+                <div class="form-group-flex">
+                    <label asp-for="PostalCode" class="control-label"></label>
+                    <input asp-for="PostalCode" class="form-control" />
+                    <span asp-validation-for="PostalCode" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h5>Emergency Contact Information</h5>
+        <div class="edit-table-style">
+            <div class="flex-row-cust">
+                <div class="form-group-flex">
+                    <label asp-for="EmergencyContactFirstName" class="control-label">First Name<div class="mandatory">*</div></label>
+                    <input asp-for="EmergencyContactFirstName" class="form-control" />
+                    <span asp-validation-for="EmergencyContactFirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group-flex">
+                    <label asp-for="EmergencyContactLastName" class="control-label">Last Name <div class="mandatory">*</div></label>
+                    <input asp-for="EmergencyContactLastName" class="form-control" />
+                    <span asp-validation-for="EmergencyContactLastName" class="text-danger"></span>
+                </div>
+                <div class="form-group-flex">
+                    <label asp-for="EmergencyContactPhone" class="control-label"></label>
+                    <input asp-for="EmergencyContactPhone" class="form-control" />
+                    <span asp-validation-for="EmergencyContactPhone" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pet-info-action-buttons">
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+        <div class="form-group">
+            <a asp-controller="Home" asp-action="CustomerHome">
+                <input type="button" value="Cancel" class="btn btn-secondary btn-outline-secondary" />
+            </a>
+        </div>
+    </div>
+</form>

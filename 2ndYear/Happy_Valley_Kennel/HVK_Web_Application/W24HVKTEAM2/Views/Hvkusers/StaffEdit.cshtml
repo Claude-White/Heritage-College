@@ -1,0 +1,182 @@
+﻿@model W24HVKTEAM2.Models.Hvkuser
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_StaffLayout.cshtml";
+
+    var upcomingPetReservations = Model.Pets.SelectMany(p => p.PetReservations)
+                          .Where(pr => pr.Reservation.StartDate >= DateTime.Today)
+                          .GroupBy(pr => pr.ReservationId)
+                          .OrderBy(prGroup => prGroup.First().Reservation.StartDate)
+                          .ThenBy(prGroup => prGroup.First().Reservation.EndDate);
+
+    ViewBag.Pets = Model.Pets;
+}
+
+<h1>@(Model.FirstName)'s Information</h1>
+<hr />
+<form asp-action="StaffEdit">
+    <div class="container">
+        <div class="staff-home-layout">
+            <div class="column-one">
+                <input type="hidden" asp-for="HvkuserId" />
+                <input type="hidden" asp-for="UserType" class="form-control" />
+                <div>
+                    <h5>Personal Information</h5>
+                    <div class="edit-table-style">
+                        <div class="flex-row-cust">
+                            <div class="form-group-flex">
+                                <label asp-for="FirstName" class="control-label">First Name <div class="mandatory">*</div></label>
+                                <input asp-for="FirstName" class="form-control" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group-flex">
+                                <label asp-for="LastName" class="control-label">Last Name <div class="mandatory">*</div></label>
+                                <input asp-for="LastName" class="form-control" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                            <div class="info-required">
+                                <p class="less-pad">At Least One is required:</p>
+                                <ul>
+                                    <li>Email</li>
+                                    <li>Phone Number</li>
+                                    <li>Cell Number</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="flex-row-cust">
+                            <div class="form-group-flex">
+                                <label asp-for="Email" class="control-label"></label>
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group-flex">
+                                <label asp-for="Phone" class="control-label"></label>
+                                <input asp-for="Phone" class="form-control" />
+                                <span asp-validation-for="Phone" class="text-danger"></span>
+                            </div>
+                            <div class="form-group-flex">
+                                <label asp-for="CellPhone" class="control-label"></label>
+                                <input asp-for="CellPhone" class="form-control" />
+                                <span asp-validation-for="CellPhone" class="text-danger"></span>
+                            </div>
+                            @Html.HiddenFor(model => model.Password)
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h5>Home Address</h5>
+                    <div class="edit-table-style">
+                        <div class="flex-row-cust">
+                            <div class="form-group-flex">
+                                <label asp-for="Street" class="control-label"></label>
+                                <input asp-for="Street" class="form-control" />
+                                <span asp-validation-for="Street" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="flex-row-cust">
+                            <div class="form-group-flex">
+                                <label asp-for="City" class="control-label"></label>
+                                <input asp-for="City" class="form-control" />
+                                <span asp-validation-for="City" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                    <label asp-for="Province" class="control-label"></label>
+                                    <select asp-for="Province" class="form-control" asp-items="new SelectList(Enum.GetValues(typeof(Hvkuser.Provinces)))">
+                                    <option value="none">Select Province</option>
+                                </select>
+                            </div>
+                            <div class="form-group-flex">
+                                <label asp-for="PostalCode" class="control-label"></label>
+                                <input asp-for="PostalCode" class="form-control" />
+                                <span asp-validation-for="PostalCode" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h5>Emergency Contact Information</h5>
+                    <div class="edit-table-style">
+                        <div class="flex-row-cust">
+                            <div class="form-group-flex">
+                                <label asp-for="EmergencyContactFirstName" class="control-label">First Name<div class="mandatory">*</div></label>
+                                <input asp-for="EmergencyContactFirstName" class="form-control" />
+                                <span asp-validation-for="EmergencyContactFirstName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group-flex">
+                                <label asp-for="EmergencyContactLastName" class="control-label">Last Name <div class="mandatory">*</div></label>
+                                <input asp-for="EmergencyContactLastName" class="form-control" />
+                                <span asp-validation-for="EmergencyContactLastName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group-flex">
+                                <label asp-for="EmergencyContactPhone" class="control-label"></label>
+                                <input asp-for="EmergencyContactPhone" class="form-control" />
+                                <span asp-validation-for="EmergencyContactPhone" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column-two">
+                <div class="row-one">
+                    <div class="table-style-sm col-sm shrink">
+                        <h3 class="h3-space">@(Model.FirstName)'s Pets</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Pet name</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var pet in ViewBag.Pets) {
+                                    <tr>
+                                        <td>@pet.Name</td>
+                                        <td><a asp-action="StaffEdit" asp-route-id="@pet.PetId" asp-controller="Pets" class="table-row-edit"><i class='bx bxs-edit'></i></a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row-two">
+                    <div class="table-style-sm col-sm">
+                        <h3 class="h3-space">Upcoming Reservations</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Pet Name(s)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var petReservation in upcomingPetReservations) {
+                                    var reservation = petReservation.First().Reservation;
+                                    var petNames = petReservation.Select(pr => pr.Pet.Name);
+                                    <tr>
+                                        <td>@reservation.StartDate.ToString("yyyy/MM/dd")</td>
+                                        <td>@reservation.EndDate.ToString("yyyy/MM/dd")</td>
+                                        <td>@string.Join(", ", petNames)</td>
+                                        <td><a asp-action="Construction" asp-controller="Vaccinations"><i class='bx bxs-edit'></i></a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pet-info-action-buttons">
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+        <div class="form-group">
+            <a asp-controller="HvkUsers" asp-action="Index">
+                <input type="button" value="Cancel" class="btn btn-secondary btn-outline-secondary" />
+            </a>
+        </div>
+    </div>
+</form>

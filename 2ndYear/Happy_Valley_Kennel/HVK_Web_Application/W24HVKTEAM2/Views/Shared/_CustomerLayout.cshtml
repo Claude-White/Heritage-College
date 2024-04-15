@@ -1,0 +1,48 @@
+﻿@*@model W24HVKTEAM2.Models.Hvkuser*@
+
+@{
+    var userId = Context.Session.GetInt32("UserId");
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - W24HVKTEAM2</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/W24HVKTEAM2.styles.css" asp-append-version="true" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Happy Valley Kennel</title>
+</head>
+<body>
+    <header>
+        <a asp-controller="Home" asp-action="CustomerHome">
+            <div class="site-name">
+                <img class="img-logo" src="~/images/LogoHVK.png" alt="Logo">
+                <h1>Happy Valley Kennel</h1>
+            </div>
+        </a>
+        <div class="site-profile">
+            <nav>
+                <menu>
+                    <a asp-controller="Hvkusers" asp-action="CustomerEdit" asp-route-id="@userId">Account</a>
+                    <a asp-controller="Hvkusers" asp-action="Logout">Logout</a>
+                </menu>
+            </nav>
+            <i class='bx bxs-user-circle'></i>
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,139 @@
+﻿@model W24HVKTEAM2.Models.Hvkuser
+
+@{
+
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    var upcomingPetReservations = Model.Pets.SelectMany(p => p.PetReservations)
+                          .Where(pr => pr.Reservation.StartDate >= DateTime.Today)
+                          .GroupBy(pr => pr.ReservationId)
+                          .OrderBy(prGroup => prGroup.First().Reservation.StartDate)
+                          .ThenBy(prGroup => prGroup.First().Reservation.EndDate);
+    var activePetReservations = Model.Pets.SelectMany(p => p.PetReservations)
+                          .Where(pr => pr.Reservation.EndDate >= DateTime.Today)
+                          .Where(pr => pr.Reservation.StartDate <= DateTime.Today)
+                          .GroupBy(pr => pr.ReservationId)
+                          .OrderBy(prGroup => prGroup.First().Reservation.StartDate)
+                          .ThenBy(prGroup => prGroup.First().Reservation.EndDate);
+}
+<div class="flex-container">
+    <div class="intro-section">
+        <h3 class="h3-extra-space">Welcome to Happy Valley Kennel!</h3>
+        <p>Welcome to our Happy Valley Kennel, where we take pride in offering unparalleled care for your furry companions. At our facility, we prioritize the well-being and comfort of your pets, ensuring a home away from home. Our dedicated and experienced staff members are passionate about creating a safe and loving environment, providing round-the-clock attention to meet the unique needs of each individual pet. We offer many services for the animals that rest in our care.</p>
+       <br />
+        <a asp-controller="Home" asp-action="Construction" class="btn btn-primary mt-2">Make Reservation</a>
+    </div>
+
+    <div class="tables-section">
+        <div class="container">
+            <div class="row">
+                <div class="table-style-sm col-sm shrink">
+                    <h3 class="h3-space">@(Model.FirstName)'s Pets</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Pet name</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var pet in ViewBag.Pets) {
+                                <tr>
+                                    <td>@pet.Name</td>
+                                    <td><a asp-action="CustomerEdit" asp-route-id="@pet.PetId" asp-controller="Pets" class="table-row-edit"><i class='bx bxs-edit'></i></a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-style-sm col-sm">
+                    <h3 class="h3-space">Active Reservations</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Pet Name(s)</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var petReservation in activePetReservations) {
+                                var reservation = petReservation.First().Reservation;
+                                var petNames = petReservation.Select(pr => pr.Pet.Name);
+                                <tr>
+                                    <td>@reservation.StartDate.ToString("yyyy/MM/dd")</td>
+                                    <td>@reservation.EndDate.ToString("yyyy/MM/dd")</td>
+                                    <td>@string.Join(", ", petNames)</td>
+                                    <td>Edit</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="table-style-sm col-sm shrink">
+                    <h3 class="h3-space">@(Model.FirstName)'s Info</h3>
+                    <table class="table">
+                        <tbody>
+                            <form asp-action="Edit" asp-controller="Hvkusers">
+                            <tr>
+                                <div class="form-group">
+                                    <label asp-for="FirstName" class="control-label"></label>
+                                    <input asp-for="FirstName" class="form-control" disabled />
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="form-group">
+                                    <label asp-for="LastName" class="control-label"></label>
+                                    <input asp-for="LastName" class="form-control" disabled />
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="form-group">
+                                    <label asp-for="Email" class="control-label"></label>
+                                    <input asp-for="Email" class="form-control" disabled />
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="form-group">
+                                    <label asp-for="Phone" class="control-label"></label>
+                                    <input asp-for="Phone" class="form-control" disabled />
+                                </div>
+                            </tr>
+                            <tr>
+                                <a asp-action="CustomerEdit" asp-route-id="@Model.HvkuserId" asp-controller="Hvkusers" class="btn btn-primary mt-2">Edit Info</a>
+                            </tr>
+                            </form>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-style-sm col-sm">
+                    <h3 class="h3-space">Upcoming Reservations</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Pet Name(s)</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var petReservation in upcomingPetReservations) {
+                                var reservation = petReservation.First().Reservation;
+                                var petNames = petReservation.Select(pr => pr.Pet.Name);
+                                <tr>
+                                    <td>@reservation.StartDate.ToString("yyyy/MM/dd")</td>
+                                    <td>@reservation.EndDate.ToString("yyyy/MM/dd")</td>
+                                    <td>@string.Join(", ", petNames)</td>
+                                    <td><a asp-controller="Home" asp-action="Construction" class="table-row-edit"><i class='bx bxs-edit'></i></a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
