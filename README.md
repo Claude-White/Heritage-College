@@ -9,10 +9,10 @@ Second-year Computer Science Student
 The Program Exit Assignment is a Git portfolio to demonstrate what I have learned in this program and provides a portfolio for job applications. It also includes a reflection that is written at the end of each year.
 
 * Programming I, II and III
-* Web Programming I, II and III
+* Web Programming I, II, III, IV and V
 * Hardware and Operating System
 * Math for Computer Science
 * Networks
 * Business in the Workplace
-* Database I
+* Database I, II
 * Systems Analysis
