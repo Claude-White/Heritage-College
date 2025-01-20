@@ -1,0 +1,246 @@
+{
+  "Version": 1,
+  "Hash": "//QZ2KV4jIblN9dtkuCUrjzHz+AXZk5K0J8OEzhe8R4=",
+  "Source": "CWhiteH60Services",
+  "BasePath": "_content/CWhiteH60Services",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [
+    {
+      "Identity": "/Users/omniquark/.nuget/packages/aspnetcorehero.toastnotification/1.1.0/staticwebassets/notyf.min.css",
+      "SourceId": "AspNetCoreHero.ToastNotification",
+      "SourceType": "Package",
+      "ContentRoot": "/Users/omniquark/.nuget/packages/aspnetcorehero.toastnotification/1.1.0/staticwebassets/",
+      "BasePath": "_content/AspNetCoreHero.ToastNotification",
+      "RelativePath": "notyf.min.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "db3tgp313k",
+      "Integrity": "CTrnMEaKkaZUZakHSB9hQKfIKv5LxFB9tAZuNwZKgSw=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/Users/omniquark/.nuget/packages/aspnetcorehero.toastnotification/1.1.0/staticwebassets/notyf.min.css"
+    },
+    {
+      "Identity": "/Users/omniquark/.nuget/packages/aspnetcorehero.toastnotification/1.1.0/staticwebassets/notyf.min.js",
+      "SourceId": "AspNetCoreHero.ToastNotification",
+      "SourceType": "Package",
+      "ContentRoot": "/Users/omniquark/.nuget/packages/aspnetcorehero.toastnotification/1.1.0/staticwebassets/",
+      "BasePath": "_content/AspNetCoreHero.ToastNotification",
+      "RelativePath": "notyf.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "cm79lz9ti0",
+      "Integrity": "1P/7rSp84NFwxnW+OhMBloyi9RtRuJiP2FLf1y3N6Yc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/Users/omniquark/.nuget/packages/aspnetcorehero.toastnotification/1.1.0/staticwebassets/notyf.min.js"
+    },
+    {
+      "Identity": "/Users/omniquark/.nuget/packages/aspnetcorehero.toastnotification/1.1.0/staticwebassets/toastify.css",
+      "SourceId": "AspNetCoreHero.ToastNotification",
+      "SourceType": "Package",
+      "ContentRoot": "/Users/omniquark/.nuget/packages/aspnetcorehero.toastnotification/1.1.0/staticwebassets/",
+      "BasePath": "_content/AspNetCoreHero.ToastNotification",
+      "RelativePath": "toastify.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "w5t26togf2",
+      "Integrity": "JNr0LwI7EmV+x3DGi2OcuqA3jfROWSu1eXYP1E7jHF0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/Users/omniquark/.nuget/packages/aspnetcorehero.toastnotification/1.1.0/staticwebassets/toastify.css"
+    },
+    {
+      "Identity": "/Users/omniquark/.nuget/packages/aspnetcorehero.toastnotification/1.1.0/staticwebassets/toastify.js",
+      "SourceId": "AspNetCoreHero.ToastNotification",
+      "SourceType": "Package",
+      "ContentRoot": "/Users/omniquark/.nuget/packages/aspnetcorehero.toastnotification/1.1.0/staticwebassets/",
+      "BasePath": "_content/AspNetCoreHero.ToastNotification",
+      "RelativePath": "toastify.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "cl5rrypo7e",
+      "Integrity": "8FcB/jDID/3N4Acfkl+GHXltsiF9TOF3Z/my8hRHIWg=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/Users/omniquark/.nuget/packages/aspnetcorehero.toastnotification/1.1.0/staticwebassets/toastify.js"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "_content/AspNetCoreHero.ToastNotification/notyf.min.css",
+      "AssetFile": "/Users/omniquark/.nuget/packages/aspnetcorehero.toastnotification/1.1.0/staticwebassets/notyf.min.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7591"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"CTrnMEaKkaZUZakHSB9hQKfIKv5LxFB9tAZuNwZKgSw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Nov 2020 10:16:56 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-CTrnMEaKkaZUZakHSB9hQKfIKv5LxFB9tAZuNwZKgSw="
+        }
+      ]
+    },
+    {
+      "Route": "_content/AspNetCoreHero.ToastNotification/notyf.min.js",
+      "AssetFile": "/Users/omniquark/.nuget/packages/aspnetcorehero.toastnotification/1.1.0/staticwebassets/notyf.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "10594"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1P/7rSp84NFwxnW+OhMBloyi9RtRuJiP2FLf1y3N6Yc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 11 Dec 2020 20:08:40 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-1P/7rSp84NFwxnW+OhMBloyi9RtRuJiP2FLf1y3N6Yc="
+        }
+      ]
+    },
+    {
+      "Route": "_content/AspNetCoreHero.ToastNotification/toastify.css",
+      "AssetFile": "/Users/omniquark/.nuget/packages/aspnetcorehero.toastnotification/1.1.0/staticwebassets/toastify.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1749"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JNr0LwI7EmV+x3DGi2OcuqA3jfROWSu1eXYP1E7jHF0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 29 Nov 2020 11:05:40 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-JNr0LwI7EmV+x3DGi2OcuqA3jfROWSu1eXYP1E7jHF0="
+        }
+      ]
+    },
+    {
+      "Route": "_content/AspNetCoreHero.ToastNotification/toastify.js",
+      "AssetFile": "/Users/omniquark/.nuget/packages/aspnetcorehero.toastnotification/1.1.0/staticwebassets/toastify.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "12794"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"8FcB/jDID/3N4Acfkl+GHXltsiF9TOF3Z/my8hRHIWg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 29 Nov 2020 07:14:28 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-8FcB/jDID/3N4Acfkl+GHXltsiF9TOF3Z/my8hRHIWg="
+        }
+      ]
+    }
+  ]
+}

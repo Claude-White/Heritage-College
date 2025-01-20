@@ -1,0 +1,34 @@
+﻿@using HFA.Resources
+@model List<ReleaseNotes>
+@{
+    ViewBag.Title = HFA_Resources.ReleaseNotes;
+}
+<section class="bg-gray-100 px-10 py-4 sm:px-36" id="ReleaseNotesSection">
+    <h1 class="mb-3 text-2xl text-secondary">@HFA_Resources.ReleaseNotes</h1>
+    @if (Model != null && Model.Any())
+    {
+        @foreach (var note in Model)
+        {
+            <details class="collapse-arrow collapse mb-3 border border-solid border-secondary bg-white px-3 shadow-sm">
+                <summary class="collapse-title rounded-lg bg-white px-4 font-medium">
+                    <h3 class="text-xl font-bold text-secondary">@note.Title</h3>
+                    <h4 class="font-bold text-secondary">@note.ReleaseVersion</h4>
+                </summary>
+                <div class="collapse-content rounded-lg px-3 pt-1">
+                    <p class="">@note.ShortSummary</p>
+                    <div class="releaseNotesContent mt-1.5">
+                        @if (note.Content != null && note.Content.Any())
+                        {
+                            <p>
+                                @Html.Raw(note.Content)
+                            </p>
+                        }
+                    </div>
+                </div>
+            </details>
+        }
+    } else
+    {
+        <p>There are no release notes.</p>
+    }
+</section>

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../buildMultiTargeting/CWhiteH60Customer.props" />
+</Project>

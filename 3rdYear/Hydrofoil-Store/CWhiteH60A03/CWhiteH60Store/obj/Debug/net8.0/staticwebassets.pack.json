@@ -1,0 +1,117 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/obj/Debug/net8.0/scopedcss/projectbundle/CWhiteH60Store.bundle.scp.css",
+      "PackagePath": "staticwebassets/CWhiteH60Store.rgmmes8gpo.bundle.scp.css"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/css/input.css",
+      "PackagePath": "staticwebassets/css/input.css"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/css/output.css",
+      "PackagePath": "staticwebassets/css/output.css"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/favicon.ico",
+      "PackagePath": "staticwebassets/favicon.ico"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/icons/delete-icon.svg",
+      "PackagePath": "staticwebassets/icons/delete-icon.svg"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/icons/details-icon.svg",
+      "PackagePath": "staticwebassets/icons/details-icon.svg"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/icons/edit-icon.svg",
+      "PackagePath": "staticwebassets/icons/edit-icon.svg"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/icons/triangle-alert.svg",
+      "PackagePath": "staticwebassets/icons/triangle-alert.svg"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/images/HeroPageImage.jpeg",
+      "PackagePath": "staticwebassets/images/HeroPageImage.jpeg"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/js/customer.js",
+      "PackagePath": "staticwebassets/js/customer.js"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/js/site.js",
+      "PackagePath": "staticwebassets/js/site.js"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/LICENSE.txt"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/lib/jquery-validation/LICENSE.md",
+      "PackagePath": "staticwebassets/lib/jquery-validation/LICENSE.md"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/lib/jquery-validation/dist/additional-methods.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/additional-methods.js"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/lib/jquery-validation/dist/additional-methods.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/additional-methods.min.js"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/lib/jquery-validation/dist/jquery.validate.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/jquery.validate.js"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/jquery.validate.min.js"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/lib/jquery/LICENSE.txt",
+      "PackagePath": "staticwebassets/lib/jquery/LICENSE.txt"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/lib/jquery/dist/jquery.js",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.js"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/lib/jquery/dist/jquery.min.js",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.js"
+    },
+    {
+      "Id": "/Users/omniquark/Documents/CS_Semester5/Web_VI/Assignments/420-h60-hr-assignment-3-Claude-White/CWhiteH60A03/CWhiteH60Store/wwwroot/lib/jquery/dist/jquery.min.map",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.map"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.CWhiteH60Store.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.CWhiteH60Store.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.CWhiteH60Store.props",
+      "PackagePath": "build\\CWhiteH60Store.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.CWhiteH60Store.props",
+      "PackagePath": "buildMultiTargeting\\CWhiteH60Store.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.CWhiteH60Store.props",
+      "PackagePath": "buildTransitive\\CWhiteH60Store.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

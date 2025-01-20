@@ -1,0 +1,13 @@
+namespace CWhiteH60Store.DAL;
+
+public interface IProductRepository<T> where T : class {
+    Task Create(T model);
+    Task Update(T model);
+    Task UpdateStock(T model);
+    Task UpdatePrice(T model);
+    Task Delete(T model);
+    Task<List<T>> GetAll();
+    Task<T> GetById(int id);
+    Task<T> GetByIdInclude(int id);
+    Task<bool> NameExists(string prodCat, int categoryId);
+}

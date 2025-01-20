@@ -1,0 +1,50 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="flex justify-center mt-8">
+    <div class="card bg-neutral-200 w-[32rem] shadow-lg">
+        <div class="card-body items-center text-center">
+            <h2 class="card-title">Login</h2>
+            <form id="account" method="post" class="flex flex-col gap-2 w-full">
+                <div asp-validation-summary="ModelOnly" class="text-red-600" role="alert"></div>
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Email</span>
+                    </div>
+                    <input asp-for="Input.Email" class="input input-bordered w-full"/>
+                    <span asp-validation-for="Input.Email" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Password</span>
+                    </div>
+                    <input asp-for="Input.Password" class="input input-bordered w-full" autocomplete="current-password" aria-required="true"/>
+                    <span asp-validation-for="Input.Password" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <div class="form-control w-full">
+                    <label class="label cursor-pointer justify-end gap-2">
+                        <span class="label-text">Remember password</span>
+                        <input asp-for="Input.RememberMe" type="checkbox" class="checkbox"/>
+                        <span asp-validation-for="Input.RememberMe" class="text-danger text-red-600 text-sm"></span>
+                    </label>
+                </div>
+                <div class="card-actions justify-center mt-2">
+                    <button id="login-submit" type="submit" class="btn btn-info px-8">Log in</button>
+                </div>
+                <div>
+                    <p>
+                        <a class="link" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

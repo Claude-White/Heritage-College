@@ -1,0 +1,84 @@
+﻿@using HFA.Resources
+@using System.Globalization
+
+<!DOCTYPE html>
+<html lang="en" data-theme="corporate">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HFA</title>
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+</head>
+<body class="min-h-[100vh] flex flex-col">
+    <header class="h-[85px]">
+        <nav class="navbar justify-between bg-base-100 px-4 lg:px-10 py-1">
+            <a class="flex-row gap-2" asp-area="" asp-controller="Home" asp-action="Index">
+                <img src="~/images/heritage-logo-v4.png" class="h-8" alt="Heritage College Logo" />
+                <h1 class="font-noto-serif text-2xl text-secondary">Heritage Faculty Association</h1>
+            </a>
+
+            <div class="flex-none">
+                <div class="drawer drawer-end">
+                    <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
+                    <div class="drawer-content flex flex-col">
+                        <div class="navbar w-full">
+                            <div class="flex-none lg:hidden">
+                                <label for="my-drawer-3" aria-label="open sidebar" class="btn btn-square btn-ghost" title="Open Sidebar">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-6 w-6 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                                </label>
+                            </div>
+                            <div class="hidden flex-none lg:block">
+                                <ul class="menu menu-horizontal items-center gap-1">
+                                    <partial name="_NavbarItemsPartial" />
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="drawer-side z-50">
+                        <label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay"></label>
+                        <ul class="menu z-50 min-h-full w-80 bg-base-200 p-4">
+                            <partial name="_NavbarItemsPartial" />
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="flex-1 h-auto">
+        @RenderBody()
+    </main>
+
+    <footer class="h-[90px] flex items-center justify-between bg-accent px-10 py-6">
+        <a class="flex-row gap-3" asp-area="" asp-controller="Home" asp-action="Index">
+            <img src="~/images/heritage-logo-v4.png" class="h-10" alt="Heritage College Logo" />
+        </a>
+        <p class="text-secondary">
+            <a asp-controller="Home" asp-action="ReleaseNotes" class="underline">Version:</a> 1.0.0 (2024-04-24)
+        </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            loop: true,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: true,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+            },
+        });
+    </script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

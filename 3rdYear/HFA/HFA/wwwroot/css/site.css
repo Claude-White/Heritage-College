@@ -1,0 +1,88 @@
+/*! @import */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Tables*/
+.table td {
+    padding: 0.5rem;
+}
+
+.table td input {
+    background: none;
+    height: 2.5rem;
+    padding-left: 0.5em;
+}
+
+tbody tr {
+    transition: all 0.25s ease-out;
+}
+
+tbody tr:hover {
+    filter: brightness(97%);
+}
+
+/* Custom Toast */
+.notyf__toast {
+    max-width: 450px !important
+}
+
+.notyf__message {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+/* Custom Prose */
+
+.prose * {
+    margin: 0px;
+}
+
+/* Custom Swiper Carousel */
+.swiper {
+    --swiper-navigation-size: 35px;
+    --swiper-navigation-color: #fff;
+    --swiper-navigation-sides-offset: 30px;
+    --swiper-pagination-color: #fff;
+}
+
+@media (max-width: 768px) {
+    .swiper-button-next, .swiper-button-prev {
+        display: none !important;
+    }
+}
+
+/* CropperJs (Required) */
+.cropper-preview {
+    display: block;
+    max-width: 100%;
+}
+
+/* Custom CSS */
+.w-inherit {
+    width: inherit;
+}
+
+.h-inherit {
+    height: inherit;
+}
+
+.fc .fc-toolbar-title {
+    font-size: 100% !important;
+    margin-bottom: -70px !important;
+}
+
+.fc .fc-button-primary {
+    background-color: #d1d5db;
+    border-color: #d1d5db;
+    color: black;
+}
+
+    .fc .fc-button-primary:hover {
+        background-color: #695e4a;
+        border-color: #695e4a;
+        color: white;
+    }

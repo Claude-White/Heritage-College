@@ -1,0 +1,36 @@
+﻿@using HFA.Resources
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+<li>
+    <a class="text-base" asp-area="" asp-controller="Home" asp-action="Index">@HFA_Resources.Home</a>
+</li>
+@* @if (User.Identity?.IsAuthenticated == true && (await AuthorizationService.AuthorizeAsync(User, "HasEditPermissions")).Succeeded) *@
+@* { *@
+    <li>
+        <a class="text-base" asp-area="" asp-controller="ContentHub" asp-action="Index">@HFA_Resources.ContentHub</a>
+    </li>
+@* } *@
+<li>
+    <a class="text-base" asp-area="" asp-controller="AboutUs" asp-action="Index">@HFA_Resources.AboutUs</a>
+</li>
+<li>
+    <a class="text-base" asp-area="" asp-controller="Articles" asp-action="Index">@HFA_Resources.Articles</a>
+</li>
+
+<li>
+    <!--<a class="text-base" asp-area="" asp-controller="Calendar" asp-action="Index">Events</a>-->
+</li>
+@if (User.Identity?.IsAuthenticated == true)
+{
+    <li>
+        <a class="text-base" asp-controller="File" asp-action="Index">@HFA_Resources.Files</a>
+    </li>
+}
+<li>
+    <a class="text-base" asp-area="" asp-controller="Faq" asp-action="Index">FAQ</a>
+</li>
+<li>
+    <a class="text-base" asp-controller="Home" asp-action="Translate">@HFA_Resources.SwitchLanguage</a>
+</li>
+<partial name="_LoginPartial" />

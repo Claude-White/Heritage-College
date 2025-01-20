@@ -1,0 +1,83 @@
+﻿@using HFA.Resources
+@model AboutUsViewModel
+@{
+    ViewData["Title"] = HFA_Resources.AboutUs;
+}
+
+@if (Model != null)
+{
+    <section class="bg-gray-100 px-10 py-4 sm:px-36">
+        <h1 class="mb-2 text-2xl text-secondary">@HFA_Resources.OurMission</h1>
+        <p>
+            @Model.Mission?.Description
+        </p>
+    </section>
+
+    @if (Model.Executives != null && Model.Executives.Any())
+    {
+
+        <section class="bg-white px-10 py-4 sm:px-36">
+            <h1 class="mb-4 text-2xl text-secondary">@HFA_Resources.ExecutivesLabel</h1>
+            <div class="grid-cols-1 grid gap-4 md:grid-cols-3 xl:grid-cols-5">
+                @foreach (Executive executive in Model.Executives)
+                {
+                    <section class="rounded border-none bg-gray-100 bg-none p-4 pb-10 text-center">
+                        <div class="avatar">
+                            <div class="w-40 rounded-full">
+                                <img src="https://placehold.co/160x160" alt="placeholder image for executives"/>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-lg font-bold text-secondary">@executive.FirstName @executive.LastName</span>
+                            <p>@executive.Position</p>
+                        </div>
+                    </section>
+                }
+
+            </div>
+        </section>
+    }
+}
+
+<section class="bg-gray-100 px-10 py-4 sm:px-36">
+    <h1 class="mb-2 text-2xl text-secondary">@HFA_Resources.ElectedMembers</h1>
+    @if (Model?.ElectedGroups != null && Model.ElectedGroups.Count() > 0)
+    {
+        <div class="grid-cols-1 grid gap-4 md:grid-cols-3 xl:grid-cols-5">
+            @foreach (var ElectedGroup in Model.ElectedGroups)
+            {
+                <div>
+                    <h4 class="text-l mb-1 font-bold text-secondary">@ElectedGroup.GroupName</h4>
+                    @if (ElectedGroup.Members != null && ElectedGroup.Members.Count() > 0)
+                    {
+                        <ul>
+                            @foreach (var member in ElectedGroup.Members)
+                            {
+                                <li>@member.MemberFirstName @member.MemberLastName</li>
+                            }
+                        </ul>
+                    } else
+                    {
+                        <p>There are no members</p>
+                    }
+                </div>
+            }
+        </div>
+    } else
+    {
+        <p>There are no elected groups.</p>
+    }
+</section>
+
+<section class="bg-white px-10 py-4 sm:px-36">
+    <h1 class="mb-2 text-2xl text-secondary">@HFA_Resources.ContactUs</h1>
+    <p>@HFA_Resources.Email : <a href="mailto:hfa@cegep-heritage.qc.ca" class="text-blue-700 underline">hfa@cegep-heritage.qc.ca</a></p>
+</section>
+
+<section class="bg-gray-100 px-10 py-4 sm:px-36">
+    <h1 class="mb-5 text-2xl text-secondary">@HFA_Resources.RelatedOrganizations</h1>
+    <div class="flex">
+        <a href="https://fneeq.qc.ca/en/" class="text-blue-700 underline"><img alt="FNEEQ logo and link" src="./images/fneeq-logo.png" /></a>
+        <a href="https://www.csn.qc.ca/en" class="ml-3 text-blue-700 underline"><img alt="CSN logo and link" src="./images/csn-logo.png" width="60" /></a>
+    </div>
+</section>

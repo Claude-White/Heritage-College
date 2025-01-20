@@ -1,0 +1,27 @@
+@model IEnumerable<CWhiteH60Customer.Models.DataTransferObjects.CustomerProductDto>
+
+<div class="text-center my-8">
+    <h1 class="text-4xl font-bold text-primary mb-4">Our Products</h1>
+    <p class="text-gray-600" id="productCount">Results: @Model.Count()</p>
+</div>
+
+<div class="w-full max-w-xl mx-auto mb-12 px-4 hidden md:block">
+    <form id="searchForm" method="get" class="join w-full">
+        <input type="text"
+               placeholder="Search products..."
+               class="input input-bordered w-full join-item"
+               id="searchInput"
+               name="searchTerm"/>
+        <button class="btn join-item" id="searchButton">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </button>
+    </form>
+</div>
+
+<div id="partialContent">
+    <partial name="_ProductDisplayPartial" model="Model" />
+</div>
+
+<script type="module" src="~/js/blob_generator.js"></script>
+<script type="module" src="~/js/searchProducts.js"></script>
+<script type="module" src="~/js/shopping_cart.js"></script>

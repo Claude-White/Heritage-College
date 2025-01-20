@@ -1,0 +1,104 @@
+@model CWhiteH60Store.Models.Product
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="flex justify-center py-8">
+    <div class="card bg-neutral-200 w-[32rem] shadow-lg">
+        <div class="card-body items-center text-center">
+            <h2 class="card-title">Edit Product</h2>
+            <form asp-action="Edit" class="flex flex-col gap-2 w-full" enctype="multipart/form-data">
+                <input type="hidden" asp-for="ProductID"/>
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Product Category</span>
+                    </div>
+                    <select asp-for="ProdCatId" class="select select-bordered w-full">
+                        <option value="" disabled selected>Select Category</option>
+                        @foreach (var category in ViewBag.ProdCat) {
+                        <option value="@category.CategoryID" id="@category.CategoryID" asp-for="ProdCatId">@category.ProdCat</option>
+                        }
+                    </select>
+                    <span asp-validation-for="ProdCatId" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Description</span>
+                    </div>
+                    <input asp-for="Description" class="input input-bordered w-full"/>
+                    <span asp-validation-for="Description" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Manufacturer</span>
+                    </div>
+                    <input asp-for="Manufacturer" class="input input-bordered w-full"/>
+                    <span asp-validation-for="Manufacturer" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Stock</span>
+                    </div>
+                    <input asp-for="Stock" class="input input-bordered w-full"/>
+                    <span asp-validation-for="Stock" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">BuyPrice</span>
+                    </div>
+                    @if (User.IsInRole("manager")) {
+                        <input asp-for="BuyPrice" class="input input-bordered w-full" />
+                    }
+                    else {
+                        <input asp-for="BuyPrice" class="input input-bordered w-full" readonly />
+                    }
+                    <span asp-validation-for="BuyPrice" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">SellPrice</span>
+                    </div>
+                    @if (User.IsInRole("manager")) {
+                        <input asp-for="SellPrice" class="input input-bordered w-full" />
+                    }
+                    else {
+                        <input asp-for="SellPrice" class="input input-bordered w-full" readonly />
+                    }
+                    <span asp-validation-for="SellPrice" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Notes</span>
+                    </div>
+                    <textarea asp-for="Notes" class="textarea textarea-bordered"></textarea>
+                    <span asp-validation-for="Notes" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Image</span>
+                    </div>
+                    <input type="file" name="imageFile" id="ImageFile" class="file-input file-input-bordered w-full" />
+                    <span asp-validation-for="ImageData" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                @if (Model.ImageData != null) {
+                    <input type="hidden" asp-for="ImageData" />
+                    <input type="hidden" asp-for="ImageName" />
+                    <div class="form-control">
+                        <label class="label cursor-pointer">
+                            <span class="label-text">Remove Image</span>
+                            <input type="checkbox" name="removeImage" id="RemoveImage" class="checkbox"/>
+                        </label>
+                    </div>
+                    <div class="flex justify-center">
+                        <img class="w-[50%] aspect-square" src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.ImageData))" alt="Product Image"/>
+                    </div>
+                }
+                <div class="card-actions justify-center mt-2">
+                    <button type="submit" class="btn btn-info px-8">Save</button>
+                    <a asp-action="Index" class="btn btn-ghost px-8">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

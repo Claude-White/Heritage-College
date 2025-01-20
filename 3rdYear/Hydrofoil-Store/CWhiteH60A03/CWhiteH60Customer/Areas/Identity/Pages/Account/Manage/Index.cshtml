@@ -1,0 +1,72 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<div class="flex justify-center mt-8">
+    <div class="card bg-[#e2effb] w-[32rem] shadow-lg">
+        <div class="card-body items-center text-center">
+            <h2 class="card-title">Profile</h2>
+            <form id="profile-form" method="post" class="flex flex-col gap-2 w-full">
+                <label class="form-control w-full bg-[#e2effb] border-0">
+                    <div class="label">
+                        <span class="label-text">First Name</span>
+                    </div>
+                    <input asp-for="Input.FirstName" class="input input-bordered w-full" />
+                    <span asp-validation-for="Input.FirstName" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <label class="form-control w-full bg-[#e2effb] border-0">
+                    <div class="label">
+                        <span class="label-text">Last Name</span>
+                    </div>
+                    <input asp-for="Input.LastName" class="input input-bordered w-full" />
+                    <span asp-validation-for="Input.LastName" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <label class="form-control w-full bg-[#e2effb] border-0">
+                    <div class="label">
+                        <span class="label-text">Email</span>
+                    </div>
+                    <input asp-for="Input.Email" class="input input-bordered w-full" />
+                    <span asp-validation-for="Input.Email" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <label class="form-control w-full bg-[#e2effb] border-0">
+                    <div class="label">
+                        <span class="label-text">Phone number</span>
+                    </div>
+                    <input asp-for="Input.PhoneNumber" class="input input-bordered w-full"/>
+                    <span asp-validation-for="Input.PhoneNumber" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <label class="form-control w-full bg-[#e2effb] border-0">
+                    <div class="label">
+                        <span class="label-text">Province</span>
+                    </div>
+                    <select asp-for="Input.Province" class="select select-bordered w-full">
+                        <option value="" disabled selected>Select Province</option>
+                        @foreach (var province in ViewBag.Provinces) {
+                            <option value="@(province.Key)" id="@(province.Key)" asp-for="Input.Province">@(province.Value)</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Input.Province" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <label class="form-control w-full bg-[#e2effb] border-0">
+                    <div class="label">
+                        <span class="label-text">Credit Card</span>
+                    </div>
+                    <input asp-for="Input.CreditCard" class="input input-bordered w-full" />
+                    <span asp-validation-for="Input.CreditCard" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <div class="form-control w-full bg-[#e2effb] border-0">
+                    <button id="update-profile-button" type="submit" class="w-full btn bg-[#1e89ee]">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,29 @@
+@model CWhiteH60Store.Models.Product
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var stock = Model.Stock;
+}
+
+<div class="flex justify-center mt-8">
+    <div class="card bg-neutral-200 w-[32rem] shadow-lg">
+        <div class="card-body items-center text-center">
+            <h2 class="card-title">Edit Stock (@(stock))</h2>
+            <form asp-action="EditStock" class="flex flex-col gap-2 w-full">
+                <input type="hidden" asp-for="ProductID" name="ProductID"/>
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Stock</span>
+                    </div>
+                    <input type="text" name="Stock" inputmode="numeric" class="input input-bordered w-full"/>
+                    <span asp-validation-for="Stock" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <div class="card-actions justify-center mt-2">
+                    <button type="submit" class="btn btn-info px-8">Save</button>
+                    <a asp-action="Index" class="btn btn-ghost px-8">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+﻿@using HFA.Resources
+@model ArticlesPage
+@{
+    ViewData["Title"] = "Articles";
+
+    ArticleViewModel? focusedArticle = Model.Articles?.FirstOrDefault();
+    List<ArticleViewModel> otherArticles = Model.Articles?.OrderByDescending(a => a.CreatedDate).ToList();
+}
+
+<section>
+
+    @* Focused Article *@
+    @if (focusedArticle != null)
+    {
+        <div class="mb-8 bg-base-200 px-6 py-12 md:px-36">
+            <h1 class="mb-2 text-lg text-secondary">@HFA_Resources.NewestArticle</h1>
+
+            <div class="grid-cols-1 relative grid gap-6 lg:grid-cols-2">
+                <a class="absolute h-full w-full" asp-controlller="Articles" asp-action="Article" asp-route-articleId="@focusedArticle.ArticleId"></a>
+                <div>
+                    @if (focusedArticle.HeroImage != null)
+                    {
+                        <img class="aspect-16/9 w-full rounded object-cover" src="@focusedArticle.HeroImage.Path" alt="image for @focusedArticle.Title">
+                    }
+                </div>
+                <div>
+                    @if (focusedArticle.CreatedDate != null)
+                    {
+                        <p>@HFA_Resources.Published @focusedArticle.CreatedDate.Value.ToString("D", HFA_Resources.Culture) @HFA_Resources.AtTime @focusedArticle.CreatedDate.Value.ToString("t", HFA_Resources.Culture)</p>
+                    }
+                    <a href="#" class="mt-1 block text-3xl font-bold leading-tight text-black hover:underline">@focusedArticle.Title</a>
+                    <p class="mt-2 text-lg text-gray-600">@focusedArticle.Lead</p>
+                </div>
+            </div>
+        </div>
+    }
+
+    @* Other Articles *@
+    <div class="gap-1 px-6 md:gap-2 md:px-36">
+        <h1 class="mb-2 flex text-lg text-secondary">
+            @HFA_Resources.AllArticles
+            @if (Model.FilteringCategories != null && Model.FilteringCategories.Count > 0)
+            {
+                <form id="FilterForm" class="ml-auto mr-0">
+                    <select id="FilterSelect" class="block overflow-y-auto w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:ring-secondary focus:border-secondary">
+                        <option value="default">@HFA_Resources.FilterByCategory</option>
+                        @foreach (var category in Model.FilteringCategories)
+                        {
+                            <option value="@category" id="@category" class="h-2">@category</option>
+                        }
+                    </select>
+                </form>
+            }
+        </h1>
+
+        <div class="grid-cols-2 grid gap-6 lg:grid-cols-4" id="Articles">
+            @foreach (var articleViewModel in otherArticles)
+            {
+                <div class="articleElement relative flex w-full flex-col" data-category="@articleViewModel.Category">
+                    <a class="absolute h-full w-full" asp-controller="Articles" asp-action="Article" asp-route-articleId="@articleViewModel.ArticleId"></a>
+                    <div class="flex-shrink-0 relative">
+                        @if (articleViewModel.Category != null)
+                        {
+                            <span class="py-[1.5px] bg-primary-0 absolute px-2 text-sm uppercase">@articleViewModel.Category</span>
+                        }
+                        @if (articleViewModel.HeroImage != null)
+                        {
+                            <img class="aspect-16/9 h-40 w-full rounded object-cover" src="@articleViewModel.HeroImage.Path" alt="image for @articleViewModel.Title">
+                        }
+                    </div>
+                    <div class="flex flex-col gap-2 py-4">
+                        @if (articleViewModel.CreatedDate != null)
+                        {
+                            <p class="text-xs">@HFA_Resources.Published @articleViewModel.CreatedDate.Value.ToString("D", HFA_Resources.Culture) @HFA_Resources.AtTime @articleViewModel.CreatedDate.Value.ToString("t", HFA_Resources.Culture)</p>
+                        }
+                        <a href="#" class="block text-xl font-bold leading-tight text-black hover:underline">@articleViewModel.Title</a>
+                        <p class="text-sm text-gray-600">@articleViewModel.Lead</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    @* No Articles or cannot retrieve articles *@
+    @if (Model.Articles == null || Model.Articles.Count == 0){
+        <p class="px-20 sm:px-36">@HFA_Resources.NoArticles</p>
+    }
+</section>
+

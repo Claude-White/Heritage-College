@@ -1,0 +1,48 @@
+﻿@model EntryPage
+@using HFA.Resources
+
+@* Custom data so that Javascript can read it *@
+<div id="RESTResources" data-resources='@Html.Raw(Json.Serialize(Model.RESTResources))'></div>
+<div id="AreRowsSummary" data-are-rows-summary='@Html.Raw(Model.AreRowsSummary)'></div>
+
+<dialog id="confirm-delete-modal" class="modal">
+    <div class="modal-box">
+        <h3 class="text-lg font-bold">@HFA_Resources.DeleteField</h3>
+        <p class="py-4">@HFA_Resources.ConfirmDeleteField</p>
+        <div class="modal-action">
+            <form method="dialog">
+                <button id="confirm-delete-button" class="btn btn-error">@HFA_Resources.Delete</button>
+                <button class="btn btn-outline">@HFA_Resources.Cancel</button>
+            </form>
+        </div>
+    </div>
+</dialog>
+
+<section class="w-full">
+    <div class="mb-3 flex items-center justify-between">
+        <h2 class="mb-2 text-3xl font-bold">@Model.PageTitle</h2>
+        <button id="action-create" class="btn btn-primary btn-sm" title="Add Entry">
+            @HFA_Resources.AddEntry
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
+                <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
+            </svg>
+        </button>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="table rounded border">
+            <partial name="_EntriesHeader" model="Model.TemplateModel" />
+
+            <tbody>
+                <partial name="_EntryRow" model="Tuple.Create(Model.TemplateModel, true, Model.AreRowsSummary, Model.RawDisplay)" />
+
+                @foreach (var entry in Model.Entries)
+                {
+                    <partial name="_EntryRow" model="Tuple.Create(entry, false, Model.AreRowsSummary, Model.RawDisplay)" />
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="join flex justify-center items-center m-4" id="paginationDiv"></div>
+</section>
+<script src="~/js/ContentHubPagination.js"></script>

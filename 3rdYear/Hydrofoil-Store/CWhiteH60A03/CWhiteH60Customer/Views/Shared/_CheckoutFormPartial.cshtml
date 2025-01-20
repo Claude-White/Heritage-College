@@ -1,0 +1,83 @@
+@model Customer
+
+<form asp-controller="ShoppingCart" asp-action="PlaceOrder" class="flex flex-col gap-2 w-full">
+    <div asp-validation-summary="ModelOnly" class="text-red-600" role="alert"></div>
+    <input type="hidden" class="hidden" asp-for="CustomerId" />
+    <label class="form-control w-full border-0 px-0">
+        <div class="label">
+            <span class="label-text">First Name</span>
+        </div>
+        <input asp-for="FirstName" class="input input-bordered w-full" />
+        <span asp-validation-for="FirstName" class="text-danger text-red-600 text-sm"></span>
+    </label>
+    <label class="form-control w-full border-0 px-0">
+        <div class="label">
+            <span class="label-text">Last Name</span>
+        </div>
+        <input asp-for="LastName" class="input input-bordered w-full"/>
+        <span asp-validation-for="LastName" class="text-danger text-red-600 text-sm"></span>
+    </label>
+    <label class="form-control w-full border-0 px-0">
+        <div class="label">
+            <span class="label-text">Delivery Address</span>
+        </div>
+        <input asp-for="Address" class="input input-bordered w-full"/>
+        <span asp-validation-for="Address" class="text-danger text-red-600 text-sm"></span>
+    </label>
+    <label class="form-control w-full border-0 px-0">
+        <div class="label">
+            <span class="label-text">Province</span>
+        </div>
+        <select id="provinceSelector" asp-for="Province" class="select select-bordered w-full">
+            <option value="" disabled selected>Select Province</option>
+            <option value="QC">Quebec</option>
+            <option value="ON">Ontario</option>
+            <option value="MB">Manitoba</option>
+            <option value="NB">New Brunswick</option>
+        </select>
+        <span asp-validation-for="Province" class="text-danger text-red-600 text-sm"></span>
+    </label>
+    <label class="form-control w-full border-0 px-0">
+        <div class="label">
+            <span class="label-text">Credit Card</span>
+        </div>
+        <input asp-for="CreditCard" class="input input-bordered w-full" autocomplete="current-password" aria-required="true"/>
+        <span asp-validation-for="CreditCard" class="text-danger text-red-600 text-sm"></span>
+    </label>
+    <div class="space-y-4">
+        <div class="space-y-2">
+            <dl class="flex items-center justify-between gap-4">
+                <div class="skeleton h-6 w-full hidden priceSkeletons"></div>
+                <dt class="text-base font-normal text-gray-500 priceLabels">Subtotal</dt>
+                <dd id="subtotal" class="text-base font-medium text-gray-900 priceValues">@string.Format("${0:N0}", ViewData["Subtotal"])</dd>
+            </dl>
+
+            <dl class="flex items-center justify-between gap-4">
+                <div class="skeleton h-6 w-full hidden priceSkeletons"></div>
+                <dt class="text-base font-normal text-gray-500 priceLabels">Tax</dt>
+                <dd id="tax" class="text-base font-medium text-gray-900 priceValues"></dd>
+            </dl>
+        </div>
+
+        <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2">
+            <div class="skeleton h-8 w-full hidden priceSkeletons"></div>
+            <dt class="text-base font-bold text-gray-900 priceLabels">Total</dt>
+            <dd id="total" class="text-base font-bold text-gray-900 priceValues"></dd>
+        </dl>
+    </div>
+
+    <button onclick="openModal()" type="button" class="flex w-full items-center justify-center rounded-lg btn btn-primary focus:outline-none focus:ring-4 focus:ring-primary-300">
+        Checkout
+    </button>
+    
+    <dialog id="confirmModal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+            <h3 class="text-lg font-bold">Place Order Confirmation</h3>
+            <div class="modal-action">
+                <button type="button" onclick="closeModal()" class="btn">Cancel</button>
+                <button type="submit" onclick="closeModal()" class="btn btn-primary">Place Order</button>
+            </div>
+        </div>
+    </dialog>
+    
+</form>

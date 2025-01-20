@@ -1,0 +1,28 @@
+@model IEnumerable<CWhiteH60Customer.Models.DataTransferObjects.CustomerProductDto>
+
+@{
+    var customerId = User.Claims.FirstOrDefault(c => c.Type == "CustomerId")?.Value;
+}
+
+<div class="grid gap-4 grid-cols-responsive justify-items-center w-[80%] mx-auto pb-24" id="productsList">
+    @if (!Model.Any()) {
+        <h2>No Products Found</h2>
+    }
+    else {
+        @foreach (var product in Model) {
+            <div class="grid place-items-center w-full h-full">
+                <a asp-action="Details" asp-route-id="@product.ProductId" class="text-center w-full h-full rounded-xl group text-black max-w-[300px]">
+                    <div class="relative">
+                        @if (product.ImageData != null) {
+                            <img class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[60%] group-hover:scale-110 transition-transform duration-300 transform origin-center" src="data:image/jpeg;base64,@(Convert.ToBase64String(product.ImageData))" alt="Product Image"/>
+                        }
+                        <div class="blob-container w-full" data-blob-id="@product.ProductId"></div>
+                    </div>
+                    <h3 class="truncate">@product.Description</h3>
+                    <p class="opacity-75 truncate">@product.Manufacturer</p>
+                    <p class="mb-3 truncate">Price: @($"{product.SellPrice:N0}$")</p>
+                </a>
+            </div>
+        }
+    }
+</div>

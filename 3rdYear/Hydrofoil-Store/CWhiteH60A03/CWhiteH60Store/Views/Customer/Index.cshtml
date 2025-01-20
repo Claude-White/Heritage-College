@@ -1,0 +1,93 @@
+@model IEnumerable<Customer>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-2xl absolute left-8">Customers</h1>
+<div class="hidden sm:flex justify-center items-center gap-2 w-full mt-4 px-4 mb-2">
+    <input type="search" id="search-input" class="input input-bordered w-52 md:w-64 xl:w-96 max-w-md" placeholder="Search" />
+    <button type="button" class="btn btn-info" onclick="searchCustomer()">Search</button>
+</div>
+
+<div class="overflow-x-auto mb-12 h-[45rem] px-4">
+    <table class="table table-pin-rows">
+        <thead>
+        <tr class="text-lg">
+            <th class="hidden md:table-cell">
+                First Name
+            </th>
+            <th class="hidden md:table-cell">
+                Last Name
+            </th>
+            <th class="hidden sm:table-cell">
+                Email
+            </th>
+            <th class="hidden lg:table-cell">
+                Phone Number
+            </th>
+            <th class="hidden lg:table-cell">
+                Province
+            </th>
+            <th>
+                <a class="btn btn-info btn-sm w-48 shadow-md" asp-action="Create">Create</a>
+            </th>
+        </tr>
+        </thead>
+        <tbody id="customer-table-body">
+        @if (Model.Any()) {
+            @foreach (var customer in Model) {
+                <tr class="hover">
+                    <td class="hidden md:table-cell">
+                        @customer.FirstName
+                    </td>
+                    <td class="hidden md:table-cell">
+                        @customer.LastName
+                    </td>
+                    <td class="hidden sm:table-cell">
+                        @customer.Email
+                    </td>
+                    <td class="hidden lg:table-cell">
+                        @customer.PhoneNumber
+                    </td>
+                    <td class="hidden lg:table-cell">
+                        @customer.Province
+                    </td>
+                    <td>
+                        <div class="join shadow-sm">
+                            <a class="btn btn-sm join-item" asp-action="Edit" asp-route-id="@customer.CustomerId">Edit</a>
+                            <a class="btn btn-sm hover:btn-neutral join-item" asp-action="Details" asp-route-id="@customer.CustomerId">Details</a>
+                            <button class="btn btn-sm hover:btn-error join-item" onclick="showDeleteModal(@customer.CustomerId)">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else {
+            <tr>
+                <td>
+                    <h4 class="text-lg">No customers</h4>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+<dialog id="delete-modal" class="modal">
+    <div class="modal-box">
+        <h3 class="text-lg font-bold">Delete Customer</h3>
+        <p class="py-4">Do you want to delete this customer?</p>
+        <div class="modal-action">
+            <form method="dialog">
+                <button class="btn">Close</button>
+            </form>
+            <div id="delete-action">
+                // button will be inserted in JS
+            </div>
+        </div>
+    </div>
+</dialog>
+
+<script src="~/js/customer.js"></script>

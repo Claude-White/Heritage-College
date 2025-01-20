@@ -1,0 +1,105 @@
+@model IEnumerable<CWhiteH60Store.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form asp-action="FilterProducts" class="hidden sm:flex flex-col justify-center items-center gap-2 w-full mt-4 px-4 mb-2">
+    <h1 class="text-2xl absolute left-8">Products</h1>
+    <select class="select select-bordered w-52 md:w-64 xl:w-96 max-w-md" name="id" onchange="this.form.submit()">
+        <option selected>All</option>
+        @foreach (var cat in (SelectList)ViewBag.ProdCats) {
+        var isSelected = int.Parse(cat.Value) == (int)ViewBag.CatId;
+        <option value="@cat.Value" selected="@(isSelected ? "selected" : null)">@cat.Text</option>
+        }
+    </select>
+</form>
+<div class="overflow-x-auto mb-12 h-[45rem] px-4">
+    <table class="table table-pin-rows">
+        <thead>
+        <tr class="text-lg">
+            <th>
+                Description
+            </th>
+            <th class="hidden lg:table-cell">
+                Manufacturer
+            </th>
+            <th class="hidden sm:table-cell text-end">
+                Stock
+            </th>
+            <th class="hidden lg:table-cell text-end">
+                Buy Price
+            </th>
+            <th class="hidden lg:table-cell text-end">
+                Sell Price
+            </th>
+            <th class="hidden xl:table-cell">
+                Product Category
+            </th>
+            <th>
+                <a class="btn btn-info btn-sm w-48 shadow-md" asp-action="Create">Create</a>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @if (Model.Any()) {
+            @foreach (var product in Model) {
+                <tr class="hover">
+                    <td>
+                        @product.Description
+                    </td>
+                    <td class="hidden lg:table-cell">
+                        @product.Manufacturer
+                    </td>
+                    <td class="sm:flex gap-1 items-center hidden justify-end">
+                        @if (product.Stock == 0) {
+                        <img class="w-4 h-4" src="icons/triangle-alert.svg" alt="Warning Icon"/>
+                        }
+                        <a class="btn btn-sm btn-link px-0" asp-action="EditStock" asp-route-id="@product.ProductID">
+                            @product.Stock
+                        </a>
+                    </td>
+                    <td class="hidden lg:table-cell text-end">
+                        @if (User.IsInRole("manager")) {
+                        <a class="btn btn-sm btn-link px-0" asp-action="EditPrice" asp-route-id="@product.ProductID">
+                            @(product.BuyPrice)$
+                        </a>
+                        }
+                        else {
+                            @(product.BuyPrice + "$")
+                        }
+                    </td>
+                    <td class="hidden lg:table-cell text-end">
+                        @if (User.IsInRole("manager")) {
+                            <a class="btn btn-sm btn-link px-0" asp-action="EditPrice" asp-route-id="@product.ProductID">
+                                @(product.SellPrice)$
+                            </a>
+                        }
+                        else {
+                            @(product.SellPrice + "$")
+                        }
+                    </td>
+                    <td class="hidden xl:table-cell">
+                        @product.ProdCat.ProdCat
+                    </td>
+                    <td>
+                        <div class="join shadow-sm">
+                            <a class="btn btn-sm join-item" asp-action="Edit" asp-route-id="@product.ProductID">Edit</a>
+                            <a class="btn btn-sm hover:btn-neutral join-item" asp-action="Details" asp-route-id="@product.ProductID">Details</a>
+                            <a class="btn btn-sm hover:btn-error join-item" asp-action="Delete" asp-route-id="@product.ProductID">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else {
+            <tr>
+                <td>
+                    <h4 class="text-lg">No products in this category</h4>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

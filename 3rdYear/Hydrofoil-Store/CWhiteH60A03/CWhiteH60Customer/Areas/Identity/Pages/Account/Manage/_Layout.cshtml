@@ -1,0 +1,25 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout !=  null)
+    {
+        Layout = parentLayout.ToString();
+    }
+    else
+    {
+        Layout = "_Layout.cshtml";
+    }
+}
+
+<div>
+    <div>
+        <div class="sm:flex sm:justify-center sm:mt-4">
+            <partial name="_ManageNav" />
+        </div>
+        <div class="w-full">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

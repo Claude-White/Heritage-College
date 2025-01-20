@@ -1,0 +1,26 @@
+﻿@model Tuple<int?,string>
+@{
+    var CurrentImageId = Model.Item1;
+    var ModelReferenceName = Model.Item2;
+}
+
+<div class="image-upload-container aspect-16/9 flex h-96 w-full gap-2">
+    <input name="@ModelReferenceName" hidden class="image-id-input" value="@CurrentImageId" />
+
+    <div class="image-upload-input-container w-inherit relative float-left inline-block h-full overflow-auto rounded border border-dashed border-neutral-600 bg-neutral-50">
+        <div class="flex h-full w-full flex-col items-center justify-center" title="Upload Image">
+            <input type="file" accept="image/*" class="image-upload-input w-inherit h-inherit opacity-0 absolute float-left">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
+                <path fill-rule="evenodd" d="M11.47 2.47a.75.75 0 0 1 1.06 0l4.5 4.5a.75.75 0 0 1-1.06 1.06l-3.22-3.22V16.5a.75.75 0 0 1-1.5 0V4.81L8.03 8.03a.75.75 0 0 1-1.06-1.06l4.5-4.5ZM3 15.75a.75.75 0 0 1 .75.75v2.25a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5V16.5a.75.75 0 0 1 1.5 0v2.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V16.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
+            </svg>
+            <h2 class="bold text-lg text-neutral-800">Upload an Image</h2>
+            <p class="text-sm text-neutral-600">Drag and drop files here</p>
+        </div>
+    </div>
+    <div class="image-upload-preview-container w-inherit relative float-left hidden h-full overflow-auto rounded border border-neutral-600 bg-neutral-50">
+        <button class="btn btn-sm btn-ghost btn-square absolute float-right ml-2 mt-2" title="Save">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+        <img class="image-upload-preview-image h-full w-full" src="~/images/fneeq-logo.png" alt="Image upload preview"/>
+    </div>
+</div>

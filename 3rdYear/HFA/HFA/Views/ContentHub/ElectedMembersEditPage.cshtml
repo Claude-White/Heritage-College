@@ -1,0 +1,120 @@
+﻿@using System.Reflection
+@using System.ComponentModel.DataAnnotations
+@using HFA.Attributes
+@using HFA.Resources
+@model ElectedGroup
+
+@{
+    ViewData["Title"] = "Edit/Add Elected Members";
+    Layout = "~/Views/Shared/_ContentHubLayout.cshtml";
+    var RESTResources = new RESTResources(
+        "CreateElectedMembers",
+        "UpdateElectedMembers",
+        "DeleteReleaseMembers"
+    );
+}
+
+<div id="RESTResources" data-resources='@Html.Raw(Json.Serialize(RESTResources))'></div>
+
+<form id="form" class="flex w-full flex-col gap-4">
+    <input asp-for="GroupId" id="ObjectId" type="hidden"/>
+    <div class="flex">
+        <h1 class="mt-3 text-3xl font-bold">@HFA_Resources.ElectedMembers</h1>
+        <div class="ml-auto mr-0 flex w-fit gap-2">
+            <a class="btn" asp-controller="ContentHub" asp-action="ElectedMembers">Back</a>
+            <button id="@ViewBag.Action" type="submit" class="btn btn-success" title="Save">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
+                    <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                </svg>
+                Save
+            </button>
+        </div>
+    </div>
+
+    <div class="flex justify-between">
+        <label class="form-control w-full lg:w-1/2">
+            <div class="label">
+                <span class="label-text font-bold">Name</span>
+            </div>
+            <input asp-for="GroupName" id="titleInput" class="input input-bordered w-full" placeholder="Enter the name here" />
+        </label>
+    </div>
+
+    <h3 class="mt-3 flex text-xl font-bold">
+        <span>Group Members</span>
+        <button id="AddMemberBtn" type="button" class="ml-2" title="Add Member">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
+                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+            </svg>
+        </button>
+
+    </h3>
+
+    @if (Model.Members != null && Model.Members.Any())
+    {
+        <div id="MembersContainer">
+            @for (int i = 0; i < Model.Members.Count; i++)
+            {
+                <div class="GroupMembers grid-cols-6 mb-2 grid lg:grid-cols-7">
+                    <div class="col-span-5 lg:grid-rows-1 lg:col-span-6 lg:flex">
+                        <label class="form-control w-full">
+                            <div class="label" >
+                                <span class="label-text font-bold">First Name</span>
+                            </div>
+                            <input asp-for="Members[i].MemberFirstName" id="MemberFirstName" class="input input-bordered w-full" placeholder="Enter the first name here" />
+                        </label>
+                        <label class="form-control w-full lg:ml-2">
+                            <div class="label">
+                                <span class="label-text font-bold">Last Name</span>
+                            </div>
+                            <input asp-for="Members[i].MemberLastName" id="MemberLastName" class="input input-bordered w-full" placeholder="Enter the last name here" />
+                        </label>
+                    </div>
+                    <span class="col-span-1">
+                        <input asp-for="Members[i].MemberId" type="hidden" id="MemberId" />
+                        <input asp-for="Members[i].GroupId" type="hidden" id="GroupId" />
+                        <button class="removeMemberBtn mt-[90px] ml-2 lg:mt-[50px]" type="button" title="Remove Member">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6" opacity="0.5">
+                                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </span>
+                </div>
+            }
+        </div>
+    } else
+    {
+        <div id="MembersContainer">
+
+        </div>
+    }
+</form>
+
+<div class="GroupMembersToCopy grid-cols-6 mb-2 grid hidden lg:grid-cols-7">
+    <div class="col-span-5 lg:grid-rows-1 lg:col-span-6 lg:flex">
+        <label class="form-control w-full">
+            <div class="label">
+                <span class="label-text font-bold">First Name</span>
+            </div>
+            <input id="MemberFirstName" class="input input-bordered w-full" placeholder="Enter the first name here" />
+        </label>
+        <label class="form-control w-full lg:ml-2">
+            <div class="label">
+                <span class="label-text font-bold">Last Name</span>
+            </div>
+            <input id="MemberLastName" class="input input-bordered w-full" placeholder="Enter the last name here" />
+        </label>
+    </div>
+    <span class="col-span-1">
+        <input type="hidden" id="GroupId" />
+        <input type="hidden" id="MemberId" />
+        <button class="removeMemberBtn mt-[90px] ml-2 lg:mt-[50px]" type="button" title="remove member">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6" opacity="0.5">
+                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clip-rule="evenodd" />
+            </svg>
+        </button>
+    </span>
+</div>
+
+<script type="module" src="~/js/ElectedMembers.js"></script>
+<script type="module" src="~/js/EditPageController.js"></script>

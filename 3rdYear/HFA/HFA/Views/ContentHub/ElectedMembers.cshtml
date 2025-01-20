@@ -1,0 +1,23 @@
+﻿@using HFA.Models;
+@using System.Collections;
+@using HFA.Resources;
+@using HFA.Models.ViewModels;
+@model IEnumerable
+
+@{
+    Layout = "~/Views/Shared/_ContentHubLayout.cshtml";
+    ViewData["Title"] = HFA_Resources.ElectedMembers;
+
+    @* Config *@
+    var PageName = HFA_Resources.ElectedMembers;
+    var TemplateModel = new ElectedGroupViewModel();
+    var RESTResources = new RESTResources(
+        "ElectedMembers/CreateElectedMembers",
+        "ElectedMembers/UpdateElectedMembers",
+        "ElectedMembers/DeleteElectedMembers"
+    );
+    var AreRowsSummary = true;
+    var RawDisplay = "ElectedMembers";
+}
+
+<partial name="_EntriesPage" model="new EntryPage(Model,PageName,TemplateModel,RESTResources,AreRowsSummary, RawDisplay)" />

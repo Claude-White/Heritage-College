@@ -1,0 +1,26 @@
+﻿@model Article
+@using HFA.Resources
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<a asp-action="Index" asp-controller="Articles" class="btn ml-12 mt-12">@HFA_Resources.Back</a>
+<section class="flex-1 flex flex-col items-start gap-4 px-12 pb-4 pt-4 lg:px-80 sm:px-36 lg:pt-2"> 
+    <h2 class="text-4xl font-bold lg:text-5xl">@Model.Title</h2>
+    <h3 class="text-lg">@Model.Lead</h3>
+    @if (Model.HeroImage != null)
+    {
+        <img class="aspect-16/9 w-full rounded object-cover" src="@Model.HeroImage.Path" alt="image for @Model.Title">
+    }
+    <div>
+        <p>@HFA_Resources.By @Model.Author</p>
+        @if (Model.CreatedDate.HasValue)
+        {
+            <p class="text-sm">@HFA_Resources.Published @Model.CreatedDate.Value.ToString("D", HFA_Resources.Culture) @HFA_Resources.AtTime @Model.CreatedDate.Value.ToString("t", HFA_Resources.Culture)</p>
+        }
+    </div>
+    <hr class="w-full flex-grow" />
+    <div class="prose w-full px-2 pb-4">
+        @Html.Raw(Model.ContentBody)
+    </div>
+</section>

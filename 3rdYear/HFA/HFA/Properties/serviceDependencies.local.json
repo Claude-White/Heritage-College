@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "identityapp1": {
+      "connectionInfo": "App registration: Heritage Faculty Association, Tenant: Cégep Heritage College (cegepheritageqcca.onmicrosoft.com - Microsoft Entra ID)",
+      "secretStore": "LocalSecretsFile",
+      "type": "identityapp.secretStore",
+      "connectionId": "AzureAD:ClientSecret"
+    },
+    "secrets1": {
+      "secretStore": null,
+      "resourceId": null,
+      "type": "secrets.user",
+      "dynamicId": null
+    },
+    "secrets2": {
+      "type": "secrets.user"
+    }
+  }
+}

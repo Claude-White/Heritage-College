@@ -1,0 +1,154 @@
+{
+  "Version": 1,
+  "ManifestType": "Build",
+  "Endpoints": [
+    {
+      "Route": "_content/AspNetCoreHero.ToastNotification/notyf.min.css",
+      "AssetFile": "_content/AspNetCoreHero.ToastNotification/notyf.min.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7591"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"CTrnMEaKkaZUZakHSB9hQKfIKv5LxFB9tAZuNwZKgSw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Nov 2020 10:16:56 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-CTrnMEaKkaZUZakHSB9hQKfIKv5LxFB9tAZuNwZKgSw="
+        }
+      ]
+    },
+    {
+      "Route": "_content/AspNetCoreHero.ToastNotification/notyf.min.js",
+      "AssetFile": "_content/AspNetCoreHero.ToastNotification/notyf.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "10594"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1P/7rSp84NFwxnW+OhMBloyi9RtRuJiP2FLf1y3N6Yc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 11 Dec 2020 20:08:40 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-1P/7rSp84NFwxnW+OhMBloyi9RtRuJiP2FLf1y3N6Yc="
+        }
+      ]
+    },
+    {
+      "Route": "_content/AspNetCoreHero.ToastNotification/toastify.css",
+      "AssetFile": "_content/AspNetCoreHero.ToastNotification/toastify.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1749"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JNr0LwI7EmV+x3DGi2OcuqA3jfROWSu1eXYP1E7jHF0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 29 Nov 2020 11:05:40 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-JNr0LwI7EmV+x3DGi2OcuqA3jfROWSu1eXYP1E7jHF0="
+        }
+      ]
+    },
+    {
+      "Route": "_content/AspNetCoreHero.ToastNotification/toastify.js",
+      "AssetFile": "_content/AspNetCoreHero.ToastNotification/toastify.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "12794"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"8FcB/jDID/3N4Acfkl+GHXltsiF9TOF3Z/my8hRHIWg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 29 Nov 2020 07:14:28 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-8FcB/jDID/3N4Acfkl+GHXltsiF9TOF3Z/my8hRHIWg="
+        }
+      ]
+    }
+  ]
+}

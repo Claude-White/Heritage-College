@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 22
+# VisualStudioVersion = 17.8.34309.116
+VisualStudioVersion = 17.9.0-pre.4.0+34518.117
+#MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HFA", "HFA\HFA.csproj", "{342E335B-1D97-4A34-B8FD-A373320B26C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{342E335B-1D97-4A34-B8FD-A373320B26C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{342E335B-1D97-4A34-B8FD-A373320B26C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{342E335B-1D97-4A34-B8FD-A373320B26C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{342E335B-1D97-4A34-B8FD-A373320B26C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0396464D-261E-4687-BDA3-A39BE34F37F9}
+	EndGlobalSection
+EndGlobal

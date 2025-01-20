@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_HomeLayout";
+}
+
+<div class="relative bg-gray-100 h-full">
+    <div class="relative flex items-center justify-center h-full mb-12 overflow-hidden">
+        <div class="relative z-10 text-center px-6 md:px-12 lg:px-24">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-6 drop-shadow">
+                Experience the Thrill of Flying on Water
+            </h1>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a asp-controller="ProductCategory" asp-action="Index" class="btn btn-info font-bold text-white rounded-full text-lg">View Categories</a>
+                <a asp-controller="Product" asp-action="Index" class="btn btn-info font-bold text-white rounded-full text-lg">View Hydrofoils</a>
+            </div>
+            
+        </div>
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="absolute w-full h-full">
+            <img src="images/HeroPageImage.jpeg" alt="Hydrofoil Hero Page Image" class="absolute h-full w-full brightness-75 object-cover z-0" />
+        </div>
+    </div>
+</div>

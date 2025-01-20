@@ -1,0 +1,67 @@
+@model CWhiteH60Store.Models.Product
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var prodCat = Model.ProdCat.ProdCat;
+}
+
+<div class="flex justify-center mt-8">
+    <div class="card bg-neutral-200 w-[32rem] shadow-lg">
+        <div class="card-body items-center text-center">
+            <h2 class="card-title">Are you sure you want to delete this?</h2>
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">Product Category</span>
+                </div>
+                <input value="@(prodCat)" class="input input-bordered w-full" readonly/>
+            </label>
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">Description</span>
+                </div>
+                <input asp-for="Description" class="input input-bordered w-full" readonly/>
+            </label>
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">Manufacturer</span>
+                </div>
+                <input asp-for="Manufacturer" class="input input-bordered w-full" readonly/>
+            </label>
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">Stock</span>
+                </div>
+                <input asp-for="Stock" class="input input-bordered w-full" readonly/>
+            </label>
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">BuyPrice</span>
+                </div>
+                <input asp-for="BuyPrice" class="input input-bordered w-full" readonly/>
+            </label>
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">SellPrice</span>
+                </div>
+                <input asp-for="SellPrice" class="input input-bordered w-full" readonly/>
+            </label>
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">Notes</span>
+                </div>
+                <textarea asp-for="Notes" class="textarea textarea-bordered" readonly></textarea>
+            </label>
+            <div class="flex justify-center">
+                <img class="w-[50%] aspect-square" src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.ImageData))" alt="Product Image"/>
+            </div>
+            <form asp-action="Delete" class="flex flex-col gap-2 w-full">
+                <input type="hidden" asp-for="ProductID"/>
+                <div class="card-actions justify-center mt-2">
+                    <input type="submit" value="Delete" class="btn btn-error px-8"/>
+                    <a asp-action="Index" class="btn btn-ghost px-8">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+@model Customer
+
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="flex justify-center mt-8">
+    <div class="card bg-neutral-200 w-[32rem] shadow-lg">
+        <div class="card-body items-center text-center">
+            <h2 class="card-title">Details</h2>
+            <input type="hidden" asp-for="CustomerId"/>
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">First Name</span>
+                </div>
+                <input asp-for="FirstName" class="input input-bordered w-full" readonly />
+            </label>
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">Last Name</span>
+                </div>
+                <input asp-for="LastName" class="input input-bordered w-full" readonly />
+            </label>
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">Email</span>
+                </div>
+                <input asp-for="Email" class="input input-bordered w-full" readonly />
+            </label>
+            <label class="form-control w-full">
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Phone Number</span>
+                    </div>
+                    <input asp-for="PhoneNumber" class="input input-bordered w-full" readonly />
+                </label>
+                <div class="label">
+                    <span class="label-text">Province</span>
+                </div>
+                <input asp-for="Province" class="input input-bordered w-full" readonly/>
+            </label>
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">Credit Card</span>
+                </div>
+                <input asp-for="CreditCard" class="input input-bordered w-full" readonly />
+            </label>
+            <div class="card-actions justify-center mt-2">
+                <a asp-action="Edit" asp-route-id="@Model.CustomerId" class="btn btn-info px-8">Edit</a>
+                <a asp-action="Index" class="btn btn-ghost px-8">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>

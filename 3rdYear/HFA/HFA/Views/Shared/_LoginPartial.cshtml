@@ -1,0 +1,20 @@
+@using System.Security.Principal
+@using HFA.Resources
+
+@if (User.Identity?.IsAuthenticated == true)
+{
+    <li>
+        <details class="border-gray-600 border-t lg:border-none mt-2 lg:mt-auto">
+            <summary class="text-base">
+                @User.Claims.First(c => c.Type == "name").Value
+            </summary>
+            <ul class="p-2 bg-base-100 rounded-t-none">
+                <li><a asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignOut">@HFA_Resources.Logout</a></li>
+            </ul>
+        </details>
+    </li>
+}
+else
+{
+    <a class="btn btn-primary" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn">@HFA_Resources.Login</a>
+}

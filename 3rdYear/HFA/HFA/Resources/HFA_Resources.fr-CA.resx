@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutUs" xml:space="preserve">
+    <value>À propos de nous</value>
+  </data>
+  <data name="AddEntry" xml:space="preserve">
+    <value>Ajouter un élément</value>
+  </data>
+  <data name="AllArticles" xml:space="preserve">
+    <value>Toutes les actualités</value>
+  </data>
+  <data name="Articles" xml:space="preserve">
+    <value>Actualités</value>
+  </data>
+  <data name="BlankFAQEntries" xml:space="preserve">
+    <value>Il n'y a pas d'entrées FAQ</value>
+  </data>
+  <data name="BugFixes" xml:space="preserve">
+    <value>Corrections</value>
+  </data>
+  <data name="By" xml:space="preserve">
+    <value>Par</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="ConfirmDeleteField" xml:space="preserve">
+    <value>Êtes-vous certain de vouloir supprimer ce champ ? Cette action ne peut être annulée.</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Contactez-nous</value>
+  </data>
+  <data name="ContentHub" xml:space="preserve">
+    <value>Centre de gestion de contenu</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="ElectedMembers" xml:space="preserve">
+    <value>Nos membres élus</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Adresse courriel</value>
+  </data>
+  <data name="ExecutiveCommunicationsOfficer" xml:space="preserve">
+    <value>Responsable de la communication</value>
+  </data>
+  <data name="ExecutivePresident" xml:space="preserve">
+    <value>Président</value>
+  </data>
+  <data name="ExecutiveSecretary" xml:space="preserve">
+    <value>Sécrétaire</value>
+  </data>
+  <data name="ExecutivesLabel" xml:space="preserve">
+    <value>Comité exécutif</value>
+  </data>
+  <data name="ExecutiveTreasurer" xml:space="preserve">
+    <value>Trésorier</value>
+  </data>
+  <data name="ExecutiveVicePresident" xml:space="preserve">
+    <value>Vice Président</value>
+  </data>
+  <data name="FAQ" xml:space="preserve">
+    <value>Foire aux Questions</value>
+  </data>
+  <data name="FileDateModifiedHeader" xml:space="preserve">
+    <value>Date Modifiée</value>
+  </data>
+  <data name="FileManagement" xml:space="preserve">
+    <value>Gestion des dossiers</value>
+  </data>
+  <data name="FileModifiedByHeader" xml:space="preserve">
+    <value>Modifiée Par</value>
+  </data>
+  <data name="FileNameHeader" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>Fichiers</value>
+  </data>
+  <data name="FileTypeHeader" xml:space="preserve">
+    <value>Type de Fichier</value>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>Nom complet</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Accueil</value>
+  </data>
+  <data name="HomePage" xml:space="preserve">
+    <value>Page Accueil</value>
+  </data>
+  <data name="LearnMore" xml:space="preserve">
+    <value>Plus d'informations</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Se connecter</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Se déconnecter</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="ModifyEntry" xml:space="preserve">
+    <value>Modifer l'élément</value>
+  </data>
+  <data name="NewestArticle" xml:space="preserve">
+    <value>Actualités récentes</value>
+  </data>
+  <data name="NoArticles" xml:space="preserve">
+    <value>Il n’y a pas encore d'actualités publiés.</value>
+  </data>
+  <data name="OpenDrawer" xml:space="preserve">
+    <value />
+  </data>
+  <data name="OtherNotes" xml:space="preserve">
+    <value>Autres notes</value>
+  </data>
+  <data name="OurMission" xml:space="preserve">
+    <value>Notre mission</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>test</value>
+  </data>
+  <data name="Published" xml:space="preserve">
+    <value>Publié le</value>
+  </data>
+  <data name="ReadMore" xml:space="preserve">
+    <value>Lire la suite</value>
+  </data>
+  <data name="RecentNews" xml:space="preserve">
+    <value>Nouvelles</value>
+  </data>
+  <data name="ReleaseNotes" xml:space="preserve">
+    <value>Notes de version</value>
+  </data>
+  <data name="RelatedOrganizations" xml:space="preserve">
+    <value>Organisations apparentées</value>
+  </data>
+  <data name="ReturnToWebsite" xml:space="preserve">
+    <value>Retourner au site web</value>
+  </data>
+  <data name="SendMessage" xml:space="preserve">
+    <value>Envoyer un courriel</value>
+  </data>
+  <data name="Slogan" xml:space="preserve">
+    <value>Voici notre slogan!</value>
+    <comment>Placeholder</comment>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Sujet</value>
+  </data>
+  <data name="SwitchLanguage" xml:space="preserve">
+    <value>EN</value>
+  </data>
+  <data name="UpcomingEvents" xml:space="preserve">
+    <value>Évènements à venir</value>
+  </data>
+  <data name="Updates" xml:space="preserve">
+    <value>Mises à jour</value>
+  </data>
+  <data name="ViewAllArticles" xml:space="preserve">
+    <value>Voir toutes les actualités</value>
+  </data>
+  <data name="ViewCalendar" xml:space="preserve">
+    <value>Voir le calendrier</value>
+  </data>
+  <data name="WelcomeToCMS" xml:space="preserve">
+    <value>Bienvenue à la page d'accueil. S'il vous plait sélectionner un champ à gauche.</value>
+  </data>
+  <data name="AtTime" xml:space="preserve">
+    <value>à</value>
+  </data>
+  <data name="Executive" xml:space="preserve">
+    <value>Membre exécutif</value>
+  </data>
+  <data name="FilterByCategory" xml:space="preserve">
+    <value>Filtrer par catégorie</value>
+  </data>
+  <data name="Article" xml:space="preserve">
+    <value>Actualité</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>Auteur(e)</value>
+  </data>
+  <data name="ByLower" xml:space="preserve">
+    <value>par</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>Contenu</value>
+  </data>
+  <data name="CreatedDate" xml:space="preserve">
+    <value>Date de création</value>
+  </data>
+  <data name="LastModifiedDate" xml:space="preserve">
+    <value>Date de la dernière modification</value>
+  </data>
+  <data name="MostRecentEditor" xml:space="preserve">
+    <value>Éditeur le plus récent</value>
+  </data>
+  <data name="Publish" xml:space="preserve">
+    <value>Publier</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Retour</value>
+  </data>
+  <data name="DeleteField" xml:space="preserve">
+    <value>Supprimer le champ</value>
+  </data>
+</root>

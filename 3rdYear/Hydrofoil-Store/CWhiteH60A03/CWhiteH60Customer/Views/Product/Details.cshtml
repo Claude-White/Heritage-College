@@ -1,0 +1,42 @@
+@model CWhiteH60Customer.Models.DataTransferObjects.CustomerProductDto
+
+<button class="btn btn-square btn-outline mt-4 ml-4" onclick="window.history.back()">
+    <i data-lucide="arrow-left"></i>
+</button>
+<div class="grid md:grid-cols-2 md:grid-rows-1 grid-rows-2 grid-cols-1 md:my-8 items-center">
+    <div>
+        <div class="relative">
+            @if (Model.ImageData != null) {
+                <img class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[60%] group-hover:scale-110 transition-transform duration-300 transform origin-center" src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.ImageData))" alt="Product Image"/>
+            }
+            <div class="blob-container w-full" data-blob-id="@Model.ProductId"></div>
+        </div>
+    </div>
+    <div class="px-8 md:py-40 h-max">
+        <div class="flex flex-wrap-reverse gap-4">
+            <h2 class="text-4xl md:text-5xl font-bold">@Model.Description</h2>
+            <div class="text-xl md:text-2xl bg-[#e2EFFB] px-3 py-2 rounded-full shadow-sm">@Model.ProdCatName</div>
+        </div>
+        
+        <h4 class="opacity-75 text-2xl md:text-3xl">@Model.Manufacturer</h4>
+        <p class="text-xl md:text-2xl font-bold mt-4">@($"{Model.SellPrice:N0}$")</p>
+        <div class="rating mt-2">
+            <input type="radio" name="rating-1" class="mask mask-star" />
+            <input type="radio" name="rating-1" class="mask mask-star" />
+            <input type="radio" name="rating-1" class="mask mask-star" />
+            <input type="radio" name="rating-1" class="mask mask-star" />
+            <input type="radio" name="rating-1" class="mask mask-star" checked="checked" />
+        </div>
+        <form id="add-to-cart">
+            <p class="text-lg md:text-xl mt-2">Quantity:</p>
+            <input type="text" inputmode="numeric" pattern="[0-9]+" name="quantity" class="input input-bordered w-24 mt-1" value="1">
+            <div class="@(Model.Stock == 0 ? "text-red-600" : "text-green-600") text-lg md:text-xl flex gap-2 mt-2">@Html.Raw(Model.Stock == 0 ? "<i data-lucide='x'></i> Out of Stock" : "<i data-lucide='check'></i> In Stock")</div>
+            <input class="hidden" type="hidden" name="customerId" value="@(User.Claims.FirstOrDefault(c => c.Type == "CustomerId")?.Value)" />
+            <input class="hidden" type="hidden" name="productId" value="@Model.ProductId" />
+            <button class="btn block md:w-[50%] w-full mt-4 rounded-full bg-[#1e89ee] mb-4 shadow-sm">Add to Cart</button>
+        </form>
+    </div>
+</div>
+
+<script type="module" src="~/js/shopping_cart.js"></script>
+<script type="module" src="~/js/blob_generator.js"></script>

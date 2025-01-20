@@ -1,0 +1,68 @@
+﻿@page
+@model RegisterModel
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="flex justify-center mt-8">
+    <div class="card bg-neutral-200 w-[32rem] shadow-lg">
+        <div class="card-body items-center text-center">
+            <h2 class="card-title">Create a new account</h2>
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="flex flex-col gap-2 w-full">
+                <div asp-validation-summary="ModelOnly" class="text-red-600" role="alert"></div>
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Email</span>
+                    </div>
+                    <input asp-for="Input.Email" class="input input-bordered w-full"/>
+                    <span asp-validation-for="Input.Email" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Password</span>
+                    </div>
+                    <input asp-for="Input.Password" class="input input-bordered w-full" autocomplete="current-password" aria-required="true"/>
+                    <span asp-validation-for="Input.Password" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Confirm Password</span>
+                    </div>
+                    <input asp-for="Input.ConfirmPassword" class="input input-bordered w-full" autocomplete="current-password" aria-required="true"/>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                @if (User.IsInRole("manager")) {
+                    <label class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">User Role</span>
+                        </div>
+                        <select asp-for="Input.UserRole" class="select select-bordered w-full">
+                            @foreach (var role in Enum.GetValues(typeof(RegisterModel.InputModel.UserRoles))) {
+                                <option value="@role.ToString().ToLower()">@role</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Input.UserRole" class="text-danger text-red-600 text-sm"></span>
+                    </label>
+                }
+                <div class="card-actions justify-center mt-2">
+                    <button id="login-submit" type="submit" class="btn btn-info px-8">Register</button>
+                </div>
+                @if (!SignInManager.IsSignedIn(User)) {
+                    <div>
+                        <p>
+                            <a class="link" asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Login to an existing account</a>
+                        </p>
+                    </div> 
+                }
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

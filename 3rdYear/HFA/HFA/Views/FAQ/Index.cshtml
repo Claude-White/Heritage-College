@@ -1,0 +1,49 @@
+﻿@model List<FrequentlyAskedQuestion>
+@using HFA.Resources
+@{
+    ViewData["Title"] = HFA_Resources.FAQ;
+}
+
+<div class="m-auto">
+    <section class="bg-gray-100 px-16 py-4 md:px-36" id="FAQ">
+        <h1 class="mb-2 text-2xl text-secondary">@HFA_Resources.FAQ</h1>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (FrequentlyAskedQuestion faq in Model)
+            {
+                <details class="collapse-arrow collapse mb-3 rounded-lg border border-solid border-secondary shadow-sm">
+                    <summary class="collapse-title rounded-lg bg-white px-3 text-xl font-medium">
+                        <h2 class="col-span-9">@faq.Question</h2>
+                    </summary>
+                    <div class="collapse-content rounded-lg px-2 pt-2">
+                        <h4>@faq.Answer</h4>
+                    </div>
+                </details>
+            }
+        }
+        else
+        {
+            <h1>@HFA_Resources.BlankFAQEntries</h1>
+        }
+
+    </section>
+    
+@if (User.Identity?.IsAuthenticated == true)
+{
+    <section class="mx-auto bg-white px-16 py-4 md:px-36" id="ContactUsForm">
+        <h1 class="mb-2 text-2xl text-secondary">@HFA_Resources.ContactUs</h1>
+        <form asp-action="SendEmail" asp-controller="FAQ">
+            <div asp-validation-summary="All" class="font-semibold text-red-600"></div>
+            <div class="grid-cols-5 mb-2 grid">
+                <label class="col-span-5 mb-0.5 text-lg">@HFA_Resources.Subject</label>
+                <input type="text" name="Subject" class="col-span-3 rounded-md border border-solid border-secondary bg-gray-100 p-1.5 md:col-span-2" />
+            </div>
+            <div class="grid-cols-5 mb-2 grid">
+                <label class="col-span-5 mb-0.5 text-lg">@HFA_Resources.Message</label>
+                <textarea name="Message" class="4 col-span-4 h-40 resize-none rounded-md border border-solid border-secondary bg-gray-100 p-1 md:col-span-3"></textarea>
+            </div>
+            <button type="submit" class="btn bg-primary">@HFA_Resources.SendMessage</button>
+        </form>
+    </section>
+    }
+</div>

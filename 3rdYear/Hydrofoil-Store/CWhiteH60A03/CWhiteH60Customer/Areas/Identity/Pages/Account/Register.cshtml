@@ -1,0 +1,44 @@
+﻿@page
+@model RegisterModel
+
+<div class="flex justify-center mt-8">
+    <div class="card bg-[#e2effb] w-[32rem] shadow-lg">
+        <div class="card-body items-center text-center">
+            <h2 class="card-title">Create a new account</h2>
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="flex flex-col gap-2 w-full">
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <label class="form-control w-full bg-[#e2effb] border-0">
+                    <div class="label">
+                        <span class="label-text">Email</span>
+                    </div>
+                    <input asp-for="Input.Email" class="input input-bordered w-full" autocomplete="username" aria-required="true" placeholder="name@example.com"/>
+                    <span asp-validation-for="Input.Email" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <label class="form-control w-full bg-[#e2effb] border-0">
+                    <div class="label">
+                        <span class="label-text">Password</span>
+                    </div>
+                    <input asp-for="Input.Password" class="input input-bordered w-full" autocomplete="new-password" aria-required="true" placeholder="password"/>
+                    <span asp-validation-for="Input.Password" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <label class="form-control w-full bg-[#e2effb] border-0">
+                    <div class="label">
+                        <span class="label-text">Confirm Password</span>
+                    </div>
+                    <input asp-for="Input.ConfirmPassword" class="input input-bordered w-full" autocomplete="new-password" aria-required="true" placeholder="password"/>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger text-red-600 text-sm"></span>
+                </label>
+                <div class="form-control w-full bg-[#e2effb] border-0">
+                    <button id="registerSubmit" type="submit" class="w-full btn bg-[#1e89ee]">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script type="module" src="~/js/blob_generator.js"></script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

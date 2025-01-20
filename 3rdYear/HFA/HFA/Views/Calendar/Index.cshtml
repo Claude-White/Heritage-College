@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Calendar Events";
+
+    @* Config *@
+    var RESTResources = new RESTResources(
+        string.Empty,
+        string.Empty,
+        string.Empty,
+        "CalendarEvents"
+    );
+}
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+<script src="./js/Calendar.js" type="text/javascript"></script>
+<div id="RESTResources" data-resources='@Html.Raw(Json.Serialize(@RESTResources))'></div>
+<section class="bg-gray-100 md:px-32 px-12 py-4">
+    <h1 class="text-2xl text-secondary mb-2">Calendar Events</h1>
+    <div class="xl:grid xl:grid-cols-3 gap-2">
+        <div class="bg-white p-4 xl:col-span-2">
+            <div id='calendar'></div>
+        </div>
+        <div class="bg-white p-4 xl:col-span-1 mt-3 xl:mt-0">
+            <h2 class="text-xl text-secondary mb-2">List of events</h2>
+            <ul class="list-disc px-5" id="listOfEvents">
+            </ul>
+        </div>
+    </div>
+</section>

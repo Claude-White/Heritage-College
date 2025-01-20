@@ -1,0 +1,17 @@
+@using System.ComponentModel.DataAnnotations
+@model dynamic
+
+<thead>
+    <tr class="bg-base-200">
+        <th class="w-16"></th>
+        @foreach (var property in Model.GetType().GetProperties())
+        {
+            var isKey = Attribute.IsDefined(property, typeof(KeyAttribute));
+            if (!isKey)
+            {
+                <th class="text-sm">@property.Name</th>
+            }
+        }
+        <th class="w-32"></th>
+    </tr>
+</thead>

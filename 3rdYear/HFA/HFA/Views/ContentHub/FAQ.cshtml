@@ -1,0 +1,21 @@
+@using HFA.Models;
+@using System.Collections
+@using HFA.Resources
+@model IEnumerable
+
+@{
+    Layout = "~/Views/Shared/_ContentHubLayout.cshtml";
+    ViewData["Title"] = "FAQ";
+
+    @* Config *@
+    var PageName = "FAQ";
+    var TemplateModel = new FrequentlyAskedQuestion();
+    var RESTResources = new RESTResources(
+        "FAQ/CreateFAQ",
+        "FAQ/UpdateFAQ",
+        "FAQ/DeleteFAQ"
+    );
+    var AreRowsSummary = false;
+}
+
+<partial name="_EntriesPage" model="new EntryPage(Model,PageName,TemplateModel,RESTResources,AreRowsSummary)" />

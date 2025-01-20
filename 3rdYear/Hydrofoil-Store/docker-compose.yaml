@@ -1,0 +1,83 @@
+services:
+    store:
+        build:
+            context: ./CWhiteH60A03/CWhiteH60Store
+            dockerfile: ./Dockerfile
+        ports:
+            - 6117:8080
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Production
+            - API_BASE_URL=http://webapi:5115
+            - DB_HOST=store-db
+            - DB_NAME=h60backend
+            - DB_SA_PASSWORD=password@12345#
+        depends_on:
+            - api
+            - store-db
+        networks:
+            - connect
+
+    customer:
+        build:
+            context: ./CWhiteH60A03/CWhiteH60Customer
+            dockerfile: ./Dockerfile
+        ports:
+            - 6118:8080
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Production
+            - API_BASE_URL=http://webapi:5115
+            - DB_HOST=store-db
+            - DB_NAME=h60backend
+            - DB_SA_PASSWORD=password@12345#
+        depends_on:
+            - api
+            - store-db
+        networks:
+            - connect
+
+    manager:
+        build:
+            context: ./CWhiteH60Manager
+            dockerfile: ./Dockerfile
+        ports:
+            - 3000:3000
+        depends_on:
+            - api
+            - store-db
+        networks:
+            - connect
+
+    api:
+        build:
+            context: ./CWhiteH60A03/CWhiteH60Services
+            dockerfile: ./Dockerfile
+        container_name: webapi
+        ports:
+            - 5115:5115
+        depends_on:
+            - store-db
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=http://*:5115
+            - DB_HOST=store-db
+            - DB_NAME=h60backend
+            - DB_SA_PASSWORD=password@12345#
+        networks:
+            - connect
+
+    store-db:
+        container_name: store-db
+        image: mcr.microsoft.com/azure-sql-edge:latest
+        privileged: true
+        security_opt:
+            - seccomp:unconfined
+        ports:
+            - 5119:1433
+        environment:
+            - ACCEPT_EULA=Y
+            - MSSQL_SA_PASSWORD=password@12345#
+        networks:
+            - connect
+
+networks:
+    connect:

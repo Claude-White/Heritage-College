@@ -1,0 +1,68 @@
+﻿@using HFA.Resources
+@model HomePageViewModel
+@{
+    ViewData["Title"] = HFA_Resources.HomePage;
+    var Articles = Model.Articles;
+    var MissionStatement = Model.Mission.Description;
+}
+
+<div class="bg-base-200 px-0 py-0 sm:px-16 md:px-52 md:py-12">
+    <div class="swiper mySwiper aspect-16/9 mb-4 w-full overflow-hidden rounded">
+        <div class="swiper-wrapper">
+            @for (int i = 0; i < Articles.Count(); i++)
+            {
+                var focusedArticle = Articles[i];
+
+                var heroImagePath = "";
+                @if (focusedArticle.HeroImage != null)
+                {
+                    heroImagePath = focusedArticle.HeroImage.Path;
+                }
+
+                <div style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%,rgba(0, 0, 0, 0.65) 75%, rgba(0, 0, 0, 0.65) 100%), url('@heroImagePath');"
+                     class="swiper-slide relative">
+                    <a class="absolute h-full w-full md:hidden" asp-controller="Articles" asp-action="Article" asp-route-articleId="@focusedArticle.ArticleId"></a>
+
+                    <div class="flex h-full w-full flex-col justify-end gap-2 px-4 py-10 md:py-14 md:px-24">
+                        <h1 class="block text-left text-lg leading-tight text-white lg:text-3xl md:font-bold">@focusedArticle.Title</h1>
+                        <p class="hidden text-left text-lg text-gray-200 md:block">@focusedArticle.Lead</p>
+                        <a class="btn btn-secondary hidden w-max md:flex" asp-controller="Articles" asp-action="Article" asp-route-articleId="@focusedArticle.ArticleId">@HFA_Resources.ReadMore</a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="flex w-full justify-end">
+        <a class="link flex items-center" asp-controller="Articles" asp-action="Index" title="View All Articles">
+            <span>@HFA_Resources.ViewAllArticles</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4 pl-0.5 pt-0.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+        </a>
+    </div>
+</div>
+
+    <!--<a class="flex link items-center justify-end" asp-controller="Calendar" asp-action="Index">
+        <span>View Calendar</span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4 pl-0.5 pt-0.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+        </svg>
+    </a>-->
+
+@if (MissionStatement != null)
+{
+    <div class="bg-base px-10 py-10 sm:px-52">
+        <h1 class="pb-2 text-2xl text-secondary">@HFA_Resources.AboutUs</h1>
+        <p class="w-full">@MissionStatement</p>
+        <a class="link float-right flex items-center" asp-controller="AboutUs" asp-action="Index" title="View About Us">
+            <span>@HFA_Resources.LearnMore</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4 pl-0.5 pt-0.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+        </a>
+    </div>
+}

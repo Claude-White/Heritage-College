@@ -1,0 +1,82 @@
+@model ShoppingCart
+
+@{
+    ViewData["Subtotal"] = 0m;
+}
+
+<section class="bg-[#f2f8fe] py-8 md:py-16">
+    <div class="mx-auto w-[80%] px-4 2xl:px-0">
+        <h2 class="text-xl font-bold text-primary sm:text-2xl">Shopping Cart</h2>
+        <div class="mt-6 sm:mt-8 md:gap-6 xl:flex xl:items-start xl:gap-8">
+            <div class="mx-auto xl:w-2/3 flex-none">
+                <div class="space-y-6">
+                    @if (Model.CartItems.Any()) {
+                        @foreach (var product in Model.CartItems) {
+                            var itemTotal = product.Price * product.Quantity;
+                            ViewData["Subtotal"] = (decimal)(ViewData["Subtotal"] ?? 0m) + itemTotal!.Value;
+                            <div data-item-id="@product.CartItemId" class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm md:p-6">
+                                <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
+                                    <div class="flex items-center gap-4 md:order-1 md:flex-1">
+                                        <div class="w-20 h-20 shrink-0">
+                                            <img src="data:image/jpeg;base64,@(Convert.ToBase64String(product.Product.ImageData))" alt="product" />
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="text-base font-medium text-gray-900">@product.Product.Description</div>
+                                            <div class="mt-2">
+                                                <button onclick="removeCartItem(@product.CartItemId)" class="inline-flex items-center text-sm font-medium text-red-600 hover:underline">
+                                                    <svg class="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+                                                    </svg>
+                                                    Remove
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between md:order-2 md:gap-6 md:w-auto">
+                                        <div class="flex items-center">
+                                            <button type="button" onclick="incrementCartItem(@product.CartItemId, -1, @product.Price)" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100">
+                                                <svg class="h-2.5 w-2.5 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
+                                                </svg>
+                                            </button>
+                                            <div id="cart-item-quantity" class="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0">
+                                                @product.Quantity
+                                            </div>
+                                            <button type="button" onclick="incrementCartItem(@product.CartItemId, 1, @product.Price)" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100">
+                                                <svg class="h-2.5 w-2.5 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <div class="text-end">
+                                            <p id="cart-item-price" class="text-base font-bold text-gray-900 w-20">
+                                                @string.Format("${0:N0}", product.Price * product.Quantity)
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    }
+                    else {
+                        <h4 class="text-lg">No products in your shopping cart</h4>
+                    }
+                </div>
+            </div>
+
+            <div class="mx-auto mt-6 flex-1 space-y-6 xl:mt-0 xl:w-1/3">
+                @if (Model.CartItems.Any()) {
+                    <div class="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
+
+                        <p class="text-xl font-semibold text-gray-900">Checkout summary</p>
+                        <partial name="_CheckoutFormPartial" model="Model.Customer" view-data="ViewData"/>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="module" src="~/js/cart_actions.js"></script>
+<script type="module" src="~/js/checkout.js"></script>

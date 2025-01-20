@@ -1,0 +1,19 @@
+{
+  "name": "cwhiteh60store",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "tailwind:build": "npx tailwindcss -i ./wwwroot/css/input.css -o ./wwwroot/css/output.css"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.9",
+    "daisyui": "^4.12.10",
+    "tailwindcss": "^3.4.10"
+  },
+  "dependencies": {
+    "theme-change": "^2.5.0"
+  }
+}

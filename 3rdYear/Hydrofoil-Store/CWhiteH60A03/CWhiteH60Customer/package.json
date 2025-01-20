@@ -1,0 +1,25 @@
+{
+  "name": "cwhiteh60customer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "tailwind:build": "npx tailwindcss -i ./wwwroot/css/input.css -o ./wwwroot/css/output.css",
+    "tailwind:watch": "npx tailwindcss -i ./wwwroot/css/input.css -o ./wwwroot/css/output.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.9",
+    "@tailwindcss/typography": "^0.5.15",
+    "daisyui": "^4.12.13",
+    "tailwindcss": "^3.4.14"
+  },
+  "dependencies": {
+    "blobshape": "^1.0.0",
+    "flowbite": "^2.5.2",
+    "notyf": "^3.10.0",
+    "preline": "^2.5.1"
+  }
+}

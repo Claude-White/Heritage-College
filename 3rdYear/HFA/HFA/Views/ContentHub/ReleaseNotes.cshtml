@@ -1,0 +1,22 @@
+﻿@using HFA.Models;
+@using System.Collections;
+@using HFA.Resources;
+@using HFA.Models.ViewModels;
+@model IEnumerable
+
+@{
+    Layout = "~/Views/Shared/_ContentHubLayout.cshtml";
+    ViewData["Title"] = HFA_Resources.ReleaseNotes;
+
+    @* Config *@
+    var PageName = HFA_Resources.ReleaseNotes;
+    var TemplateModel = new ReleaseNotesViewModel();
+    var RESTResources = new RESTResources(
+        "ReleaseNotes/CreateReleaseNote",
+        "ReleaseNotes/UpdateReleaseNote",
+        "ReleaseNotes/DeleteReleaseNote"
+    );
+    var AreRowsSummary = true;
+}
+
+<partial name="_EntriesPage" model="new EntryPage(Model,PageName,TemplateModel,RESTResources,AreRowsSummary)" />

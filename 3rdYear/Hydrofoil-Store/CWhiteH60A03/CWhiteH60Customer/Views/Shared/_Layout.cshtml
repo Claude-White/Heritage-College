@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - CWhiteH60Customer</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true"/>
+</head>
+<body class="h-screen bg-[#f2f8fe]">
+<header>
+    <div class="drawer">
+        <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
+        <div class="drawer-content flex flex-col">
+            <div class="navbar bg-[#f2f8fe] w-full border-bottom border-1">
+                <div class="flex-none md:hidden">
+                    <label for="my-drawer-3" aria-label="open sidebar" class="btn btn-square btn-ghost">
+                        <i data-lucide="align-justify"></i>
+                    </label>
+                </div>
+                <div class="hidden md:block flex-1">
+                    <!-- Left-aligned menu -->
+                    <div class="flex justify-between items-center">
+                        <ul class="menu menu-horizontal p-0 items-center">
+                            <li><a class="btn btn-ghost text-xl" asp-area="" asp-controller="Home" asp-action="Index">FoilFlow</a></li>
+                            <li><a asp-controller="Product" asp-action="Index">Products</a></li>
+                            <partial name="_LoginPartial" />
+                        </ul>
+
+                        <!-- Right-aligned shopping cart -->
+                        @if (User.IsInRole("customer")) {
+                            <a class="h-full w-10 grid place-items-center btn btn-ghost"
+                               asp-controller="ShoppingCart"
+                               asp-action="ShoppingCart"
+                               asp-route-id="@(User.Claims.FirstOrDefault(c => c.Type == "CustomerId")?.Value)">
+                                <i data-lucide="shopping-cart"></i>
+                            </a>
+                        }
+                    </div>
+                </div>
+                @{
+                    var actionName = ViewContext.RouteData.Values["action"]?.ToString();
+                    var controllerName = ViewContext.RouteData.Values["controller"]?.ToString();
+                }
+                @if (controllerName == "Product" && actionName == "Index") {
+                    <div class="px-2 flex-1 md:hidden">
+                        <form id="searchFormHeader" method="get" class="join w-full">
+                            <input type="text"
+                                   placeholder="Search products..."
+                                   class="input input-bordered w-full join-item"
+                                   id="searchInputHeader"
+                                   name="searchTerm"/>
+                            <button class="btn join-item" id="searchButtonHeader">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                            </button>
+                        </form>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="drawer-side z-20 h-screen">
+            <label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay"></label>
+            <ul class="menu bg-[#f2f8fe] min-h-full w-80 p-4">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-controller="Product" asp-action="Index">Products</a></li>
+                <partial name="_LoginPartial" />
+            </ul>
+        </div>
+    </div>
+</header>
+<main role="main" class="bg-[#f2f8fe]">
+    @RenderBody()
+</main>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
+</script>
+@await Component.InvokeAsync("Notyf")
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

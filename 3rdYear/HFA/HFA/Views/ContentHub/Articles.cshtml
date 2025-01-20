@@ -1,0 +1,21 @@
+@using HFA.Models;
+@using System.Collections
+@using HFA.Resources;
+@model IEnumerable
+
+@{
+    Layout = "~/Views/Shared/_ContentHubLayout.cshtml";
+    ViewData["Title"] = "Articles";
+
+    @* Config *@
+    var PageName = HFA_Resources.Articles;
+    var TemplateModel = new ArticleSummaryViewModel();
+    var RESTResources = new RESTResources(
+        "Articles/CreateArticle",
+        "Articles/UpdateArticle",
+        "Articles/DeleteArticle"
+    );
+    var AreRowsSummary = true;
+}
+
+<partial name="_EntriesPage" model="new EntryPage(Model,PageName,TemplateModel,RESTResources,AreRowsSummary)" />

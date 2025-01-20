@@ -1,0 +1,6 @@
+@CWhiteH60Services_HostAddress = http://localhost:5115
+
+GET {{CWhiteH60Services_HostAddress}}/api/Products
+Accept: application/json
+
+###

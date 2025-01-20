@@ -1,0 +1,84 @@
+@model IEnumerable<CWhiteH60Store.Models.ProductCategory>
+
+@{
+    ViewData["Title"] = "Product Categories";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="overflow-x-auto mt-4 px-4">
+    <div class="flex justify-between pr-12">
+        <h1 class="text-2xl">Product Categories</h1>
+        <a class="btn btn-info btn-sm w-48 shadow-md" asp-action="Create">Create</a>
+    </div>
+    @foreach (var item in Model) {
+        <div class="collapse bg-base-300 my-2">
+            <input type="checkbox"/>
+            <div class="collapse-title text-xl font-medium flex justify-between">
+                @item.ProdCat
+                <div class="join z-10">
+                    <a class="btn btn-sm join-item" asp-action="Edit" asp-route-id="@item.CategoryID">Edit</a>
+                    <a class="btn btn-sm hover:btn-neutral join-item" asp-action="Details" asp-route-id="@item.CategoryID">Details</a>
+                    <a class="btn btn-sm hover:btn-error join-item" asp-action="Delete" asp-route-id="@item.CategoryID">Delete</a>
+                </div>
+            </div>
+            <div class="collapse-content">
+                <table class="table">
+                    <thead>
+                    <tr class="text-lg">
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Manufacturer
+                        </th>
+                        <th>
+                            Stock
+                        </th>
+                        <th>
+                            Buy Price
+                        </th>
+                        <th>
+                            Sell Price
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if (item.Products.Any()) {
+                        @foreach (var prod in item.Products) {
+                            <tr class="hover">
+                                <td>
+                                    <a class="btn btn-sm btn-link" asp-controller="Product" asp-action="Details" asp-route-id="@prod.ProductID">
+                                        @prod.Description
+                                    </a>
+                                </td>
+                                <td>
+                                    @prod.Manufacturer
+                                </td>
+                                <td class="flex gap-1 items-center">
+                                    @prod.Stock
+                                    @if (prod.Stock == 0) {
+                                        <img class="w-4 h-4" src="icons/triangle-alert.svg" alt="Warning Icon"/>
+                                    }
+                                </td>
+                                <td>
+                                    @(prod.BuyPrice)$
+                                </td>
+                                <td>
+                                    @(prod.SellPrice)$
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else {
+                        <tr>
+                            <td>
+                                <h4 class="text-lg">No products in this category</h4>
+                            </td>
+                        </tr>
+                    }
+                    </tbody >
+                </table>
+            </div>
+        </div>
+    }
+</div>
