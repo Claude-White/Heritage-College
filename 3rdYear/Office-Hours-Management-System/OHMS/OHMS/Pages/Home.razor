@@ -1,0 +1,31 @@
+﻿@page "/"
+@attribute [Authorize]
+
+<PageTitle>Home</PageTitle>
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+
+@code {
+    protected override async Task OnInitializedAsync() {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated ?? false) {
+            var role = user.FindFirst(c => c.Type == ClaimTypes.Role)?.Value;
+
+            if (role == "Student") {
+                NavigationManager.NavigateTo("/student/dashboard");
+            }
+            else if (role == "Teacher") {
+                NavigationManager.NavigateTo("/teacher/dashboard");
+            }
+            else {
+                NavigationManager.NavigateTo("/unauthorized");
+            }
+        }
+        else {
+            NavigationManager.NavigateTo("/login");
+        }
+    }
+}

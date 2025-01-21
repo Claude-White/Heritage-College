@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "AOHmwwahMFt1tbfN+k4ADOVz7aFkrh59Eowvh9EH7rg=",
+  "Source": "OHMS_Service",
+  "BasePath": "_content/OHMS_Service",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

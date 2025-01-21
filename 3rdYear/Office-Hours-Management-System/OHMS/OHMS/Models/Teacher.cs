@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace OHMS.Models;
+
+public partial class Teacher
+{
+    public int Id { get; set; }
+
+    public string Name { get; set; } = null!;
+
+    public string Email { get; set; } = null!;
+
+    public virtual ICollection<Calendar> Calendars { get; set; } = new List<Calendar>();
+}

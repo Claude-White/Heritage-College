@@ -1,0 +1,124 @@
+﻿@page "/student/dashboard"
+@using OHMS.Models
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject HIAAAStateProvider AuthenticationStateProvider
+@attribute [Authorize("Student")]
+
+
+<header class="bg-primary text-center text-white">
+    <div class="mx-auto max-w-7xl px-6 py-4">
+        <h3 class="text-center text-2xl font-bold text-white">Teachers</h3>
+    </div>
+</header>
+
+<div class="mt-2 flex flex-col h-full gap-6">
+    @if (calendars == null) {
+        <p class="text-xl text-red-error">Loading calendars...</p>
+    }
+    else if (calendars.Count == 0) {
+        <p class="text-lg text-grey">No calendars found for this student.</p>
+    }
+    else {
+        @foreach (var calendar in calendars) {
+            <div class="p-2">
+                <button class="h-max w-full rounded-lg border border-grey bg-white p-3 text-left shadow-md flex flex-col gap-4" @onclick="() => ToggleDropdown(calendar.Id)">
+                    <div class="flex w-full">
+                        <div class="flex-1">
+                            <h2 class="mb-1 text-lg font-semibold text-primary">
+                                <strong>@calendar.Teacher.Name</strong>
+                            </h2>
+                            <p class="truncate text-xs text-secondary">@calendar.Teacher.Email</p>
+                            <p class="truncate text-xs text-secondary">@calendar.Name</p>
+                        </div>
+                        
+                        <div class="w-max flex justify-center items-center">
+                            @if (expandedCalendars.Contains(calendar.Id)) {
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up"><path d="m18 15-6-6-6 6"/></svg>
+                            }
+                            else {
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+                            }
+                        </div>
+                    </div>
+
+                    
+
+                    @if (expandedCalendars.Contains(calendar.Id) && officeHours.ContainsKey(calendar.Id)) {
+                        <div class="w-full flex flex-col gap-2">
+                            @foreach (var oh in officeHours[calendar.Id]) {
+                                <div>
+                                    <span class="text-sm text-darkslate">
+                                        @oh.DayOfWeek - @oh.StartDate.ToString(@"hh\:mm") - @oh.EndDate.ToString(@"hh\:mm")
+                                    </span>
+                                </div>
+                            }
+                            <div class="w-full h-max">
+                                <a href="/student/createappointment/@calendar.Id" class="block text-center w-full py-2 rounded-lg bg-primary hover:bg-secondary text-white">Create Appointment</a>
+                            </div>
+                        </div>
+                    }
+                </button>
+            </div>
+        }
+    }
+</div>
+
+@code {
+    private List<Calendar> calendars;
+    private HashSet<int> expandedCalendars = new HashSet<int>();
+    private Dictionary<int, List<OfficeHour>> officeHours = new Dictionary<int, List<OfficeHour>>();
+
+    protected override async Task OnInitializedAsync() {
+        try {
+            var studentId = 3; // HARDCODED FOR NOW ****************************************************
+            calendars = await Http.GetFromJsonAsync<List<Calendar>>($"http://localhost:5239/api/Calendar/{studentId}");
+        }
+        catch (Exception ex) {
+            Console.WriteLine($"Error fetching calendars: {ex.Message}");
+        }
+    }
+
+    private async Task ToggleDropdown(int calendarId) {
+        if (expandedCalendars.Contains(calendarId)) {
+            expandedCalendars.Remove(calendarId);
+        }
+        else {
+            expandedCalendars.Add(calendarId);
+
+            if (!officeHours.ContainsKey(calendarId)) {
+                try {
+                    var hours = await Http.GetFromJsonAsync<List<OfficeHour>>($"http://localhost:5239/api/Calendar/OfficeHours/{calendarId}");
+                    officeHours[calendarId] = (hours ?? new List<OfficeHour>())
+                        .OrderBy(oh => GetDayOfWeekValue(oh.DayOfWeek))
+                        .ThenBy(oh => oh.StartDate)
+                        .ToList();
+                }
+                catch (Exception ex) {
+                    Console.WriteLine($"Error fetching office hours for calendar {calendarId}: {ex.Message}");
+                    officeHours[calendarId] = new List<OfficeHour>();
+                }
+            }
+        }
+    }
+
+    private int GetDayOfWeekValue(string dayOfWeek) {
+        return dayOfWeek switch {
+            "Monday" => 1,
+            "Tuesday" => 2,
+            "Wednesday" => 3,
+            "Thursday" => 4,
+            "Friday" => 5,
+        };
+    }
+    
+    private void NavigateToCreateAppointment(int id) {
+        NavigationManager.NavigateTo($"/student/createappointment/{id}");
+    }
+
+    private async Task HandleLogout() {
+        await AuthenticationStateProvider.LogoutAsync();
+        NavigationManager.NavigateTo("/login");
+    }
+
+}

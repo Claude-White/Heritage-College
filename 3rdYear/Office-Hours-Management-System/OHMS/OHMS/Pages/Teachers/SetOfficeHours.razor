@@ -1,0 +1,200 @@
+@page "/teacher/SetOfficeHours"
+@using OHMS.Models
+@attribute [Authorize("Teacher")]
+@inject HttpClient Http
+@inject AppConstants AppConstants
+@inject NavigationManager NavigationManager
+@attribute [Authorize("Teacher")]
+
+<div class="bg-white rounded w-11/12 text-center px-4 my-2 mx-auto h-10 flex items-center justify-between">
+    <a href="/teacher/Dashboard" class="font-bold">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+    </a>
+    <h1 class="font-bold flex-grow">Set Office Hours</h1>
+</div>
+<div class="bg-white rounded w-11/12 text-center my-4 mx-auto py-4 h-full">
+    @if (selectedDay == null)
+    {
+        <h2 class="font-bold">Select Days For Office Hours</h2>
+        <div class="flex flex-col w-full justify-around gap-4 p-4 my-2 h-auto">
+            @foreach (var day in days)
+            {
+                <button class="flex justify-between items-center bg-primary text-white rounded p-4" @onclick="() => ShowForm(day)">
+                    @day
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M8 12h8M12 8v8" />
+                    </svg>
+                </button>
+                @if (officeHoursByDay.ContainsKey(day) && officeHoursByDay[day]?.Any() == true)
+                {
+                    <div class="text-sm text-gray-600">
+                        @foreach (var officeHour in officeHoursByDay[day])
+                        {
+                            <div class="text-sm text-gray-600 flex items-center my-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock mr-2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 16 14"/>
+                                </svg>
+                                <span>
+                                    @officeHour.StartDate.ToString(@"hh\:mm") - @officeHour.EndDate.ToString(@"hh\:mm")
+                                </span>
+                                <a href="/" class="ml-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2 cursor-pointer">
+                                        <path d="M3 6h18"/>
+                                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                                        <line x1="10" x2="10" y1="11" y2="17"/>
+                                        <line x1="14" x2="14" y1="11" y2="17"/>
+                                    </svg>
+                                </a>
+                            </div>
+                            
+                        }
+                    </div>
+                }
+            }
+        </div>
+    }
+    else
+    {
+        <div>
+            <button class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2" @onclick="CancelForm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </button>
+            <h3 class="font-bold">@selectedDay's Office Hours</h3>
+            <EditForm Model="officeHoursByDay[selectedDay]" OnSubmit="() => HandleSetOfficeHours(selectedDay)" class="my-2 p-4">
+                <div class="space-y-4">
+                    <div>
+                        <label for="start-time" class="block text-sm font-medium text-gray-700">Start Time</label>
+                        <input class="border border-gray-300 rounded px-3 py-2 mt-1 w-full bg-background" @bind="startTimes[selectedDay]" type="time" id="start-time" name="start-time" required />
+                    </div>
+                    <div>
+                        <label for="end-time" class="block text-sm font-medium text-gray-700">End Time</label>
+                        <input class="border border-gray-300 rounded px-3 py-2 mt-1 w-full bg-background" @bind="endTimes[selectedDay]" type="time" id="end-time" name="end-time" required />
+                    </div>
+                </div>
+                <button class="w-full bg-primary text-white rounded shadow-md py-2 mt-4">Save</button>
+            </EditForm>
+        </div>
+    }
+</div>
+
+@code {
+    private List<string> days = new List<string> { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" };
+    private string selectedDay = null;
+
+    private Dictionary<string, List<OfficeHour>> officeHoursByDay = new Dictionary<string, List<OfficeHour>>();
+    private Dictionary<string, TimeOnly> startTimes = new Dictionary<string, TimeOnly>();
+    private Dictionary<string, TimeOnly> endTimes = new Dictionary<string, TimeOnly>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        foreach (var day in days) {
+            officeHoursByDay[day] = new List<OfficeHour>();
+            startTimes[day] = TimeOnly.MinValue;
+            endTimes[day] = TimeOnly.MinValue;
+        }
+        
+        await GetOfficeHours();
+        
+    }
+
+    private async Task GetOfficeHours() 
+    {
+        try
+        {
+            foreach (var day in days)
+            {
+                // TODO: Remove hardcoded teacherId and calendarId
+                var response = await Http.GetFromJsonAsync<IEnumerable<OfficeHour>>($"{AppConstants.BASE_URL}api/Teachers/GetOfficeHoursByTeacherId/1");
+
+                if (response != null)
+                {
+                    Console.WriteLine($"API response for {day}: {string.Join(", ", response.Select(oh => $"{oh.DayOfWeek}: {oh.StartDate} - {oh.EndDate}"))}");
+                    var officeHoursForDay = response.Where(oh => oh.DayOfWeek == day).ToList();
+                    if (officeHoursForDay.Any())
+                    {
+                        officeHoursByDay[day] = officeHoursForDay;
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error fetching office hours: {e.Message}");
+        }
+    }
+
+    private void ShowForm(string day)
+    {
+        selectedDay = day;
+    }
+
+    private void CancelForm()
+    {
+        selectedDay = null;
+    }
+
+    private async Task HandleSetOfficeHours(string day)
+    {
+        try
+        {
+            var officeHour = new OfficeHour
+            {
+                StartDate = startTimes[day].ToTimeSpan(),
+                EndDate = endTimes[day].ToTimeSpan(),
+                DayOfWeek = day
+            };
+            
+            if (officeHour.StartDate >= officeHour.EndDate)
+            {
+                Console.WriteLine("Start time must be earlier than end time.");
+                return;
+            }
+            
+            var existingOfficeHour = officeHoursByDay[day].FirstOrDefault(oh => oh.StartDate == officeHour.StartDate && oh.EndDate == officeHour.EndDate);
+        
+            if (existingOfficeHour == null)
+            {
+                officeHoursByDay[day].Add(officeHour);
+            }
+            else
+            {
+                existingOfficeHour.StartDate = officeHour.StartDate;
+                existingOfficeHour.EndDate = officeHour.EndDate;
+            }
+            
+            var setOfficeHoursDto = new SetOfficeHoursDto
+            {
+                TeacherId = 1,
+                CalendarId = 1,
+                Start = officeHour.StartDate,
+                End = officeHour.EndDate,
+                DayOfWeek = officeHour.DayOfWeek
+            };
+
+            var endpoint = $"{AppConstants.BASE_URL}api/Teachers/SetOfficeHours";
+            var response = await Http.PostAsJsonAsync(endpoint, setOfficeHoursDto);
+
+            if (response.IsSuccessStatusCode) {
+                GetOfficeHours();
+                selectedDay = null;
+            }
+            else
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(error);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Exception: {e.Message}");
+        }
+    }
+}

@@ -1,4 +1,6 @@
-# Assignment 3 - Claude White
+# FoilFlow
+
+## Online Hydrofoil store
 
 ## Instructions
 
@@ -22,6 +24,7 @@
 6. Have fun exploring my website!
 
 ## Docker DB Credentials
+
 Server: localhost,5119
 
 User Name: SA
@@ -31,6 +34,7 @@ Password: password@12345#
 Trust Server Certificate: True
 
 ## URLS
+
 Store: http://localhost:6117
 
 Customer: http://localhost:6118
@@ -40,6 +44,7 @@ Web API: http://localhost:5115 (for this you need to go to /api/Products/Manager
 Manager: http://localhost:3000
 
 ## Users
+
 **Customer**: customer@gmail.com ?Customer1!  
 **Clerk**: clerk@gmail.com ?Clerk1!  
 **Manager**: manager@gmail.com ?Manager1!

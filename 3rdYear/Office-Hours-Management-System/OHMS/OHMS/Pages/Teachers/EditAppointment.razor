@@ -1,0 +1,182 @@
+@page "/teacher/EditAppointment/{id:int}"
+@using OHMS.DTO
+@using OHMS.Models
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject AppConstants AppConstants
+@attribute [Authorize("Teacher")]
+
+
+@if (appointment != null) {
+    <div class="min-h-screen p-4">
+        <header class="flex items-center justify-between bg-white p-4 rounded-lg">
+            <a href="/teacher/dashboard">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                     stroke="currentColor" class="h-6 w-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
+                </svg>
+            </a>
+            <h2 class="text-xl font-bold">Edit Appointment</h2>
+            <br/>
+        </header>
+
+        <form class="mt-6 space-y-6" @onsubmit="HandleSubmit">
+            <div class="space-y-2">
+                <label for="title" class="block text-sm font-medium text-darkslate">Appointment Title</label>
+                <input id="title" class="form-control border-gray-300 w-full rounded p-2 shadow-sm"
+                       @bind="appointment.Title" placeholder="Enter appointment title"/>
+            </div>
+
+            <div class="space-y-2">
+                <label for="day" class="block text-sm font-medium text-darkslate">Select Day</label>
+                <select id="day" class="form-control border-gray-300 w-full rounded p-2 shadow-sm"
+                        @onchange="(e) => HandleDayChange(e)">
+                    <option value="">Select a day</option>
+                    @foreach (var officeHour in officeHours) {
+                        DateTime today = DateTime.Today;
+                        int daysUntilNextDate = (GetDayOfWeekValue(officeHour.DayOfWeek) - (int)today.DayOfWeek + 7) % 7;
+                        if (daysUntilNextDate == 0) daysUntilNextDate = 7;
+
+                        DateTime nextDate = today.AddDays(daysUntilNextDate);
+                        @if (appointment.StartDate.Date == nextDate.Date) {
+                            <option value="@nextDate" selected>@nextDate.ToString("MMMM d") | @officeHour.StartDate - @officeHour.EndDate</option>
+                        }
+                        else {
+                            <option value="@nextDate">@nextDate.ToString("MMMM d") | @officeHour.StartDate - @officeHour.EndDate</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="space-y-2">
+                <label for="time" class="block text-sm font-medium text-darkslate">Select Time Slot</label>
+                <select id="time" class="form-control border-gray-300 w-full rounded p-2 shadow-sm"
+                        @bind="selectedTimeSlot" disabled="@(!timeSlots.Any())">
+                    <option value="@appointment.StartDate" selected>@appointment.StartDate.ToString("h:mm tt") - @appointment.EndDate.ToString("h:mm tt")</option>
+                    @foreach (var timeSlot in timeSlots) {
+                        <option value="@timeSlot">@timeSlot.ToString("h:mm tt") - @timeSlot.AddMinutes(15).ToString("h:mm tt")</option>
+                    }
+                </select>
+            </div>
+
+            <div class="space-y-2">
+                <label for="description" class="block text-sm font-medium text-darkslate">Description</label>
+                <textarea id="description" class="form-control border-gray-300 w-full rounded p-2 shadow-sm"
+                          @bind="appointment.Description" placeholder="Enter a brief description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="block text-sm font-medium">Appointment Type</label>
+                <InputRadioGroup @bind-Value="appointment.Type" class="mt-1 flex space-x-4">
+                    <div>
+                        <InputRadio Value="true" id="inPerson"/>
+                        <label for="inPerson">In-Person</label>
+                    </div>
+                    <div>
+                        <InputRadio Value="false" id="online"/>
+                        <label for="online">Online</label>
+                    </div>
+                </InputRadioGroup>
+            </div>
+
+            <button type="submit" class="w-full rounded bg-primary py-2 text-white hover:bg-secondary">
+                Save Changes
+            </button>
+        </form>
+    </div>
+}
+
+@code {
+    [Parameter] public int Id { get; set; }
+
+    private Appointment? appointment { get; set; }
+    private List<OfficeHour> officeHours = new();
+    private List<DateTime> timeSlots = new();
+    private string selectedDay;
+    private DateTime? selectedTimeSlot;
+    private AvailableHoursDTO availableHours;
+
+    private async Task GetAppointment() {
+        var appointmentUrl = $"{AppConstants.BASE_URL}api/Appointment/{Id}";
+
+        var appointmentResult = await Http.GetAsync(appointmentUrl);
+        if (appointmentResult.IsSuccessStatusCode) {
+            var appointmentResultContent = await appointmentResult.Content.ReadAsStringAsync();
+            appointment = JsonSerializer.Deserialize<Appointment>(
+                appointmentResultContent,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+        }
+    }
+
+    protected override async Task OnInitializedAsync() {
+        await GetAppointment();
+        selectedDay = appointment?.StartDate.ToString() ?? "";
+        await LoadAvailableTimeSlots();
+        try {
+            // Hardcoded calendar id for now
+            officeHours = await Http.GetFromJsonAsync<List<OfficeHour>>($"{AppConstants.BASE_URL}api/Calendar/OfficeHours/1");
+        }
+        catch (Exception ex) {
+            Console.WriteLine($"Error fetching office hours: {ex.Message}");
+        }
+    }
+
+    private async Task HandleDayChange(ChangeEventArgs e) {
+        selectedDay = e.Value.ToString();
+        Console.WriteLine(selectedDay);
+        await LoadAvailableTimeSlots();
+    }
+
+    private async Task LoadAvailableTimeSlots() {
+        timeSlots.Clear();
+        if (DateTime.TryParse(selectedDay, out var dayDate)) {
+            // Hardcoded calendar id for now
+            availableHours = await Http.GetFromJsonAsync<AvailableHoursDTO>($"{AppConstants.BASE_URL}api/Calendar/Availability/1/{new DateTime(dayDate.Year, dayDate.Month, dayDate.Day, 1, 0, 0).ToString("yyyy-MM-ddTHH:mm:ss")}/{new DateTime(dayDate.Year, dayDate.Month, dayDate.Day, 23, 59, 0).ToString("yyyy-MM-ddTHH:mm:ss")}");
+            foreach (var timeChunk in availableHours.TimeChunks) {
+                if (timeChunk != null) {
+                    timeSlots.Add(timeChunk.StartDate);
+                }
+            }
+        }
+    }
+
+    private async Task HandleSubmit() {
+        try {
+            if (selectedTimeSlot.HasValue) {
+                appointment.StartDate = selectedTimeSlot.Value;
+                appointment.EndDate = appointment.StartDate.AddMinutes(15);
+            }
+            // Hardcoded calendar id for now
+            var appointmentDTO = new AppointmentDTO {
+                Id = appointment.Id,
+                CalendarId = 1,
+                Title = appointment.Title ?? "Untitled",
+                Description = appointment.Description ?? "",
+                Type = appointment.Type,
+                Status = true,
+                StartDate = appointment.StartDate,
+                EndDate = appointment.EndDate,
+                StudentId = 3 // HARDCODED FOR NOW ***************************************************
+            };
+            Console.WriteLine($"Submitting appointment: {appointmentDTO}");
+
+            await Http.PutAsJsonAsync($"{AppConstants.BASE_URL}api/Appointment/{appointment.Id}", appointmentDTO);
+            NavigationManager.NavigateTo("/teacher/dashboard");
+        }
+        catch (Exception ex) {
+            Console.WriteLine($"Error submitting appointment: {ex.Message}");
+        }
+    }
+
+    private int GetDayOfWeekValue(string dayOfWeek) {
+        return dayOfWeek switch {
+            "Monday" => 1,
+            "Tuesday" => 2,
+            "Wednesday" => 3,
+            "Thursday" => 4,
+            "Friday" => 5,
+        };
+    }
+
+}

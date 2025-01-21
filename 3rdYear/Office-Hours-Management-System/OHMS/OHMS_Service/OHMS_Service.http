@@ -1,0 +1,6 @@
+@OHMS_Service_HostAddress = http://localhost:5239
+
+GET {{OHMS_Service_HostAddress}}/
+Accept: application/json
+
+###

@@ -1,0 +1,80 @@
+﻿@page "/teacher/dashboard"
+@using System.Linq
+@using OHMS.Models
+@inject HIAAAStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+@attribute [Authorize("Teacher")]
+
+@{
+    var businessDays = GetBusinessDays(DateTime.Today, 10)
+        .Select(date => new {
+            Date = date,
+        })
+        .ToList();
+}
+
+
+<header class="bg-primary text-center text-white">
+    <div class="mx-auto max-w-7xl px-6 py-4">
+        <h3 class="text-center text-2xl font-bold text-white">Teacher Dashboard</h3>
+    </div>
+</header>
+
+<div class="h-full overflow-y-auto">
+    <div class="flex flex-col gap-2 p-2">
+        @foreach (var day in businessDays) {
+            <h2 class="text-xl font-bold text-primary">@day.Date.ToString("dddd, MMMM d")</h2>
+            @if (Appointments != null && Appointments.Any()) {
+                var todayAppointments = Appointments.Where(a => a.StartDate.Date == day.Date.Date).OrderBy(a => a.StartDate).ToList();
+                @if (!todayAppointments.Any()) {
+                    <div class="text-blue-grey">No appointments</div>
+                }
+                @foreach (var appointment in todayAppointments) {
+                    var appointmentRoute = $"/teacher/EditAppointment/{appointment.Id}";
+                    <a class="h-max w-full truncate rounded-lg border border-grey bg-white p-3 text-left shadow-md" href="@appointmentRoute">
+                        <h4 class="text-primary">@appointment.Title</h4>
+                        <p class="text-blue-grey">@appointment.StartDate.ToString("h:mm tt") - @appointment.EndDate.ToString("h:mm tt")</p>
+                    </a>
+                }
+            }
+        }
+    </div>
+</div>
+
+
+@code {
+    private List<Appointment> Appointments { get; set; }
+    
+    private async Task HandleLogout() {
+        await AuthenticationStateProvider.LogoutAsync();
+        NavigationManager.NavigateTo("/login");
+    }
+
+    private List<DateTime> GetBusinessDays(DateTime startDate, int numberOfDays) {
+        var businessDays = new List<DateTime>();
+        var currentDate = startDate;
+
+        while (businessDays.Count < numberOfDays) {
+            if (currentDate.DayOfWeek != DayOfWeek.Saturday &&
+                currentDate.DayOfWeek != DayOfWeek.Sunday) {
+                businessDays.Add(currentDate);
+            }
+
+            currentDate = currentDate.AddDays(1);
+        }
+
+        return businessDays;
+    }
+
+    protected override async Task OnInitializedAsync() {
+        // hard coded because fake login can't get teacher calendar
+        var appointmentsEndpoint = $"{AppConstants.BASE_URL}api/Teachers/GetWeeklyOfficeHours/{1}/{DateTime.Today:yyyy-MM-dd}/{DateTime.Today.AddDays(14):yyyy-MM-dd}";
+        try {
+            Appointments = await Http.GetFromJsonAsync<List<Appointment>>(appointmentsEndpoint);
+        }
+        catch (Exception ex) {
+            Console.WriteLine($"Error fetching office hours: {ex.Message}");
+        }
+    }
+}

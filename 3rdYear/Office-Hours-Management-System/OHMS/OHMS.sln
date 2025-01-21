@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OHMS", "OHMS\OHMS.csproj", "{1DCCB0CD-2D9C-4912-B73F-7C1A28D3FA5B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OHMS_TEST", "OHMS_TEST\OHMS_TEST.csproj", "{C67D743A-2F0D-4E33-A4CF-8ED39A7076C0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OHMS_Service", "OHMS_Service\OHMS_Service.csproj", "{A55DD9FC-2ECA-4882-9E5C-795A6A186ECE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1DCCB0CD-2D9C-4912-B73F-7C1A28D3FA5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DCCB0CD-2D9C-4912-B73F-7C1A28D3FA5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DCCB0CD-2D9C-4912-B73F-7C1A28D3FA5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DCCB0CD-2D9C-4912-B73F-7C1A28D3FA5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C67D743A-2F0D-4E33-A4CF-8ED39A7076C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C67D743A-2F0D-4E33-A4CF-8ED39A7076C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C67D743A-2F0D-4E33-A4CF-8ED39A7076C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C67D743A-2F0D-4E33-A4CF-8ED39A7076C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A55DD9FC-2ECA-4882-9E5C-795A6A186ECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A55DD9FC-2ECA-4882-9E5C-795A6A186ECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A55DD9FC-2ECA-4882-9E5C-795A6A186ECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A55DD9FC-2ECA-4882-9E5C-795A6A186ECE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8B0C808F-DF39-4463-A6D3-E0890317BBBD}
+	EndGlobalSection
+EndGlobal
