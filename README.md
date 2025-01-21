@@ -1,5 +1,7 @@
 # Program Exit Assessment
+
 ## Claude White
+
 White.Claude@cegep-heritage.qc.ca
 
 Heritage College
@@ -8,11 +10,15 @@ Third-year Computer Science Student
 
 The Program Exit Assignment is a Git portfolio to demonstrate what I have learned in this program and provides a portfolio for job applications. It also includes a reflection that is written at the end of each year.
 
-* Programming I, II and III
-* Web Programming I, II, III, IV and V
-* Hardware and Operating System
-* Math for Computer Science
-* Networks
-* Business in the Workplace
-* Database I, II
-* Systems Analysis
+- Programming I, II, III
+- Web Programming I, II, III, IV, V, VI
+- Hardware and Operating System
+- Math for Computer Science
+- Networks
+- Business in the Workplace
+- Database I, II
+- Systems Analysis
+- Advanced Topics I, II
+- Systems Maintenance
+- Development Project I, II
+- IT Security
